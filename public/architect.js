@@ -206,6 +206,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name', 'value', 'metas'],
   data: function data() {
@@ -303,6 +305,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         case 'insert':
           return ['fas', 'paste'];
+      }
+    },
+    canDisplayButton: function canDisplayButton(button, image) {
+      switch (button) {
+        case 'social':
+        case 'main':
+          return image.width === 1200 && image.height === 630;
+
+        case 'square':
+          return image.width === image.height;
+      }
+
+      return true;
+    },
+    generateButtonTooltip: function generateButtonTooltip(button) {
+      switch (button) {
+        case 'social':
+          return 'Set as Social Image';
+
+        case 'main':
+          return 'Set as Main Image';
+
+        case 'square':
+          return 'Set as Square Image';
+
+        case 'insert':
+          return 'Insert image into body';
       }
     }
   }
@@ -1402,7 +1431,7 @@ var render = function() {
             "li",
             {
               staticClass:
-                "mr-2 mb-2 border-1 border-highlight rounded max-w-imageManager relative flex justify-center items-center text-6xl text-highlight cursor-pointer max-h-imageManager",
+                "mr-2 mb-2 border-1 border-highlight rounded w-imageManager relative flex justify-center items-center text-6xl text-highlight cursor-pointer max-h-imageManager",
               class: _vm.images.length > 0 ? "initial" : "hidden"
             },
             [
@@ -1426,10 +1455,19 @@ var render = function() {
                           "absolute left-0 bottom-0 m-1 flex flex-wrap"
                       },
                       _vm._l(_vm.metas.buttons, function(display, button) {
-                        return display
+                        return display && _vm.canDisplayButton(button, image)
                           ? _c(
                               "div",
                               {
+                                directives: [
+                                  {
+                                    name: "tooltip",
+                                    rawName: "v-tooltip.bottom",
+                                    value: _vm.generateButtonTooltip(button),
+                                    expression: "generateButtonTooltip(button)",
+                                    modifiers: { bottom: true }
+                                  }
+                                ],
                                 staticClass:
                                   "rounded text-sm w-auto cursor-pointer mr-1 p-1",
                                 class: _vm.generateButtonClass(button, image),
@@ -2009,9 +2047,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-toasted */ "./node_modules/vue-toasted/dist/vue-toasted.min.js");
 /* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_toasted__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes */ "./resources/js/routes/index.js");
-/* harmony import */ var _utilities_requestHandler__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utilities/requestHandler */ "./resources/js/utilities/requestHandler.js");
-/* harmony import */ var _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/vue-fontawesome */ "./node_modules/@fortawesome/vue-fontawesome/index.es.js");
+/* harmony import */ var v_tooltip__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! v-tooltip */ "./node_modules/v-tooltip/dist/v-tooltip.esm.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./routes */ "./resources/js/routes/index.js");
+/* harmony import */ var _utilities_requestHandler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./utilities/requestHandler */ "./resources/js/utilities/requestHandler.js");
+/* harmony import */ var _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/vue-fontawesome */ "./node_modules/@fortawesome/vue-fontawesome/index.es.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2023,8 +2062,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toasted__WEBPACK_IMPORTED_MODULE_1___default.a, {
-  router: _routes__WEBPACK_IMPORTED_MODULE_2__["default"],
+  router: _routes__WEBPACK_IMPORTED_MODULE_3__["default"],
   position: "bottom-right",
   duration: 6000
 });
@@ -2045,10 +2085,11 @@ function () {
       var _this = this;
 
       var architect = this;
-      vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"]);
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_5__["FontAwesomeIcon"]);
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(v_tooltip__WEBPACK_IMPORTED_MODULE_2__["default"]);
       this.app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         el: '#architect',
-        router: _routes__WEBPACK_IMPORTED_MODULE_2__["default"],
+        router: _routes__WEBPACK_IMPORTED_MODULE_3__["default"],
         components: {},
         mounted: function mounted() {
           document.querySelector('.hamburger').addEventListener('click', function () {
@@ -2066,10 +2107,10 @@ function () {
     key: "request",
     value: function request(options) {
       if (options !== undefined) {
-        return Object(_utilities_requestHandler__WEBPACK_IMPORTED_MODULE_3__["default"])(options);
+        return Object(_utilities_requestHandler__WEBPACK_IMPORTED_MODULE_4__["default"])(options);
       }
 
-      return _utilities_requestHandler__WEBPACK_IMPORTED_MODULE_3__["default"];
+      return _utilities_requestHandler__WEBPACK_IMPORTED_MODULE_4__["default"];
     }
   }, {
     key: "$on",

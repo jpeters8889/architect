@@ -27,6 +27,10 @@ class Architect
      * @var DataSourceManager
      */
     public $dataSourceManager;
+    /**
+     * @var AssetManager
+     */
+    public $assetManager;
 
     public function __construct()
     {
@@ -35,6 +39,7 @@ class Architect
 
     private function bootstrapAppDependencies()
     {
+        $this->assetManager = new AssetManager();
         $this->authGuard = resolve(Guard::class);
         $this->blueprintManager = new BlueprintManager();
         $this->dataSourceManager = new DataSourceManager();

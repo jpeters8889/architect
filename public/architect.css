@@ -716,6 +716,72 @@ video {
   transition: colour 0.5s ease;
 }
 
+.tooltip {
+  display: block;
+  z-index: 50;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.tooltip .tooltip-inner {
+  background-color: var(--primary);
+  color: var(--white);
+  border-radius: 0.25rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.tooltip .tooltip-arrow {
+  width: 0;
+  height: 0;
+  position: absolute;
+  margin: 0.5rem;
+  border-color: var(--primary);
+  z-index: 10;
+}
+
+.tooltip[x-placement^="bottom"] {
+  margin-top: 0.5rem;
+}
+
+.tooltip[x-placement^="bottom"] .tooltip-arrow {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-width: 0 8px 8px 8px;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color: transparent !important;
+  top: -5px;
+  left: calc(50% - 5px);
+}
+
+.tooltip.popover .popover-inner {
+  background-color: var(--8);
+  color: var(--primary);
+  padding: 1.5rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.tooltip.popover .popover-arrow {
+  border-width: 8px;
+}
+
+.tooltip[aria-hidden='true'] {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity .15s, visibility .15s;
+  transition: opacity .15s, visibility .15s;
+}
+
+.tooltip[aria-hidden='false'] {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transition: opacity .15s;
+  transition: opacity .15s;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

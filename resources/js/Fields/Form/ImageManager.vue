@@ -3,22 +3,24 @@
         <input type="file" class="hidden" ref="fileTrigger" accept="image/*" multiple @change="processImages" />
 
         <ul class="flex flex-wrap align-start">
-            <li class="mr-2 mb-2 border-1 border-highlight rounded max-w-imageManager relative flex justify-center items-center text-6xl text-highlight cursor-pointer max-h-imageManager"
+            <li class="mr-2 mb-2 border-1 border-highlight rounded w-imageManager relative flex justify-center items-center text-6xl text-highlight cursor-pointer max-h-imageManager"
                 :class="images.length > 0 ? 'initial' : 'hidden'"
                 v-for="image in images"
             >
                 <div v-if="image.processing">
                     <font-awesome-icon :icon="['fas', 'circle-notch']" spin></font-awesome-icon>
                 </div>
+
                 <div v-else>
                     <img :src="'/'+image.path" alt="" />
 
                     <div class="absolute left-0 bottom-0 m-1 flex flex-wrap">
                         <div v-for="(display, button) in metas.buttons"
-                             v-if="display"
+                             v-if="display && canDisplayButton(button,image)"
                              class="rounded text-sm w-auto cursor-pointer mr-1 p-1"
                              :class="generateButtonClass(button, image)"
                              @click="handleImageButtonClick(button, image)"
+                             v-tooltip.bottom="generateButtonTooltip(button)"
                         >
                             <font-awesome-icon :icon="generateButtonIcon(button)"></font-awesome-icon>
                         </div>
@@ -133,6 +135,31 @@
                         return ['fas', 'crop'];
                     case 'insert':
                         return ['fas', 'paste'];
+                }
+            },
+
+            canDisplayButton(button, image) {
+                switch (button) {
+                    case 'social':
+                    case 'main':
+                        return image.width === 1200 && image.height === 630;
+                    case 'square':
+                        return image.width === image.height;
+                }
+
+                return true;
+            },
+
+            generateButtonTooltip(button) {
+                switch (button) {
+                    case 'social':
+                        return 'Set as Social Image';
+                    case 'main':
+                        return 'Set as Main Image';
+                    case 'square':
+                        return 'Set as Square Image';
+                    case 'insert':
+                        return 'Insert image into body';
                 }
             }
         }

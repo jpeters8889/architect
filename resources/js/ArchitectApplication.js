@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Toasted from 'vue-toasted';
+import VTooltip from 'v-tooltip';
 import routes from './routes';
 import request from "./utilities/requestHandler";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
@@ -21,6 +22,7 @@ export default class Architect {
         let architect = this;
 
         Vue.component('font-awesome-icon', FontAwesomeIcon);
+        Vue.use(VTooltip);
 
         this.app = new Vue({
             el: '#architect',
