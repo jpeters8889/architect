@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+
+:root {
+    --black: #000;
+    --white: #fff;
+    --primary: #229aa3;
+    --positive: #2cde25;
+    --negative: #CF221F;
+    --highlight: #225669;
+
+    --black-90: rgba(0,0,0,0.9);
+    --black-50: rgba(0,0,0,0.5);
+    --black-10: rgba(0,0,0,0.1);
+
+    --white-05: rgba(255,255,255,0.05);
+    --white-10: rgba(255,255,255,0.1);
+    --white-20: rgba(255,255,255,0.2);
+
+    --highlight-75: rgba(34, 86, 105, 0.75);
+    --highlight-50: rgba(34, 86, 105, 0.5);
+
+    --primary-10: rgba(34, 154, 163, 0.1);
+    --primary-50: rgba(34, 154, 163, 0.5);
+
+    --1: #111;
+    --2: #222;
+    --3: #666;
+    --4: #787878;
+    --5: #bbb;
+    --6: #ccc;
+    --7: #e8e8e8;
+    --8: #f7f7f7;
+    --9: #fbfbfb;
+}
+
+.form-control {
+    line-height: normal;
+}
+
+.form-control-input {
+    @apply bg-white border border-5 p-1 text-lg rounded-lg;
+}
+
+.form-control-error {
+    @apply border-negative;
+}
+
+.button {
+    @apply inline-block no-underline font-bold;
+}
+
+.button-default {
+    @apply h-8 px-6 leading-loose rounded-lg shadow button-text-shadow;
+}
+
+.button-primary {
+    @apply bg-primary text-white;
+}
+
+.button-white {
+    @apply bg-white text-primary
+}
+
+.button-text-shadow {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.architect-container {
+    width: 100%;
+}
+
+.transition-bg {
+    transition: background-color 0.5s ease;
+}
+
+.transisition-colour {
+    transition: colour 0.5s ease;
+}
+
+@tailwind utilities;

@@ -1,0 +1,30 @@
+{
+    "name": "jpeters/architect",
+    "description": "Architect",
+    "type": "library",
+    "version": "0.1.0",
+    "license": "MIT",
+    "require": {
+        "laravel/framework": "^6.0",
+        "intervention/image": "^2.4@dev"
+    },
+    "authors": [
+        {
+            "name": "jamie peters",
+            "email": "jamie@jamie-peters.co.uk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "JPeters\\Architect\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JPeters\\Architect\\Providers\\ArchitectServiceProvider"
+            ]
+        }
+    }
+}
