@@ -31,6 +31,10 @@ class Architect
      * @var AssetManager
      */
     public $assetManager;
+    /**
+     * @var ApiManager
+     */
+    public $apiManager;
 
     public function __construct()
     {
@@ -39,6 +43,7 @@ class Architect
 
     private function bootstrapAppDependencies()
     {
+        $this->apiManager = new ApiManager();
         $this->assetManager = new AssetManager();
         $this->authGuard = resolve(Guard::class);
         $this->blueprintManager = new BlueprintManager();

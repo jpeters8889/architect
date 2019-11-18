@@ -14,6 +14,10 @@
 
     <link rel="stylesheet" href="{{ mix('architect.css', 'vendor/architect') }}">
 
+    @foreach($assetManager->styles() as $name => $path)
+        <link rel="stylesheet" href="/{{ config('architect.route') }}/api/assets/style/{!! $name !!}">
+    @endforeach
+
     <!-- other styles -->
 </head>
 <body class="bg-5 min-h-full text-black">
@@ -62,7 +66,9 @@
     window.Architect = new architectBootstrapper(config);
 </script>
 
-<!-- todo extra scripts -->
+@foreach($assetManager->scripts() as $name => $path)
+    <script src="/{{ config('architect.route') }}/api/assets/script/{!!  $name !!}"></script>
+@endforeach
 
 <script>
     Architect.build();

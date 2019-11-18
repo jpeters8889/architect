@@ -16,10 +16,17 @@ export default class Architect {
     constructor(config) {
         this.vue = new Vue();
         this.config = config;
+        this.afterBootCallbacks = [];
+    }
+
+    onBoot(callback) {
+        this.afterBootCallbacks.push(callback);
     }
 
     build() {
         let architect = this;
+
+        this.afterBoot();
 
         Vue.component('font-awesome-icon', FontAwesomeIcon);
         Vue.use(VTooltip);
@@ -38,6 +45,14 @@ export default class Architect {
                 });
             }
         });
+    }
+
+    afterBoot() {
+        this.afterBootCallbacks.forEach((callback) => {
+            callback(Vue);
+        });
+
+        this.afterBootCallbacks = [];
     }
 
     request(options) {

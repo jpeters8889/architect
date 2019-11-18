@@ -8,6 +8,7 @@ class ViewController extends BaseController
     {
         return $this->architect->responseFactory->view('architect::view', [
             'blueprintManager' => $this->architect->blueprintManager,
+            'assetManager' => $this->architect->assetManager,
         ]);
     }
 }
