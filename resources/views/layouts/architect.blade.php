@@ -52,6 +52,8 @@
             </div>
         </div>
     </div>
+
+    <portal-target name="modal"></portal-target>
 </div>
 
 <script>

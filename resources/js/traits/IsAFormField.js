@@ -6,34 +6,34 @@ export default {
     },
 
     data: () => ({
-        value: '',
+        actualValue: '',
     }),
 
     mounted() {
         this.setValue();
 
         window.Architect.$on(this.field.value + '-value', value => {
-            this.value = value;
+            this.actualValue = value;
         });
     },
 
     methods: {
         setValue() {
-            this.value = '';
+            this.actualValue = '';
 
             this.field.fillFormData = this.fillFormData;
 
             if (this.field.value !== undefined && this.field.value !== null) {
-                this.value = this.field.value;
+                this.actualValue = this.field.value;
             }
         },
 
         fillFormData(formData) {
-            formData.append(this.field.name, String(this.value));
+            formData.append(this.field.name, String(this.actualValue));
         },
 
         onChange(value) {
-            this.value = value;
+            this.actualValue = value;
         }
     }
 }

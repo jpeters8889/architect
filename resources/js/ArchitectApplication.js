@@ -4,6 +4,7 @@ import VTooltip from 'v-tooltip';
 import routes from './routes';
 import request from "./utilities/requestHandler";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import PortalVue from 'portal-vue'
 
 Vue.use(Toasted, {
     router: routes,
@@ -30,6 +31,7 @@ export default class Architect {
 
         Vue.component('font-awesome-icon', FontAwesomeIcon);
         Vue.use(VTooltip);
+        Vue.use(PortalVue);
 
         this.app = new Vue({
             el: '#architect',
@@ -68,7 +70,7 @@ export default class Architect {
     }
 
     $emit(...args) {
-        this.bus.$emit(...args)
+        this.vue.$emit(...args)
     }
 
     success(message) {
