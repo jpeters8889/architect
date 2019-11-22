@@ -33,10 +33,15 @@
         data: () => ({
             title: '',
             fields: [],
+            values: {},
         }),
 
         mounted() {
             this.initComponent();
+
+            window.Architect.$on('form-field-change', (field) => {
+               this.$set(this.values, field.name, field.value);
+            });
         },
 
         computed: {
@@ -67,6 +72,10 @@
                     .then((response) => {
                         this.title = response.data.meta.title;
                         this.fields = response.data.fields;
+
+                        this.fields.forEach((field) => {
+                            this.$set(this.values, field.name, field.value);
+                        });
                     })
                     .catch(error => {
                         if (error.response.status >= 500) {
@@ -89,18 +98,17 @@
             },
 
             collectData() {
-                return _.tap(new FormData(), formData => {
-                    _.each(this.fields, field => {
-                        console.log(field);
-                        field.fillFormData(formData);
-                    });
+                window.Architect.$emit('prepare-form-data');
 
-                    formData.append('blueprint', this.blueprint);
+                let formData = new FormData();
 
-                    if (this.state === 'update') {
-                        formData.append('id', 1)//todo;
-                    }
+                Object.keys(this.values).forEach((name) => {
+                    formData.append(name, this.values[name]);
                 });
+
+                console.log(formData);
+
+                return formData;
             }
         },
     }

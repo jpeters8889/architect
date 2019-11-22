@@ -1,9 +1,11 @@
 <template>
-    <input type="text" class="form-control form-control-input w-full" :value="value" :name="name"/>
+    <input type="text" class="form-control form-control-input w-full" v-model="actualValue" :name="name"/>
 </template>
 
 <script>
+    import {IsAFormField} from 'architect-js-helpers';
+
     export default {
-        props: ['name','value'],
+        mixins: [IsAFormField],
     }
 </script>

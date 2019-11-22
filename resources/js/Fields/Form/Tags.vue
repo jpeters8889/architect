@@ -12,7 +12,11 @@
                 </li>
             </ul>
 
-            <input type="text" class="border-0 p-0 m-0" @keyup="searchTag" v-on:keyup.enter="pushTag()"
+            <input type="text"
+                   class="border-0 p-0 m-0"
+                   @keyup="searchTag"
+                   v-on:keyup.enter="pushTag()"
+                   @focusout="closeTagSearch()"
                    v-model="searchTerm"
                    placeholder="Add Tag..." />
         </div>
@@ -31,9 +35,10 @@
 </template>
 
 <script>
+    import {IsAFormField} from 'architect-js-helpers';
 
     export default {
-        props: ['name', 'value', 'metas'],
+        mixins: [IsAFormField],
 
         data: () => ({
             allTags: [],
@@ -73,9 +78,21 @@
                 }
 
                 this.allTags.push(tag.replace(',', ''));
+
+                this.closeTagSearch();
+            },
+
+            closeTagSearch() {
                 this.searchTerm = '';
                 this.searchResults = [];
                 this.searchResultsDisplay = 'hidden';
+            },
+
+            getFormData() {
+                return {
+                    name: this.name,
+                    value: this.allTags.join(','),
+                }
             }
         }
     }

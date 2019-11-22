@@ -6,4 +6,5 @@ mix
     .extract()
     .setPublicPath('public')
     .postCss('resources/css/architect.css', 'public', [tailwindcss('tailwind.config.js')])
-    .version();
+    .version()
+    .webpackConfig({ devtool: "inline-source-map" });

@@ -18,9 +18,7 @@
 </template>
 
 <script>
-    import IsAFormField from '../traits/IsAFormField';
-
     export default {
-        mixins: [IsAFormField],
+        props: ['field'],
     }
 </script>
