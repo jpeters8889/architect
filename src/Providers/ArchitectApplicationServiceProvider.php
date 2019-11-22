@@ -20,7 +20,6 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
 
         Architect::isRunning(function ()  {
             $this->registerBlueprints();
-            $this->registerDataSources();
         });
 
         $this->registerCoreRoutes();
@@ -29,11 +28,6 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
     }
 
     protected function blueprints()
-    {
-        return [];
-    }
-
-    public function dataSources()
     {
         return [];
     }
@@ -49,13 +43,6 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
     {
         (new Collection($this->blueprints()))->each(function($blueprint) {
             $this->architect->registerBlueprint($blueprint);
-        });
-    }
-
-    private function registerDataSources()
-    {
-        (new Collection($this->dataSources()))->each(function($dataSource, $key) {
-            $this->architect->registerDataSource($key, $dataSource);
         });
     }
 }

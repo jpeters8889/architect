@@ -11,6 +11,4 @@ Route::middleware('auth:api')->group(static function () {
     });
 
     Route::any('/external/{route}/{method}', 'ExternalFieldController@handle');
-
-    Route::post('/datasource', 'DatasourceController@list');
 });

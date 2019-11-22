@@ -2,6 +2,7 @@
 
 namespace JPeters\Architect\Blueprints;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 abstract class Blueprint

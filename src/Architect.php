@@ -24,10 +24,6 @@ class Architect
     public $blueprintManager;
 
     /**
-     * @var DataSourceManager
-     */
-    public $dataSourceManager;
-    /**
      * @var AssetManager
      */
     public $assetManager;
@@ -47,7 +43,6 @@ class Architect
         $this->assetManager = new AssetManager();
         $this->authGuard = resolve(Guard::class);
         $this->blueprintManager = new BlueprintManager();
-        $this->dataSourceManager = new DataSourceManager();
         $this->responseFactory = resolve(ResponseFactory::class);
     }
 
@@ -66,11 +61,6 @@ class Architect
     public function registerBlueprint($blueprint)
     {
         $this->blueprintManager->registerBlueprint($blueprint);
-    }
-
-    public function registerDataSource($key, $dataSource)
-    {
-        $this->dataSourceManager->registerDataSource($key, $dataSource);
     }
 
     public static function coreJavascript()

@@ -2,6 +2,7 @@
 
 namespace JPeters\Architect\Controls;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 abstract class Control
@@ -81,4 +82,9 @@ abstract class Control
     }
 
     abstract public function vuePrefix();
+
+    public function handleUpdate(Model $model, $column, $value)
+    {
+        $model->$column = $value;
+    }
 }

@@ -2,8 +2,10 @@
 
 namespace JPeters\Architect\Providers;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use JPeters\Architect\Console\InstallCommand;
 use JPeters\Architect\Console\PublishCommand;
 use JPeters\Architect\Http\Middleware\ArchitectIsRunning;
@@ -18,6 +20,12 @@ class ArchitectServiceProvider extends ServiceProvider
 
         $this->registerViews();
         $this->registerRoutes();
+
+        if(!Str::hasMacro('explodeIntoCollection')) {
+            Str::macro('explodeIntoCollection', static function($value, $delimiter = ',') {
+                return new Collection(explode($delimiter, $value));
+            });
+        }
     }
 
     public function register()
