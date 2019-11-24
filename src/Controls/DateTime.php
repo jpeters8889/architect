@@ -2,7 +2,7 @@
 
 namespace JPeters\Architect\Controls;
 
-class DateTime extends Control
+class DateTime extends InternalControl
 {
     public function vuePrefix()
     {

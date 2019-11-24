@@ -2,7 +2,7 @@
 
 namespace JPeters\Architect\Controls;
 
-class Textfield extends Control
+class Textfield extends InternalControl
 {
     public function vuePrefix()
     {

@@ -15,6 +15,8 @@ abstract class Control
 
     private $metas;
 
+    public $deferUpdate = false;
+
     public function __construct($column, $label = null)
     {
         $this->column = $column;
@@ -83,8 +85,5 @@ abstract class Control
 
     abstract public function vuePrefix();
 
-    public function handleUpdate(Model $model, $column, $value)
-    {
-        $model->$column = $value;
-    }
+    abstract public function handleUpdate(Model $model, $column, $value);
 }

@@ -9,9 +9,24 @@ abstract class Blueprint
 {
     abstract public function model(): string;
 
+    public function url()
+    {
+        return Str::lower(class_basename($this->model()));
+    }
+
     public function primaryField()
     {
         return 'id';
+    }
+
+    public function isVisibleField()
+    {
+        return 'live';
+    }
+
+    public function slugField()
+    {
+        return 'slug';
     }
 
     public function ordering()

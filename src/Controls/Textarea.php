@@ -2,7 +2,7 @@
 
 namespace JPeters\Architect\Controls;
 
-class Textarea extends Control
+class Textarea extends InternalControl
 {
     protected $rows = 3;
 

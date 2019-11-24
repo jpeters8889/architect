@@ -2,7 +2,7 @@
 
 namespace JPeters\Architect\Controls;
 
-class Boolean extends Control
+class Boolean extends InternalControl
 {
     public function vuePrefix()
     {

@@ -30,6 +30,7 @@ export default class Architect {
         this.afterBoot();
 
         Vue.component('font-awesome-icon', FontAwesomeIcon);
+        Vue.use(Toasted);
         Vue.use(VTooltip);
         Vue.use(PortalVue);
 
@@ -43,7 +44,8 @@ export default class Architect {
                 });
 
                 architect.$on('error', message => {
-                    this.$toasted.show(message, {type: 'error'});
+                    console.log(message);
+                    this.vue.$toasted.show(message, {type: 'error'});
                 });
             }
         });

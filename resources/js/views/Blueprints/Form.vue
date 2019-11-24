@@ -17,6 +17,49 @@
                 </div>
             </form>
         </div>
+
+        <portal to="modal" v-if="showModal">
+            <modal>
+                <div class="text-2xl">
+                    {{ this.blueprint }} saved.
+                </div>
+                <div class="flex justify-end">
+                    <router-link
+                            class="button button-primary rounded px-4 py-1"
+                            :to="{
+                                name: 'blueprintList',
+                                params: {
+                                    blueprint: blueprint,
+                                }
+                            }"
+                    >
+                        Back to list
+                    </router-link>
+
+                    <router-link
+                            class="button button-primary rounded px-4 py-1"
+                            :to="{
+                                name: 'blueprintForm',
+                                params: {
+                                    blueprint: blueprint,
+                                    state: 'add',
+                                }
+                            }"
+                    >
+                        Add Another
+                    </router-link>
+
+                    <a class="button button-primary rounded px-4 py-1"
+                       v-if="savedBlueprintUrl"
+                       :href="savedBlueprintUrl"
+                       target="_blank"
+                       @click="showModal = false"
+                    >
+                        View {{ this.blueprint }}
+                    </a>
+                </div>
+            </modal>
+        </portal>
     </div>
 </template>
 
@@ -34,13 +77,15 @@
             title: '',
             fields: [],
             values: {},
+            showModal: false,
+            savedBlueprintUrl: '',
         }),
 
         mounted() {
             this.initComponent();
 
             window.Architect.$on('form-field-change', (field) => {
-               this.$set(this.values, field.name, field.value);
+                this.$set(this.values, field.name, field.value);
             });
         },
 
@@ -92,9 +137,16 @@
             },
 
             submitForm() {
-                let url = `/architect-api/blueprint/${this.state}`;
+                let url = `/blueprints/submit`;
 
                 window.Architect.request().post(url, this.collectData())
+                    .then((response) => {
+                        this.savedBlueprintUrl = response.response.url;
+                        this.showModal = true;
+                    })
+                    .catch((error) => {
+                        window.Architect.$emit('error', 'An error has occurred, ' + error.message + ' - ' + error.response.data.message);
+                    });
             },
 
             collectData() {
@@ -106,10 +158,11 @@
                     formData.append(name, this.values[name]);
                 });
 
-                console.log(formData);
+                formData.append('_blueprint', this.blueprint);
+                formData.append('_state', this.state);
 
                 return formData;
-            }
+            },
         },
     }
 </script>
