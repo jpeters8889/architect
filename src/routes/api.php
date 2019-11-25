@@ -10,7 +10,8 @@ Route::middleware('auth:api')->group(static function () {
 
         Route::prefix('/{blueprint}')->group(static function () {
             Route::get('/list', 'BlueprintController@list');
-            Route::get('/add', 'BlueprintController@add');
+            Route::get('/add', 'BlueprintController@form');
+            Route::get('/{id}', 'BlueprintController@form');
         });
     });
 

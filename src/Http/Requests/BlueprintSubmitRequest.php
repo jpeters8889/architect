@@ -11,6 +11,7 @@ class BlueprintSubmitRequest extends FormRequest
         return [
             '_blueprint' => 'required|string',
             '_state' => 'required|in:add,update',
+            '_id' => 'required_if:_state,update',
         ];
     }
 }

@@ -26,15 +26,21 @@ class BlueprintController extends BaseController
         );
     }
 
-    public function add($blueprint)
+    public function form($blueprint, $id = null)
     {
         /** @var Blueprint $concreteBlueprint */
         $concreteBlueprint = $this->architect->blueprintManager->resolve($blueprint);
 
         abort_if($concreteBlueprint === false, 404, 'Blueprint not found');
 
+        $blueprintFormExtractor = new BlueprintFormExtractor($concreteBlueprint);
+
+        if($id) {
+            $blueprintFormExtractor->getValuesFrom($id);
+        }
+
         return $this->architect->responseFactory->json(
-            (new BlueprintFormExtractor($concreteBlueprint))->make()
+            $blueprintFormExtractor->make()
         );
     }
 
@@ -52,6 +58,11 @@ class BlueprintController extends BaseController
 
             /** @var Model $model */
             $model = new $modelClass;
+
+            if($request->input('_state') === 'update') {
+                $model = $modelClass::query()->find($request->input('_id'));
+            }
+
             $deferredPlans = [];
 
             (new Collection($concreteBlueprint->plans()))->each(static function (Control $plan) use ($model, $request, &$deferredPlans) {

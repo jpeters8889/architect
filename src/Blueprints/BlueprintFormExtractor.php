@@ -2,17 +2,25 @@
 
 namespace JPeters\Architect\Blueprints;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use JPeters\Architect\Controls\Control;
 
 class BlueprintFormExtractor extends Extractor
 {
+    /** @var Model */
+    private $currentModel;
+
+    public function getValuesFrom($id) {
+        $this->currentModel = $this->blueprint->model()::query()->findOrFail($id);
+    }
+
     public function make(): array
     {
         $fields = [];
 
         (new Collection($this->blueprint->plans()))
-            ->each(static function (Control $plan) use (&$fields) {
+            ->each(function (Control $plan) use (&$fields) {
                 if (!$plan->isAvailableOnForm()) {
                     return;
                 }
@@ -22,6 +30,7 @@ class BlueprintFormExtractor extends Extractor
                     'name' => $plan->getColumn(),
                     'component' => $plan->vuePrefix() . '-form',
                     'metas' => $plan->getMetas(),
+                    'value' => $this->currentModel ? $plan->getCurrentValue($this->currentModel) : null,
                 ];
             });
 

@@ -22,4 +22,11 @@ export default [
         component: BlueprintForm,
         props: true,
     },
+
+    {
+        path: '/blueprints/:blueprint/:id',
+        name: 'blueprintEdit',
+        component: BlueprintForm,
+        props: true,
+    }
 ];

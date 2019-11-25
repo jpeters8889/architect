@@ -25,12 +25,22 @@
             </td>
 
             <td class="p-2 align-top">
-                <a class="button button-default button-primary cursor-pointer hover:bg-highlight flex items-center transition-bg">
+                <router-link
+                        class="button button-default button-primary cursor-pointer hover:bg-highlight flex items-center transition-bg"
+                        :to="{
+                        name: 'blueprintEdit',
+                        params: {
+                            blueprint: blueprint,
+                            id: row.id,
+                            state: 'update',
+                        }
+                    }"
+                >
                     <div class="mr-1">
                         <font-awesome-icon :icon="['fas', 'edit']"></font-awesome-icon>
                     </div>
                     <div class="flex-1">Edit</div>
-                </a>
+                </router-link>
             </td>
         </tr>
     </table>
@@ -39,6 +49,7 @@
 <script>
     export default {
         props: {
+            blueprint: String,
             headers: Object | Array,
             rows: Object | Array,
             components: Object | Array,

@@ -7,10 +7,11 @@
         <!-- List -->
         <div class="bg-white w-full p-2">
             <table-component
-                :headers="headers"
-                :rows="rows"
-                :components="components"
-                :hide-on-mobile="hideOnMobile"
+                    :blueprint="blueprint"
+                    :headers="headers"
+                    :rows="rows"
+                    :components="components"
+                    :hide-on-mobile="hideOnMobile"
             >
             </table-component>
         </div>
@@ -43,17 +44,17 @@
                     .then((response) => {
                         this.title = response.data.meta.title;
                         this.hideOnMobile = response.data.hiddenOnMobile,
-                        this.headers = response.data.labels;
+                            this.headers = response.data.labels;
                         this.rows = response.data.data.data;
                         this.components = response.data.vuePrefixes;
                     })
                     .catch(error => {
-                        if(error.response.status >= 500) {
+                        if (error.response.status >= 500) {
                             Architect.$emit(error.response.data.message);
                             return;
                         }
 
-                        if(error.response.status === 404) {
+                        if (error.response.status === 404) {
 
                         }
 

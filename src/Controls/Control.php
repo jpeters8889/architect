@@ -28,6 +28,11 @@ abstract class Control
         $this->label = $label;
     }
 
+    public function getCurrentValue(Model $model)
+    {
+        return $model->{$this->getColumn()};
+    }
+
     public function getLabel()
     {
         return $this->label;

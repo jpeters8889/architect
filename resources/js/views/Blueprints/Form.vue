@@ -21,11 +21,11 @@
         <portal to="modal" v-if="showModal">
             <modal>
                 <div class="text-2xl">
-                    {{ this.blueprint }} saved.
+                    {{ this.title }} saved.
                 </div>
                 <div class="flex justify-end">
                     <router-link
-                            class="button button-primary rounded px-4 py-1"
+                            class="button button-primary rounded px-4 py-1 m-1"
                             :to="{
                                 name: 'blueprintList',
                                 params: {
@@ -37,7 +37,8 @@
                     </router-link>
 
                     <router-link
-                            class="button button-primary rounded px-4 py-1"
+                            class="button button-primary rounded px-4 py-1 m-1"
+                            v-if="state==='add'"
                             :to="{
                                 name: 'blueprintForm',
                                 params: {
@@ -49,7 +50,7 @@
                         Add Another
                     </router-link>
 
-                    <a class="button button-primary rounded px-4 py-1"
+                    <a class="button button-primary rounded px-4 py-1 m-1"
                        v-if="savedBlueprintUrl"
                        :href="savedBlueprintUrl"
                        target="_blank"
@@ -67,10 +68,7 @@
     export default {
         props: {
             blueprint: String,
-            state: {
-                type: String,
-                default: 'add',
-            },
+            state: String,
         },
 
         data: () => ({
@@ -90,8 +88,16 @@
         },
 
         computed: {
+            currentState() {
+                if(this.$route.params.id !== undefined) {
+                    return 'update';
+                }
+
+                return 'add';
+            },
+
             pageTitle() {
-                if (this.state === 'add') {
+                if (this.currentState === 'add') {
                     return this.title + ' - Add New';
                 }
 
@@ -99,11 +105,19 @@
             },
 
             buttonLabel() {
-                if (this.state === 'add') {
+                if (this.currentState === 'add') {
                     return 'Add Record';
                 }
 
                 return 'Update Record';
+            },
+
+            blueprintUrl() {
+                if(this.currentState==='update') {
+                    return `/blueprints/${this.blueprint}/${this.$route.params.id}`
+                }
+
+                return `/blueprints/${this.blueprint}/add`;
             }
         },
 
@@ -113,7 +127,7 @@
             },
 
             getBlueprint() {
-                Architect.request().get(`/blueprints/${this.blueprint}/add`)
+                Architect.request().get(this.blueprintUrl)
                     .then((response) => {
                         this.title = response.data.meta.title;
                         this.fields = response.data.fields;
@@ -141,7 +155,7 @@
 
                 window.Architect.request().post(url, this.collectData())
                     .then((response) => {
-                        this.savedBlueprintUrl = response.response.url;
+                        this.savedBlueprintUrl = response.data.url;
                         this.showModal = true;
                     })
                     .catch((error) => {
@@ -159,7 +173,8 @@
                 });
 
                 formData.append('_blueprint', this.blueprint);
-                formData.append('_state', this.state);
+                formData.append('_state', this.currentState);
+                formData.append('_id', this.$route.params.id);
 
                 return formData;
             },
