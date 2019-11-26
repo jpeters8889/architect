@@ -4,24 +4,24 @@ namespace JPeters\Architect\Controls;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use JPeters\Architect\Traits\TogglesVisibility;
 
 abstract class Control
 {
-    protected $label;
-    protected $column;
-    protected $hideOnMobile = false;
-    protected $showOnIndex = true;
-    protected $showOnForm = true;
-
-    private $metas;
+    use TogglesVisibility;
 
     public $deferUpdate = false;
+
+    protected $label;
+    protected $column;
+
+    private $metas;
 
     public function __construct($column, $label = null)
     {
         $this->column = $column;
 
-        if (!$label) {
+        if (! $label) {
             $label = str_replace('_', ' ', Str::title($column));
         }
 
@@ -43,43 +43,8 @@ abstract class Control
         return $this->column;
     }
 
-    public function hideFromIndexOnMobile()
+    public function withMetas($metas)
     {
-        $this->hideOnMobile = true;
-
-        return $this;
-    }
-
-    public function isHiddenOnMobile()
-    {
-        return $this->hideOnMobile;
-    }
-
-    public function hideOnIndex()
-    {
-        $this->showOnIndex = false;
-
-        return $this;
-    }
-
-    public function hideOnForms()
-    {
-        $this->showOnForm = false;
-
-        return $this;
-    }
-
-    public function isAvailableOnIndex()
-    {
-        return $this->showOnIndex === true;
-    }
-
-    public function isAvailableOnForm()
-    {
-        return $this->showOnForm === true;
-    }
-
-    public function withMetas($metas) {
         $this->metas = $metas;
     }
 

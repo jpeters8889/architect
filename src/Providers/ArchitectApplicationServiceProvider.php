@@ -3,9 +3,9 @@
 namespace JPeters\Architect\Providers;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\ServiceProvider;
 use JPeters\Architect\Architect;
 use JPeters\Architect\CoreRoutes;
-use Illuminate\Support\ServiceProvider;
 
 class ArchitectApplicationServiceProvider extends ServiceProvider
 {
@@ -18,7 +18,7 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
     {
         $this->architect = new Architect();
 
-        Architect::isRunning(function ()  {
+        Architect::isRunning(function () {
             $this->registerBlueprints();
         });
 
@@ -41,7 +41,7 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
 
     private function registerBlueprints()
     {
-        (new Collection($this->blueprints()))->each(function($blueprint) {
+        (new Collection($this->blueprints()))->each(function ($blueprint) {
             $this->architect->registerBlueprint($blueprint);
         });
     }

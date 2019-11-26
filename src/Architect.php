@@ -6,11 +6,15 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Event;
 use JPeters\Architect\Blueprints\BlueprintManager;
-use JPeters\Architect\DataSources\DataSourceManager;
 use JPeters\Architect\Events\ArchitectRunning;
 
 class Architect
 {
+    /** @var ApiManager */
+    public $apiManager;
+
+    /** @var AssetManager */
+    public $assetManager;
 
     /** @var Guard */
     public $authGuard;
@@ -18,19 +22,8 @@ class Architect
     /** @var ResponseFactory */
     public $responseFactory;
 
-    /**
-     * @var BlueprintManager
-     */
+    /** @var BlueprintManager */
     public $blueprintManager;
-
-    /**
-     * @var AssetManager
-     */
-    public $assetManager;
-    /**
-     * @var ApiManager
-     */
-    public $apiManager;
 
     public function __construct()
     {

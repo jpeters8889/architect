@@ -21,8 +21,8 @@ class ArchitectServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerRoutes();
 
-        if(!Str::hasMacro('explodeIntoCollection')) {
-            Str::macro('explodeIntoCollection', static function($value, $delimiter = ',') {
+        if (! Str::hasMacro('explodeIntoCollection')) {
+            Str::macro('explodeIntoCollection', static function ($value, $delimiter = ',') {
                 return new Collection(explode($delimiter, $value));
             });
         }
@@ -39,15 +39,15 @@ class ArchitectServiceProvider extends ServiceProvider
     protected function registerPublishCommands()
     {
         $this->publishes([
-            __DIR__ . '/../Console/Stubs/ArchitectServiceProvider.stub' => app_path('Providers/ArchitectServiceProvider.php')
+            __DIR__ . '/../Console/Stubs/ArchitectServiceProvider.stub' => app_path('Providers/ArchitectServiceProvider.php'),
         ], 'architect-provider');
 
         $this->publishes([
-            __DIR__ . '/../../config/architect.php' => config_path('architect.php')
+            __DIR__ . '/../../config/architect.php' => config_path('architect.php'),
         ], 'architect-config');
 
         $this->publishes([
-            __DIR__ . '/../../public' => public_path('vendor/architect')
+            __DIR__ . '/../../public' => public_path('vendor/architect'),
         ], 'architect-assets');
     }
 
@@ -61,7 +61,7 @@ class ArchitectServiceProvider extends ServiceProvider
         Route::group(
             [
                 'namespace' => 'JPeters\Architect\Http\Controllers',
-                'prefix' => config('architect.route').'/api',
+                'prefix' => config('architect.route') . '/api',
                 'middleware' => ArchitectIsRunning::class,
             ],
             function () {

@@ -15,7 +15,7 @@ class AssetManager
             $repository = $this->styles;
         }
 
-        if (!isset($repository[$name])) {
+        if (! isset($repository[$name])) {
             abort(404, 'Asset not found');
         }
 

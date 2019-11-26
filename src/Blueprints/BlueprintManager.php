@@ -21,22 +21,11 @@ class BlueprintManager
             'blueprints' => [],
         ];
 
-        $blueprints->each(static function ($blueprint) use (&$navigationSettings) {
-            /** @var Blueprint $concreteBlueprint */
-            $concreteBlueprint = new $blueprint;
-            $blueprintSite = $concreteBlueprint->blueprintSite();
+        $this->processBlueprintsForNavigation($blueprints, $navigationSettings);
 
-            if (!in_array($blueprintSite, $navigationSettings['buildings'], true)) {
-                $navigationSettings['buildings'][] = $blueprintSite;
-            }
-
-            $navigationSettings['blueprints'][$blueprintSite][] = [
-                'label' => $concreteBlueprint->blueprintName(),
-                'route' => $concreteBlueprint->blueprintRoute(),
-            ];
-        });
-
-        return $responseFactory->view('architect::navigation', compact('navigationSettings'))->content();
+        return $responseFactory
+            ->view('architect::navigation', compact('navigationSettings'))
+            ->content();
     }
 
     public function registerBlueprint($blueprint)
@@ -48,7 +37,7 @@ class BlueprintManager
     {
         foreach ($this->blueprints as $blueprint) {
             /** @var Blueprint $concrete */
-            $concrete = new $blueprint;
+            $concrete = new $blueprint();
 
             if ($concrete->blueprintRoute() === $blueprintRoute) {
                 return $concrete;
@@ -56,5 +45,27 @@ class BlueprintManager
         }
 
         return false;
+    }
+
+    /**
+     * @param Collection $blueprints
+     * @param $navigationSettings
+     */
+    private function processBlueprintsForNavigation(Collection $blueprints, &$navigationSettings): void
+    {
+        $blueprints->each(static function ($blueprint) use (&$navigationSettings) {
+            /** @var Blueprint $concreteBlueprint */
+            $concreteBlueprint = new $blueprint();
+            $blueprintSite = $concreteBlueprint->blueprintSite();
+
+            if (! in_array($blueprintSite, $navigationSettings['buildings'], true)) {
+                $navigationSettings['buildings'][] = $blueprintSite;
+            }
+
+            $navigationSettings['blueprints'][$blueprintSite][] = [
+                'label' => $concreteBlueprint->blueprintName(),
+                'route' => $concreteBlueprint->blueprintRoute(),
+            ];
+        });
     }
 }

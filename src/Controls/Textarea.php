@@ -11,7 +11,8 @@ class Textarea extends InternalControl
         return 'text-area';
     }
 
-    public function rows($rows) {
+    public function rows($rows)
+    {
         $this->rows = $rows;
 
         return $this;
@@ -20,7 +21,7 @@ class Textarea extends InternalControl
     public function getMetas()
     {
         return array_merge(parent::getMetas() ?? [], [
-           'rows' => $this->rows,
+            'rows' => $this->rows,
         ]);
     }
 }

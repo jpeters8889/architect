@@ -8,44 +8,50 @@ use JPeters\Architect\Controls\Control;
 
 class BlueprintListExtractor extends Extractor
 {
+    protected $labels = [];
+    protected $vuePrefix = [];
+    protected $columns = [];
+    protected $hideOnMobile = [];
+
     public function make(): array
     {
-        $labels = [];
-        $vuePrefix = [];
-        $columns = [];
-        $hideOnMobile = [];
+        $this->processControls();
 
+        /** @var Model $model */
+        $model = $this->blueprint->model();
+
+        $this->columns[] = $this->blueprint->primaryField();
+
+        return [
+            'vue-suffix' => 'list',
+            'labels' => $this->labels,
+            'vuePrefixes' => $this->vuePrefix,
+            'hiddenOnMobile' => $this->hideOnMobile,
+            'data' => $model::query()->orderBy(...$this->blueprint->ordering())
+                ->paginate(25, $this->columns),
+            'meta' => [
+                'title' => $this->blueprint->blueprintName(),
+            ],
+        ];
+    }
+
+    private function processControls(): array
+    {
         (new Collection($this->blueprint->plans()))
-            ->each(static function (Control $plan) use (&$labels, &$vuePrefix, &$columns, &$hideOnMobile) {
-                if (!$plan->isAvailableOnIndex()) {
+            ->each(function (Control $plan) {
+                if (! $plan->isAvailableOnIndex()) {
                     return;
                 }
 
                 $column = $plan->getColumn();
 
-                $labels[$column] = $plan->getLabel();
-                $vuePrefix[$column] = $plan->vuePrefix();
-                $columns[] = $column;
+                $this->labels[$column] = $plan->getLabel();
+                $this->vuePrefix[$column] = $plan->vuePrefix();
+                $this->columns[] = $column;
 
                 if ($plan->isHiddenOnMobile()) {
-                    $hideOnMobile[] = $column;
+                    $this->hideOnMobile[] = $column;
                 }
             });
-
-        /** @var Model $model */
-        $model = $this->blueprint->model();
-
-        $columns[] = $this->blueprint->primaryField();
-
-        return [
-            'vue-suffix' => 'list',
-            'labels' => $labels,
-            'vuePrefixes' => $vuePrefix,
-            'hiddenOnMobile' => $hideOnMobile,
-            'data' => $model::query()->orderBy(...$this->blueprint->ordering())->paginate(25, $columns),
-            'meta' => [
-                'title' => $this->blueprint->blueprintName(),
-            ]
-        ];
     }
 }

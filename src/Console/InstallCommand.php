@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 
 class InstallCommand extends Command
 {
-
     protected $signature = 'architect:install';
 
     protected $description = 'Install Architect';
@@ -23,7 +22,7 @@ class InstallCommand extends Command
 
         $this->registerServiceProvider();
 
-        $this->setAppNamespace();
+        $this->writeAppNamespace();
     }
 
     protected function getAppNamespace()
@@ -37,19 +36,21 @@ class InstallCommand extends Command
         $appConfigFile = config_path('app.php');
         file_put_contents($appConfigFile, str_replace(
             "{$namespace}\\Providers\EventServiceProvider::class" . PHP_EOL,
-            "{$namespace}\\Providers\EventServiceProvider::class," . PHP_EOL . "        {$namespace}\Providers\ArchitectServiceProvider::class," . PHP_EOL,
+            "{$namespace}\\Providers\EventServiceProvider::class," .
+            PHP_EOL .
+            "        {$namespace}\Providers\ArchitectServiceProvider::class," . PHP_EOL,
             file_get_contents($appConfigFile)
         ));
     }
 
-    protected function setAppNamespace()
+    protected function writeAppNamespace()
     {
         $namespace = $this->getAppNamespace();
 
-        $this->setAppNamespaceOn(app_path('Providers/ArchitectServiceProvider.php'), $namespace);
+        $this->writeAppNamespaceOn(app_path('Providers/ArchitectServiceProvider.php'), $namespace);
     }
 
-    protected function setAppNamespaceOn($file, $namespace)
+    protected function writeAppNamespaceOn($file, $namespace)
     {
         file_put_contents($file, str_replace(
             'App\\',

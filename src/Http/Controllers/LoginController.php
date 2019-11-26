@@ -11,7 +11,8 @@ class LoginController extends BaseController
     public function showLoginForm()
     {
         if ($this->architect->authGuard->check()) {
-            return $this->architect->responseFactory->redirectTo($this->architect->buildPathTo('/'));
+            return $this->architect->responseFactory
+                ->redirectTo($this->architect->buildPathTo('/'));
         }
 
         return $this->architect->responseFactory->view('architect::auth.login')->content();

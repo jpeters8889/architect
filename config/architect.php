@@ -1,6 +1,5 @@
 <?php
 
-use JPeters\Architect\Events\ArchitectRunning;
 use JPeters\Architect\Http\Middleware\ArchitectIsRunning;
 
 return [
@@ -15,5 +14,5 @@ return [
         'web',
         'auth',
         ArchitectIsRunning::class,
-    ]
+    ],
 ];
