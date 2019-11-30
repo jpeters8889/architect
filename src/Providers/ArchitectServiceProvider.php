@@ -18,6 +18,10 @@ class ArchitectServiceProvider extends ServiceProvider
             $this->registerPublishCommands();
         }
 
+        if (! $this->app->configurationIsCached()) {
+            $this->mergeConfigFrom(__DIR__ . '/../../config/architect.php', 'architect');
+        }
+
         $this->registerViews();
         $this->registerRoutes();
 

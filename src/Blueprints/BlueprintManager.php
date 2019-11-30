@@ -68,4 +68,9 @@ class BlueprintManager
             ];
         });
     }
+
+    public function blueprintList()
+    {
+        return $this->blueprints;
+    }
 }
