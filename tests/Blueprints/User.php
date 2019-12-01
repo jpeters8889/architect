@@ -3,6 +3,7 @@
 namespace JPeters\Architect\Tests\Blueprints;
 
 use JPeters\Architect\Blueprints\Blueprint;
+use JPeters\Architect\Controls\DateTime;
 use JPeters\Architect\Controls\Textfield;
 
 class User extends Blueprint
@@ -21,7 +22,11 @@ class User extends Blueprint
 
             new Textfield('password'),
 
-            new Textfield('api_token'),
+            (new Textfield('api_token'))->hideFromIndexOnMobile(),
+
+            (new DateTime('created_at'))->hideOnForms(),
+
+            (new DateTime('updated_at'))->hideOnIndex()->hideOnForms(),
         ];
     }
 }

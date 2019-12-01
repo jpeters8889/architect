@@ -35,7 +35,7 @@ class BlueprintListExtractor extends Extractor
         ];
     }
 
-    private function processControls(): array
+    private function processControls()
     {
         (new Collection($this->blueprint->plans()))
             ->each(function (Control $plan) {
