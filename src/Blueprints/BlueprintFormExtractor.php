@@ -14,6 +14,8 @@ class BlueprintFormExtractor extends Extractor
     public function getValuesFrom($id)
     {
         $this->currentModel = $this->blueprint->model()::query()->findOrFail($id);
+
+        return $this;
     }
 
     public function make(): array

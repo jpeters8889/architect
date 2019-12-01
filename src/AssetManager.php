@@ -2,11 +2,19 @@
 
 namespace JPeters\Architect;
 
+use HttpException;
+use RuntimeException;
+
 class AssetManager
 {
     protected $scripts = [];
     protected $styles = [];
 
+    /**
+     * @param $asset
+     * @param $name
+     * @return mixed
+     */
     public function findAsset($asset, $name)
     {
         $repository = $this->scripts;
@@ -16,7 +24,7 @@ class AssetManager
         }
 
         if (! isset($repository[$name])) {
-            abort(404, 'Asset not found');
+            throw new RuntimeException('Asset not found', 404);
         }
 
         return $repository[$name];
