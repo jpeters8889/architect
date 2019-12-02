@@ -8,8 +8,6 @@ class ExternalFieldController extends BaseController
 {
     public function handle(Request $request, $route)
     {
-        $httpMethod = strtolower($request->method());
-
-        return $this->architect->apiManager->loadEndpoint($httpMethod, $route, $request);
+        return $this->architect->apiManager->loadEndpoint($request->method(), $route, $request);
     }
 }

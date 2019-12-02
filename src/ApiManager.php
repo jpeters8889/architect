@@ -4,6 +4,7 @@ namespace JPeters\Architect;
 
 use Illuminate\Http\Request;
 use ReflectionParameter;
+use RuntimeException;
 
 class ApiManager
 {
@@ -17,9 +18,7 @@ class ApiManager
 
     public function registerEndpoint($method, $route, $class, $function = 'handle')
     {
-        if (! array_key_exists($method, $this->endpoints)) {
-            abort(422, 'Unknown method');
-        }
+        $this->validateMethod($method);
 
         $this->endpoints[$method][$route] = [
             'class' => $class,
@@ -27,26 +26,42 @@ class ApiManager
         ];
     }
 
+    public function checkEndpointExists($method, $route)
+    {
+        $this->validateMethod($method);
+
+        return isset($this->endpoints[$method][$route]);
+    }
+
+    public function getEndpointDetails($method, $route)
+    {
+        $this->validateMethod($method);
+
+        $this->checkEndpointIsRegistered($method, $route);
+
+        return $this->endpoints[$method][$route];
+    }
+
     public function loadEndpoint($method, $route, Request $request)
     {
-        if (! array_key_exists($method, $this->endpoints)) {
-            abort(422, 'Unknown method');
-        }
+        $this->validateMethod($method);
 
-        if (! isset($this->endpoints[$method][$route])) {
-            abort(404, 'External endpoint not registered');
-        }
+        $this->checkEndpointIsRegistered($method, $route);
 
         $endpoint = $this->endpoints[$method][$route];
 
         $class = $endpoint['class'];
         $function = $endpoint['function'];
 
-        $reflectedMethod = new \ReflectionMethod($class, $function);
+        try {
+            $reflectedMethod = new \ReflectionMethod($class, $function);
 
-        $dependencies = $reflectedMethod->getParameters();
+            $dependencies = $reflectedMethod->getParameters();
 
-        return (new $class())->$function(...$this->getDependencies($dependencies, $request));
+            return (new $class())->$function(...$this->getDependencies($dependencies, $request));
+        } catch (\Exception $e) {
+            throw new RuntimeException('Unable to execute endpoint');
+        }
     }
 
     private function getDependencies($dependencies, Request $request)
@@ -64,5 +79,28 @@ class ApiManager
         }
 
         return $bootableDependencies;
+    }
+
+    /**
+     * @param $method
+     */
+    private function validateMethod(&$method): void
+    {
+        $method = strtolower($method);
+
+        if (! array_key_exists($method, $this->endpoints)) {
+            throw new RuntimeException('Unknown method');
+        }
+    }
+
+    /**
+     * @param $method
+     * @param $route
+     */
+    private function checkEndpointIsRegistered($method, $route): void
+    {
+        if (! isset($this->endpoints[$method][$route])) {
+            throw new RuntimeException('External endpoint not registered');
+        }
     }
 }
