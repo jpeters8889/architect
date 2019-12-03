@@ -1,10 +1,10 @@
 <?php
 
-namespace JPeters\Architect\Controls;
+namespace JPeters\Architect\Plans;
 
 use Illuminate\Database\Eloquent\Model;
 
-abstract class InternalControl extends Control
+abstract class InternalPlan extends Plan
 {
     public function handleUpdate(Model $model, $column, $value)
     {

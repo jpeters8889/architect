@@ -27,11 +27,11 @@ class BlueprintAddFormTest extends ArchitectTest
     }
 
     /** @test */
-    public function it_loads_an_array_of_fields()
+    public function it_loads_an_array_of_plans()
     {
         $request = $this->makeRequest();
 
-        $this->assertIsArray($request->json('fields'));
+        $this->assertIsArray($request->json('plans'));
     }
 
     private function makeRequest($extra = '')

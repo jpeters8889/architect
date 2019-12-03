@@ -2,12 +2,12 @@
 
 namespace JPeters\Architect\Tests\Unit;
 
-use JPeters\Architect\Controls\Boolean;
-use JPeters\Architect\Tests\Abstracts\ControlTest;
+use JPeters\Architect\Plans\Boolean;
+use JPeters\Architect\Tests\Abstracts\PlanTest;
 
-class BooleanControlTest extends ControlTest
+class BooleanPlanTest extends PlanTest
 {
-    public function getControl()
+    public function getPlan()
     {
         return Boolean::class;
     }

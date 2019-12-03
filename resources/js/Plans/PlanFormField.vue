@@ -2,16 +2,16 @@
     <div>
         <div class="text-lg font-semibold text-highlight mb-1">
             <label>
-                {{ field.label }}
+                {{ plan.label }}
             </label>
         </div>
 
         <div>
             <component
-                    :is="field.component"
-                    :name="field.name"
-                    :value="field.value"
-                    :metas="field.metas"
+                    :is="plan.component"
+                    :name="plan.name"
+                    :value="plan.value"
+                    :metas="plan.metas"
             ></component>
         </div>
     </div>
@@ -19,6 +19,6 @@
 
 <script>
     export default {
-        props: ['field'],
+        props: ['plan'],
     }
 </script>

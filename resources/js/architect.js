@@ -6,7 +6,7 @@ Vue.config.productionTip = false;
 
 import './components';
 
-import './fields';
+import './plans';
 
 (function() {
    this.architectBootstrapper = function(config) {

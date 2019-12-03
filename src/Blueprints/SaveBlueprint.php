@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use JPeters\Architect\Controls\Control;
+use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Http\Requests\BlueprintSubmitRequest;
 
 class SaveBlueprint
@@ -48,8 +48,8 @@ class SaveBlueprint
             DB::beginTransaction();
 
             (new Collection($this->blueprint->plans()))
-                ->each(function (Control $plan) {
-                    $this->processControl($plan);
+                ->each(function (Plan $plan) {
+                    $this->processPlan($plan);
                 });
 
             $this->model->save();
@@ -65,7 +65,7 @@ class SaveBlueprint
         }
     }
 
-    protected function processControl(Control $plan)
+    protected function processPlan(Plan $plan)
     {
         if (! $plan->isAvailableOnForm()) {
             return;
@@ -95,7 +95,7 @@ class SaveBlueprint
     protected function handleDeferredUpdates()
     {
         foreach ($this->deferredPlans as $plan) {
-            /** @var Control $plan */
+            /** @var Plan $plan */
             $plan->handleUpdate(
                 $this->model,
                 $plan->getColumn(),

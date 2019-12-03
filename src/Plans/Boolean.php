@@ -1,8 +1,8 @@
 <?php
 
-namespace JPeters\Architect\Controls;
+namespace JPeters\Architect\Plans;
 
-class Boolean extends InternalControl
+class Boolean extends InternalPlan
 {
     public function vuePrefix()
     {

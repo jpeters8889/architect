@@ -2,12 +2,12 @@
 
 namespace JPeters\Architect\Tests\Unit;
 
-use JPeters\Architect\Controls\Textfield;
-use JPeters\Architect\Tests\Abstracts\ControlTest;
+use JPeters\Architect\Plans\Textfield;
+use JPeters\Architect\Tests\Abstracts\PlanTest;
 
-class TextFieldControlTest extends ControlTest
+class TextFieldPlanTest extends PlanTest
 {
-    public function getControl()
+    public function getPlan()
     {
         return Textfield::class;
     }

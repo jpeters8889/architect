@@ -4,7 +4,7 @@ namespace JPeters\Architect\Blueprints;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use JPeters\Architect\Controls\Control;
+use JPeters\Architect\Plans\Plan;
 
 class BlueprintFormExtractor extends Extractor
 {
@@ -20,27 +20,27 @@ class BlueprintFormExtractor extends Extractor
 
     public function make(): array
     {
-        $fields = [];
+        $plans = [];
 
         (new Collection($this->blueprint->plans()))
-            ->each(function (Control $plan) use (&$fields) {
+            ->each(function (Plan $plan) use (&$plans) {
                 if (! $plan->isAvailableOnForm()) {
                     return;
                 }
 
-                $fields[] = $this->prepareFieldArray($plan);
+                $plans[] = $this->preparePlanArray($plan);
             });
 
         return [
             'vue-suffix' => 'list',
-            'fields' => $fields,
+            'plans' => $plans,
             'meta' => [
                 'title' => $this->blueprint->blueprintName(),
             ],
         ];
     }
 
-    private function prepareFieldArray(Control $plan)
+    private function preparePlanArray(Plan $plan)
     {
         return [
             'label' => $plan->getLabel(),

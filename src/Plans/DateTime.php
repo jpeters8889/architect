@@ -1,8 +1,8 @@
 <?php
 
-namespace JPeters\Architect\Controls;
+namespace JPeters\Architect\Plans;
 
-class DateTime extends InternalControl
+class DateTime extends InternalPlan
 {
     public function vuePrefix()
     {

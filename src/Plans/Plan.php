@@ -1,12 +1,12 @@
 <?php
 
-namespace JPeters\Architect\Controls;
+namespace JPeters\Architect\Plans;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use JPeters\Architect\Traits\TogglesVisibility;
 
-abstract class Control
+abstract class Plan
 {
     use TogglesVisibility;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace JPeters\Architect\Controls;
+namespace JPeters\Architect\Plans;
 
-class Textfield extends InternalControl
+class Textfield extends InternalPlan
 {
     public function vuePrefix()
     {

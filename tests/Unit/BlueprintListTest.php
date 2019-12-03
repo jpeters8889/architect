@@ -5,7 +5,7 @@ namespace JPeters\ArchitectTests\Unit;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use JPeters\Architect\Blueprints\BlueprintListExtractor;
-use JPeters\Architect\Controls\Control;
+use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Tests\ArchitectTest;
 use JPeters\Architect\Tests\Blueprints\User;
 use JPeters\Architect\Tests\Models\User as UserModel;
@@ -57,7 +57,7 @@ class BlueprintListTest extends ArchitectTest
         $blueprint = new User();
 
         foreach ($blueprint->plans() as $plan) {
-            /** @var Control $plan */
+            /** @var Plan $plan */
             if (!$plan->isAvailableOnIndex()) {
                 continue;
             }
@@ -85,7 +85,7 @@ class BlueprintListTest extends ArchitectTest
         $blueprint = new User();
 
         foreach ($blueprint->plans() as $plan) {
-            /** @var Control $plan */
+            /** @var Plan $plan */
             if (!$plan->isAvailableOnIndex()) {
                 continue;
             }

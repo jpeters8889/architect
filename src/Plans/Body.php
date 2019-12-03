@@ -1,6 +1,6 @@
 <?php
 
-namespace JPeters\Architect\Controls;
+namespace JPeters\Architect\Plans;
 
 class Body extends Textarea
 {

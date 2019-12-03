@@ -6,8 +6,8 @@
 
         <div class="bg-white w-full p-2">
             <form autocomplete="off" @submit.prevent="submitForm">
-                <div class="w-full py-3" v-for="field in fields">
-                    <form-field :field="field"></form-field>
+                <div class="w-full py-3" v-for="plan in plans">
+                    <plan-form-field :plan="plan"></plan-form-field>
                 </div>
 
                 <div class="w-full py-3 flex justify-end">
@@ -73,7 +73,7 @@
 
         data: () => ({
             title: '',
-            fields: [],
+            plans: [],
             values: {},
             showModal: false,
             savedBlueprintUrl: '',
@@ -130,10 +130,10 @@
                 Architect.request().get(this.blueprintUrl)
                     .then((response) => {
                         this.title = response.data.meta.title;
-                        this.fields = response.data.fields;
+                        this.plans = response.data.plans;
 
-                        this.fields.forEach((field) => {
-                            this.$set(this.values, field.name, field.value);
+                        this.plans.forEach((plan) => {
+                            this.$set(this.values, plan.name, plan.value);
                         });
                     })
                     .catch(error => {

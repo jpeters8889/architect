@@ -2,12 +2,12 @@
 
 namespace JPeters\Architect\Tests\Unit;
 
-use JPeters\Architect\Controls\Body;
-use JPeters\Architect\Tests\Abstracts\ControlTest;
+use JPeters\Architect\Plans\Body;
+use JPeters\Architect\Tests\Abstracts\PlanTest;
 
-class BodyControlTest extends ControlTest
+class BodyPlanTest extends PlanTest
 {
-    public function getControl()
+    public function getPlan()
     {
         return Body::class;
     }
@@ -20,6 +20,6 @@ class BodyControlTest extends ControlTest
     /** @test */
     public function it_returns_the_number_of_rows_in_the_metas()
     {
-        $this->assertEquals(['rows' => 20], $this->control->getMetas());
+        $this->assertEquals(['rows' => 20], $this->plan->getMetas());
     }
 }

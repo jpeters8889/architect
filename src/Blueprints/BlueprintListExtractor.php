@@ -4,7 +4,7 @@ namespace JPeters\Architect\Blueprints;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use JPeters\Architect\Controls\Control;
+use JPeters\Architect\Plans\Plan;
 
 class BlueprintListExtractor extends Extractor
 {
@@ -15,7 +15,7 @@ class BlueprintListExtractor extends Extractor
 
     public function make(): array
     {
-        $this->processControls();
+        $this->processPlans();
 
         /** @var Model $model */
         $model = $this->blueprint->model();
@@ -35,10 +35,10 @@ class BlueprintListExtractor extends Extractor
         ];
     }
 
-    private function processControls()
+    private function processPlans()
     {
         (new Collection($this->blueprint->plans()))
-            ->each(function (Control $plan) {
+            ->each(function (Plan $plan) {
                 if (! $plan->isAvailableOnIndex()) {
                     return;
                 }

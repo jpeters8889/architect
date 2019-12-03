@@ -3,8 +3,8 @@
 namespace JPeters\Architect\Tests\Blueprints;
 
 use JPeters\Architect\Blueprints\Blueprint;
-use JPeters\Architect\Controls\Textarea;
-use JPeters\Architect\Controls\Textfield;
+use JPeters\Architect\Plans\Textarea;
+use JPeters\Architect\Plans\Textfield;
 
 class Blog extends Blueprint
 {
