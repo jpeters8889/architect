@@ -85,16 +85,10 @@ class SaveBlueprint
 
     protected function returnResponse()
     {
-        $url = implode('/', [
-            config('app.url'),
-            $this->blueprint->url(),
-            $this->model->{$this->blueprint->slugField()},
-        ]);
-
         return new Response([
             'id' => $this->model->id,
             'blueprint' => $this->blueprint->blueprintName(),
-            'url' => $this->model->{$this->blueprint->isVisibleField()} ? $url : null,
+            'url' => $this->generateUrl()
         ], 201);
     }
 
@@ -108,5 +102,22 @@ class SaveBlueprint
                 $this->request->input($plan->getColumn())
             );
         }
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function generateUrl()
+    {
+        $url = null;
+
+        if ($this->model->{$this->blueprint->isVisibleField()}) {
+            $url = implode('/', [
+                config('app.url'),
+                $this->blueprint->url(),
+                $this->model->{$this->blueprint->slugField()},
+            ]);
+        }
+        return $url;
     }
 }
