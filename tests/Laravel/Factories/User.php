@@ -5,7 +5,7 @@
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Str;
-use JPeters\Architect\Tests\Models\User;
+use JPeters\Architect\Tests\Laravel\Models\User;
 
 $factory->define(User::class, function (Faker $faker) {
     return [

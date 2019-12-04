@@ -4,8 +4,8 @@ namespace JPeters\Architect\Tests\Unit;
 
 use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Tests\ArchitectTest;
-use JPeters\Architect\Tests\Blueprints\Blog;
-use JPeters\Architect\Tests\Blueprints\User;
+use JPeters\Architect\Tests\Laravel\Blueprints\Blog;
+use JPeters\Architect\Tests\Laravel\Blueprints\User;
 
 class BlueprintTest extends ArchitectTest
 {

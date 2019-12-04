@@ -1,6 +1,6 @@
 <?php
 
-namespace JPeters\Architect\Tests\Providers;
+namespace JPeters\Architect\Tests\Laravel\Providers;
 
 use Carbon\Laravel\ServiceProvider;
 use Illuminate\Foundation\Mix;

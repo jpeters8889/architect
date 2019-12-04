@@ -2,7 +2,7 @@
 
 namespace JPeters\Architect\Tests\Traits;
 
-use JPeters\Architect\Tests\Models\User;
+use JPeters\Architect\Tests\Laravel\Models\User;
 
 trait LogsInUses
 {

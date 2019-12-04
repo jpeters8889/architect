@@ -4,7 +4,7 @@ namespace JPeters\Architect\Tests\Abstracts;
 
 use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Tests\ArchitectTest;
-use JPeters\Architect\Tests\Models\User;
+use JPeters\Architect\Tests\Laravel\Models\User;
 
 abstract class PlanTest extends ArchitectTest
 {

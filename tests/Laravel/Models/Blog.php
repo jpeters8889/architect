@@ -1,6 +1,6 @@
 <?php
 
-namespace JPeters\Architect\Tests\Models;
+namespace JPeters\Architect\Tests\Laravel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

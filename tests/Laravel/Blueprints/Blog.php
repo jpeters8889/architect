@@ -1,6 +1,6 @@
 <?php
 
-namespace JPeters\Architect\Tests\Blueprints;
+namespace JPeters\Architect\Tests\Laravel\Blueprints;
 
 use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Plans\Textarea;
@@ -10,7 +10,7 @@ class Blog extends Blueprint
 {
     public function model(): string
     {
-        return \JPeters\Architect\Tests\Models\Blog::class;
+        return \JPeters\Architect\Tests\Laravel\Models\Blog::class;
     }
 
     public function plans(): array

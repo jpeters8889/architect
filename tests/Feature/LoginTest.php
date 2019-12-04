@@ -3,7 +3,7 @@
 namespace JPeters\Architect\Tests\Feature;
 
 use JPeters\Architect\Tests\ArchitectTest;
-use JPeters\Architect\Tests\Models\User;
+use JPeters\Architect\Tests\Laravel\Models\User;
 
 class LoginTest extends ArchitectTest
 {

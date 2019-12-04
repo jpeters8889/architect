@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Collection;
 use JPeters\Architect\Blueprints\BlueprintListExtractor;
 use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Tests\ArchitectTest;
-use JPeters\Architect\Tests\Blueprints\User;
-use JPeters\Architect\Tests\Models\User as UserModel;
+use JPeters\Architect\Tests\Laravel\Blueprints\User;
+use JPeters\Architect\Tests\Laravel\Models\User as UserModel;
 
 class BlueprintListTest extends ArchitectTest
 {

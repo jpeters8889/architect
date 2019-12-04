@@ -6,8 +6,8 @@ use Illuminate\Foundation\Application;
 use JPeters\Architect\Architect;
 use JPeters\Architect\Providers\ArchitectApplicationServiceProvider;
 use JPeters\Architect\Providers\ArchitectServiceProvider;
-use JPeters\Architect\Tests\Models\User;
-use JPeters\Architect\Tests\Providers\TestingServiceProvider;
+use JPeters\Architect\Tests\Laravel\Models\User;
+use JPeters\Architect\Tests\Laravel\Providers\TestingServiceProvider;
 use Orchestra\Testbench\TestCase;
 
 class ArchitectTest extends TestCase
@@ -24,7 +24,7 @@ class ArchitectTest extends TestCase
 
         $this->loadMigrations();
 
-        $this->withFactories(__DIR__ . '/Factories');
+        $this->withFactories(__DIR__ . '/Laravel/Factories');
 
         $this->architect = resolve(Architect::class);
     }
@@ -33,7 +33,7 @@ class ArchitectTest extends TestCase
     {
         $this->loadMigrationsFrom([
             '--database' => 'sqlite',
-            '--path' => realpath(__DIR__ . '/Migrations'),
+            '--path' => realpath(__DIR__ . '/Laravel/Migrations'),
         ]);
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace JPeters\Architect\Tests\Blueprints;
+namespace JPeters\Architect\Tests\Laravel\Blueprints;
 
 use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Plans\DateTime;
@@ -10,7 +10,7 @@ class User extends Blueprint
 {
     public function model(): string
     {
-        return \JPeters\Architect\Tests\Models\User::class;
+        return \JPeters\Architect\Tests\Laravel\Models\User::class;
     }
 
     public function plans(): array
