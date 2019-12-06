@@ -4,10 +4,10 @@ namespace JPeters\Architect\Tests\Laravel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Blog extends Model
+class BlogAttribute extends Model
 {
-    public function attributes()
+    public function blog()
     {
-        return $this->hasMany(BlogAttribute::class);
+        return $this->belongsTo(Blog::class);
     }
 }

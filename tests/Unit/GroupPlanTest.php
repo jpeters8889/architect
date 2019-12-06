@@ -2,14 +2,19 @@
 
 namespace JPeters\Architect\Tests\Unit;
 
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Collection;
 use JPeters\Architect\Plans\Group;
+use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Plans\Textfield;
 use JPeters\Architect\Tests\Abstracts\PlanTest;
+use JPeters\Architect\Tests\Laravel\Models\Blog;
 use JPeters\Architect\Tests\Laravel\Models\User;
 
 class GroupPlanTest extends PlanTest
 {
+    use WithFaker;
+
     /** @var Group */
     protected $plan;
 
@@ -21,6 +26,8 @@ class GroupPlanTest extends PlanTest
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->makeFaker('en_GB');
 
         $this->plan->plans($this->setPlans = [
             new Textfield('name'),
@@ -68,5 +75,79 @@ class GroupPlanTest extends PlanTest
         $this->plan->getPlans()->each(function ($plan, $index) use ($user) {
             $this->assertEquals($user->{$this->setPlans[$index]->getColumn()}, $plan['value']);
         });
+    }
+
+    /** @test */
+    public function it_can_be_set_to_wrap_the_columns()
+    {
+        $this->assertArrayHasKey('wrap', $this->plan->getMetas());
+        $this->assertFalse($this->plan->getMetas()['wrap']);
+
+        $this->plan->wrapPlans();
+
+        $this->assertTrue($this->plan->getMetas()['wrap']);
+    }
+
+    /** @test */
+    public function it_updates_the_model()
+    {
+        $values = [];
+
+        foreach ($this->setPlans as $plan) {
+            /** @var Plan $plan */
+            $values[$plan->getColumn()] = $this->faker->word;
+        }
+
+        $user = new User();
+        $user->email = 'foo';
+
+        $this->plan->handleUpdate($user, $this->plan->getColumn(), json_encode($values));
+
+        $user->save();
+
+        unset($user);
+
+        $user = User::query()->first();
+
+        foreach ($this->setPlans as $plan) {
+            /** @var Plan $plan */
+            $this->assertEquals(
+                $values[$plan->getColumn()],
+                $user->{$plan->getColumn()}
+            );
+        }
+    }
+
+    /** @test */
+    public function it_updates_the_model_when_a_relationship_is_set()
+    {
+        /** @var Blog $blog */
+        $blog = factory(Blog::class)->create();
+
+        $plans = [
+          new Textfield('first'),
+          new Textfield('second'),
+        ];
+
+        $this->plan->plans($plans)->setRelationship('attributes');
+
+        $values = [];
+
+        foreach ($plans as $plan) {
+            /** @var Plan $plan */
+            $values[$plan->getColumn()] = $this->faker->word;
+        }
+
+        $this->plan->handleUpdate($blog, $this->plan->getColumn(), json_encode($values));
+
+        $additional = $blog->fresh()->attributes()->first();
+
+        foreach ($plans as $plan) {
+            /** @var Plan $plan */
+            $this->assertEquals(
+                $values[$plan->getColumn()],
+                $additional->{$plan->getColumn()}
+            );
+        }
     }
 }

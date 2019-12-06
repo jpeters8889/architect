@@ -7,6 +7,7 @@ import PlanFormField from "./Plans/PlanFormField";
 import TextField from "./Plans/Form/TextField";
 import TextArea from "./Plans/Form/TextArea";
 import Bool from "./Plans/Form/Bool";
+import Group from "./Plans/Form/Group";
 
 Vue.component('bool-list', BoolList);
 Vue.component('date-time-list', DateTimeList);
@@ -16,5 +17,6 @@ Vue.component('text-field-list', TextFieldList);
 Vue.component('plan-form-field', PlanFormField);
 
 Vue.component('bool-form', Bool);
+Vue.component('group-form', Group);
 Vue.component('text-area-form', TextArea);
 Vue.component('text-field-form', TextField);
