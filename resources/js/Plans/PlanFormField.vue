@@ -12,6 +12,8 @@
                     :name="plan.name"
                     :value="plan.value"
                     :metas="plan.metas"
+                    :listener="listener"
+                    :emitter="emitter"
             ></component>
         </div>
     </div>
@@ -19,6 +21,16 @@
 
 <script>
     export default {
-        props: ['plan'],
+        props: {
+            plan: Object,
+            listener: {
+                type: String,
+                default: 'prepare-form-data',
+            },
+            emitter: {
+                type: String,
+                default: 'form-field-change',
+            }
+        },
     }
 </script>

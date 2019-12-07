@@ -52,7 +52,7 @@ class GroupPlanTest extends PlanTest
 
         $this->plan->getPlans()->each(function ($plan, $index) {
             $this->assertEquals($this->setPlans[$index]->getLabel(), $plan['label']);
-            $this->assertEquals($this->setPlans[$index]->getColumn(), $plan['column']);
+            $this->assertEquals($this->setPlans[$index]->getColumn(), $plan['name']);
             $this->assertEquals($this->setPlans[$index]->vuePrefix() . '-form', $plan['component']);
             $this->assertEquals($this->setPlans[$index]->getMetas(), $plan['metas']);
             $this->assertNull($plan['value']);

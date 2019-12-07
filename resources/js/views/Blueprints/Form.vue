@@ -152,15 +152,17 @@
 
             submitForm() {
                 let url = `/blueprints/submit`;
+this.collectData();
 
-                window.Architect.request().post(url, this.collectData())
-                    .then((response) => {
-                        this.savedBlueprintUrl = response.data.url;
-                        this.showModal = true;
-                    })
-                    .catch((error) => {
-                        window.Architect.$emit('error', 'An error has occurred, ' + error.message + ' - ' + error.response.data.message);
-                    });
+console.log(this.values);
+                // window.Architect.request().post(url, this.collectData())
+                //     .then((response) => {
+                //         this.savedBlueprintUrl = response.data.url;
+                //         this.showModal = true;
+                //     })
+                //     .catch((error) => {
+                //         window.Architect.$emit('error', 'An error has occurred, ' + error.message + ' - ' + error.response.data.message);
+                //     });
             },
 
             collectData() {

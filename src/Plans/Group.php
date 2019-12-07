@@ -57,7 +57,7 @@ class Group extends InternalPlan
             ->transform(function (Plan $plan) {
                 return [
                     'label' => $plan->getLabel(),
-                    'column' => $plan->getColumn(),
+                    'name' => $plan->getColumn(),
                     'component' => $plan->vuePrefix() . '-form',
                     'metas' => $plan->getMetas(),
                     'value' => $this->model ? $plan->getCurrentValue($this->model) : null,
