@@ -50,12 +50,16 @@ class Group extends InternalPlan
     public function setRelationship($relationship)
     {
         $this->relationship = $relationship;
+
+        return $this;
     }
 
     public function setPivotRelationship($relationship)
     {
         $this->relationship = $relationship;
         $this->relationshipPivot = true;
+
+        return $this;
     }
 
     public function getPlans()

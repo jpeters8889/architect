@@ -9,7 +9,7 @@
         <div>
             <component
                     :is="plan.component"
-                    :name="plan.name"
+                    :name="plan.name.toString()"
                     :value="plan.value"
                     :metas="plan.metas"
                     :listener="listener"
