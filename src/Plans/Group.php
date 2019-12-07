@@ -12,6 +12,7 @@ class Group extends InternalPlan
 
     protected $wrapPlans = false;
     protected $relationship;
+    protected $relationshipPivot = false;
 
     public $deferUpdate = true;
 
@@ -51,6 +52,12 @@ class Group extends InternalPlan
         $this->relationship = $relationship;
     }
 
+    public function setPivotRelationship($relationship)
+    {
+        $this->relationship = $relationship;
+        $this->relationshipPivot = true;
+    }
+
     public function getPlans()
     {
         return (new Collection($this->plans))
@@ -73,13 +80,21 @@ class Group extends InternalPlan
         ]);
     }
 
+    /**
+     * @param Model $model
+     * @param $column
+     * @param $value
+     *
+     * @todo refactor
+     */
     public function handleUpdate(Model $model, $column, $value)
     {
         $values = json_decode($value, true);
 
         $relationship = null;
+        $pivots = [];
 
-        if ($this->relationship) {
+        if ($this->relationship && ! $this->relationshipPivot) {
             /** @var Relation $class */
             $class = $model->{$this->relationship}();
             /** @var Model $relationship */
@@ -90,16 +105,27 @@ class Group extends InternalPlan
             /** @var Plan $plan */
             $column = $plan->getColumn();
 
-            if (!$relationship) {
+            if (! $this->relationship) {
                 parent::handleUpdate($model, $column, $values[$column]);
                 continue;
             }
 
-            $relationship->$column = $values[$column];
+            if ($relationship && ! $this->relationshipPivot) {
+                $relationship->$column = $values[$column];
+                continue;
+            }
+
+            if (!empty($values[$column])) {
+                $pivots[] = $column;
+            }
         }
 
-        if ($relationship) {
+        if ($relationship && ! $this->relationshipPivot) {
             $model->{$this->relationship}()->save($relationship);
+        }
+
+        if (count($pivots) > 0) {
+            $model->{$this->relationship}()->attach(array_filter($pivots));
         }
     }
 }

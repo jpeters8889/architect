@@ -2,8 +2,11 @@
 
 namespace JPeters\Architect\Tests\Unit;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use JPeters\Architect\Plans\Boolean;
 use JPeters\Architect\Plans\Group;
 use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Plans\Textfield;
@@ -125,8 +128,8 @@ class GroupPlanTest extends PlanTest
         $blog = factory(Blog::class)->create();
 
         $plans = [
-          new Textfield('first'),
-          new Textfield('second'),
+            new Textfield('first'),
+            new Textfield('second'),
         ];
 
         $this->plan->plans($plans)->setRelationship('attributes');
@@ -149,5 +152,47 @@ class GroupPlanTest extends PlanTest
                 $additional->{$plan->getColumn()}
             );
         }
+    }
+
+    /** @test */
+    public function it_will_attach_values_when_using_a_pivot_relationship()
+    {
+        DB::table('blog_tags')
+            ->insert([
+                [
+                    'tag' => 'First Tag',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ],
+                [
+                    'tag' => 'First Tag',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ],
+            ]);
+
+        /** @var Blog $blog */
+        $blog = factory(Blog::class)->create();
+
+        $plans = [
+            new Boolean(1, 'First Tag'),
+            new Boolean(2, 'Second Tag'),
+        ];
+
+        $this->plan->plans($plans)->setPivotRelationship('tags');
+
+        $values = [
+            1 => false,
+            2 => true,
+        ];
+
+        $this->plan->handleUpdate($blog, $this->plan->getColumn(), json_encode($values));
+
+        $this->assertEquals(1, DB::table('blog_assigned_tags')->count());
+
+        $tag = DB::table('blog_assigned_tags')->first();
+
+        $this->assertEquals($blog->id, $tag->blog_id);
+        $this->assertEquals(2, $tag->tag_id);
     }
 }

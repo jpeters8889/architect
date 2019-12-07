@@ -10,4 +10,9 @@ class Blog extends Model
     {
         return $this->hasMany(BlogAttribute::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(BlogTag::class, 'blog_assigned_tags', 'blog_id', 'tag_id');
+    }
 }
