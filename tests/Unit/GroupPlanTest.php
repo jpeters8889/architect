@@ -81,6 +81,64 @@ class GroupPlanTest extends PlanTest
     }
 
     /** @test */
+    public function it_returns_each_plans_value_from_a_relationship()
+    {
+        /** @var Blog $blog */
+        $blog = factory(Blog::class)->create();
+        $blog->attributes()->create([
+            'first' => 'foo',
+            'second' => 'bar',
+        ]);
+
+        $plans = [
+            new Textfield('first'),
+            new Textfield('second'),
+        ];
+
+        $this->plan->plans($plans)->setRelationship('attributes');
+
+        $this->plan->getCurrentValue($blog);
+
+        $this->plan->getPlans()->each(function ($plan, $index) use ($blog, $plans) {
+            $this->assertEquals($blog->attributes()->first()->{$plans[$index]->getColumn()}, $plan['value']);
+        });
+    }
+
+    /** @test */
+    public function it_returns_each_value_from_a_pivot_relationship()
+    {
+        DB::table('blog_tags')
+            ->insert([
+                [
+                    'tag' => 'First Tag',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ],
+                [
+                    'tag' => 'First Tag',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ],
+            ]);
+
+        /** @var Blog $blog */
+        $blog = factory(Blog::class)->create();
+        $blog->tags()->attach([2]);
+
+        $plans = [
+            new Boolean(1, 'First Tag'),
+            new Boolean(2, 'Second Tag'),
+        ];
+
+        $this->plan->plans($plans)->setPivotRelationship('tags');
+
+        $this->plan->getCurrentValue($blog);
+
+        $this->assertEquals('0', $this->plan->getPlans()[0]['value']);
+        $this->assertEquals('1', $this->plan->getPlans()[1]['value']);
+    }
+
+    /** @test */
     public function it_can_be_set_to_wrap_the_columns()
     {
         $this->assertArrayHasKey('wrap', $this->plan->getMetas());

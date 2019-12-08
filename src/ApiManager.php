@@ -59,7 +59,7 @@ class ApiManager
             $dependencies = $reflectedMethod->getParameters();
 
             return (new $class())->$function(...$this->getDependencies($dependencies, $request));
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             throw new RuntimeException('Unable to execute endpoint');
         }
     }

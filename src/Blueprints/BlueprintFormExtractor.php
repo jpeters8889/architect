@@ -46,8 +46,8 @@ class BlueprintFormExtractor extends Extractor
             'label' => $plan->getLabel(),
             'name' => $plan->getColumn(),
             'component' => $plan->vuePrefix() . '-form',
-            'metas' => $plan->getMetas(),
             'value' => $this->currentModel ? $plan->getCurrentValue($this->currentModel) : null,
+            'metas' => $plan->getMetas(),
         ];
     }
 }

@@ -18,7 +18,7 @@
         mixins: [IsAFormField],
 
         mounted() {
-            if (this.actualValue === null) {
+            if (this.actualValue === '') {
                 this.actualValue = '0';
             }
         },

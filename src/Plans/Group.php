@@ -5,6 +5,7 @@ namespace JPeters\Architect\Plans;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
+use JPeters\Architect\AnonymousModel;
 
 class Group extends InternalPlan
 {
@@ -33,8 +34,31 @@ class Group extends InternalPlan
         return $this;
     }
 
+    private function getCurrentValueFromPivot($model)
+    {
+        $parameters = [];
+
+        $model->{$this->relationship}->each(static function ($related) use (&$parameters) {
+            $parameters[$related->id] = '1';
+        });
+
+        $this->model = new AnonymousModel($parameters);
+    }
+
     public function getCurrentValue(Model $model)
     {
+        if ($this->relationshipPivot) {
+            $this->getCurrentValueFromPivot($model);
+
+            return;
+        }
+
+        if ($this->relationship) {
+            $this->model = $model->{$this->relationship}()->getModels()[0];
+
+            return;
+        }
+
         $this->model = $model;
 
         return null;
@@ -84,52 +108,61 @@ class Group extends InternalPlan
         ]);
     }
 
-    /**
-     * @param Model $model
-     * @param $column
-     * @param $value
-     *
-     * @todo refactor
-     */
-    public function handleUpdate(Model $model, $column, $value)
+    public function handleDefaultUpdate(Model $model, array $values)
     {
-        $values = json_decode($value, true);
-
-        $relationship = null;
-        $pivots = [];
-
-        if ($this->relationship && ! $this->relationshipPivot) {
-            /** @var Relation $class */
-            $class = $model->{$this->relationship}();
-            /** @var Model $relationship */
-            $relationship = $class->newModelInstance();
+        foreach ($this->plans as $plan) {
+            /** @var Plan $plan */
+            parent::handleUpdate($model, $plan->getColumn(), $values[$plan->getColumn()]);
         }
+    }
+
+    public function handleRelationshipUpdate(Model $model, array $values)
+    {
+        /** @var Relation $class */
+        $class = $model->{$this->relationship}();
+        /** @var Model $relationship */
+        $relationship = $class->newModelInstance();
+
+        foreach ($this->plans as $plan) {
+            /** @var Plan $plan */
+            $column = $plan->getColumn();
+            $relationship->$column = $values[$column];
+        }
+
+        $model->{$this->relationship}()->save($relationship);
+    }
+
+    public function handlePivotRelationshipUpdate(Model $model, array $values)
+    {
+        $pivots = [];
 
         foreach ($this->plans as $plan) {
             /** @var Plan $plan */
             $column = $plan->getColumn();
 
-            if (! $this->relationship) {
-                parent::handleUpdate($model, $column, $values[$column]);
-                continue;
-            }
-
-            if ($relationship && ! $this->relationshipPivot) {
-                $relationship->$column = $values[$column];
-                continue;
-            }
-
-            if (!empty($values[$column])) {
+            if (! empty($values[$column])) {
                 $pivots[] = $column;
             }
         }
 
-        if ($relationship && ! $this->relationshipPivot) {
-            $model->{$this->relationship}()->save($relationship);
-        }
-
         if (count($pivots) > 0) {
+            $model->{$this->relationship}()->detach();
             $model->{$this->relationship}()->attach(array_filter($pivots));
         }
+    }
+
+    public function handleUpdate(Model $model, $column, $value)
+    {
+        $values = json_decode($value, true);
+
+        if ($this->relationshipPivot) {
+            return $this->handlePivotRelationshipUpdate($model, $values);
+        }
+
+        if ($this->relationship) {
+            return $this->handleRelationshipUpdate($model, $values);
+        }
+
+        return $this->handleDefaultUpdate($model, $values);
     }
 }

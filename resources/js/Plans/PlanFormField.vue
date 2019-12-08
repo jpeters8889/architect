@@ -10,7 +10,7 @@
             <component
                     :is="plan.component"
                     :name="plan.name.toString()"
-                    :value="plan.value"
+                    :value="value"
                     :metas="plan.metas"
                     :listener="listener"
                     :emitter="emitter"
@@ -32,5 +32,19 @@
                 default: 'form-field-change',
             }
         },
+
+        computed: {
+            value() {
+                if(!this.plan.value) {
+                    return ''
+                }
+
+                if(!isNaN(this.plan.value)) {
+                    return this.plan.value.toString();
+                }
+
+                return this.plan.value;
+            }
+        }
     }
 </script>

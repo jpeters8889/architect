@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Http\Requests\BlueprintSubmitRequest;
+use JPeters\Architect\Plans\Plan;
 
 class SaveBlueprint
 {
@@ -88,7 +88,7 @@ class SaveBlueprint
         return new Response([
             'id' => $this->model->id,
             'blueprint' => $this->blueprint->blueprintName(),
-            'url' => $this->generateUrl()
+            'url' => $this->generateUrl(),
         ], 201);
     }
 

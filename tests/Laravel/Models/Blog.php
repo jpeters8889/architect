@@ -4,6 +4,9 @@ namespace JPeters\Architect\Tests\Laravel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property BlogAttribute $attributes
+ */
 class Blog extends Model
 {
     public function attributes()
