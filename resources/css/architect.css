@@ -74,8 +74,24 @@
     transition: background-color 0.5s ease;
 }
 
-.transisition-colour {
+.transition-colour {
     transition: colour 0.5s ease;
+}
+
+.paginator-page {
+    @apply py-1 px-2 text-primary font-bold cursor-pointer transition-colour transition-bg bg-white;
+}
+
+.paginator-page:hover {
+    @apply bg-primary text-white;
+}
+
+.paginator-page-border {
+    @apply border-r-2 border-primary;
+}
+
+.paginator-page-active {
+    @apply border-r-2 border-primary py-1 px-2 text-white font-bold cursor-pointer bg-primary;
 }
 
 .tooltip {

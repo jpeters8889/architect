@@ -711,9 +711,47 @@ video {
   transition: background-color 0.5s ease;
 }
 
-.transisition-colour {
+.transition-colour {
   -webkit-transition: colour 0.5s ease;
   transition: colour 0.5s ease;
+}
+
+.paginator-page {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  color: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-transition: colour 0.5s ease;
+  transition: colour 0.5s ease;
+  -webkit-transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease;
+  background-color: var(--white);
+}
+
+.paginator-page:hover {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.paginator-page-border {
+  border-right-width: 2px;
+  border-color: var(--primary);
+}
+
+.paginator-page-active {
+  border-right-width: 2px;
+  border-color: var(--primary);
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  color: var(--white);
+  font-weight: 700;
+  cursor: pointer;
+  background-color: var(--primary);
 }
 
 .tooltip {
