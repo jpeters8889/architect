@@ -51,8 +51,14 @@
             });
         },
 
+        watch: {
+            $route() {
+                this.initComponent();
+            }
+        },
+
         methods: {
-            async initComponent() {
+            initComponent() {
                 this.getBlueprint();
             },
 
