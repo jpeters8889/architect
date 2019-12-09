@@ -33,6 +33,11 @@ abstract class Plan
         return $model->{$this->getColumn()};
     }
 
+    public function hasDatabaseColumn()
+    {
+        return true;
+    }
+
     public function getLabel()
     {
         return $this->label;

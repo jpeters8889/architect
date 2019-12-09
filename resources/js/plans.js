@@ -8,9 +8,11 @@ import TextField from "./Plans/Form/TextField";
 import TextArea from "./Plans/Form/TextArea";
 import Bool from "./Plans/Form/Bool";
 import Group from "./Plans/Form/Group";
+import LabelList from "./Plans/List/Label";
 
 Vue.component('bool-list', BoolList);
 Vue.component('date-time-list', DateTimeList);
+Vue.component('label-list', LabelList)
 Vue.component('text-area-list', TextAreaList);
 Vue.component('text-field-list', TextFieldList);
 

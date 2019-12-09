@@ -2,11 +2,17 @@
 
 namespace JPeters\Architect\Blueprints;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 abstract class Blueprint
 {
     abstract public function model(): string;
+
+    public function getData(): Builder
+    {
+        return $this->model()::query();
+    }
 
     public function url()
     {

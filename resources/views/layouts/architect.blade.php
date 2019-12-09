@@ -25,7 +25,7 @@
     <div v-cloak class="flex min-h-screen">
         <!-- navigation -->
         <div class="navigation absolute z-30 hidden bg-highlight flex-none min-h-screen pt-15 w-56 max-w-225 sm:block sm:relative">
-            <a href="{{ config('architect.route') }}">
+            <a href="/{{ config('architect.route') }}">
                 <div class="absolute bg-blue-500 flex h-15 items-center left-0 pxx-6 right-0 text-center top-0">
                     Logo
                 </div>
