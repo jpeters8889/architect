@@ -4,7 +4,7 @@ namespace JPeters\Architect\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use JPeters\Architect\Architect;
-use JPeters\Architect\Tests\ArchitectTest as BaseArchitectTest;
+use JPeters\Architect\Tests\ArchitectTestCase as BaseArchitectTest;
 use JPeters\Architect\Tests\Traits\LogsInUses;
 
 class ArchitectTest extends BaseArchitectTest

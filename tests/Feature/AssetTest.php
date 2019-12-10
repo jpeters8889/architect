@@ -2,9 +2,9 @@
 
 namespace JPeters\Architect\Tests\Feature;
 
-use JPeters\Architect\Tests\ArchitectTest;
+use JPeters\Architect\Tests\ArchitectTestCase;
 
-class AssetTest extends ArchitectTest
+class AssetTest extends ArchitectTestCase
 {
     protected function setUp(): void
     {

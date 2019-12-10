@@ -4,12 +4,12 @@ namespace JPeters\Architect\Tests\Feature;
 
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use JPeters\Architect\Tests\ArchitectTest;
+use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Laravel\Blueprints\User as UserBlueprint;
 use JPeters\Architect\Tests\Laravel\Models\User;
 use JPeters\Architect\Tests\Traits\LogsInUses;
 
-class BlueprintSubmitTest extends ArchitectTest
+class BlueprintSubmitTest extends ArchitectTestCase
 {
     use LogsInUses;
     use WithFaker;

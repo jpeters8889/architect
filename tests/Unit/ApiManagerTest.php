@@ -4,11 +4,11 @@ namespace JPeters\Architect\Tests\Unit;
 
 use Illuminate\Http\Request;
 use Illuminate\View\Factory;
-use JPeters\Architect\Tests\ArchitectTest;
+use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Mocks\ApiManagerHandler;
 use RuntimeException;
 
-class ApiManagerTest extends ArchitectTest
+class ApiManagerTest extends ArchitectTestCase
 {
     protected $methods = ['get', 'post', 'put', 'patch', 'delete'];
 

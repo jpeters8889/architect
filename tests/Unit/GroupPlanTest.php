@@ -10,11 +10,11 @@ use JPeters\Architect\Plans\Boolean;
 use JPeters\Architect\Plans\Group;
 use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Plans\Textfield;
-use JPeters\Architect\Tests\Abstracts\PlanTest;
+use JPeters\Architect\Tests\Abstracts\PlanTestCase;
 use JPeters\Architect\Tests\Laravel\Models\Blog;
 use JPeters\Architect\Tests\Laravel\Models\User;
 
-class GroupPlanTest extends PlanTest
+class GroupPlanTest extends PlanTestCase
 {
     use WithFaker;
 

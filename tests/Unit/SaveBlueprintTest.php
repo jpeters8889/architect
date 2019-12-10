@@ -7,11 +7,11 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Str;
 use JPeters\Architect\Blueprints\SaveBlueprint;
 use JPeters\Architect\Http\Requests\BlueprintSubmitRequest;
-use JPeters\Architect\Tests\ArchitectTest;
+use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Laravel\Blueprints\User;
 use JPeters\Architect\Tests\Laravel\Models\User as UserModel;
 
-class SaveBlueprintTest extends ArchitectTest
+class SaveBlueprintTest extends ArchitectTestCase
 {
     use WithFaker;
 

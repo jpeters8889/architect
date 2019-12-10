@@ -4,11 +4,11 @@ namespace JPeters\Architect\Tests\Unit;
 
 use JPeters\Architect\Blueprints\BlueprintFormExtractor;
 use JPeters\Architect\Plans\Plan;
-use JPeters\Architect\Tests\ArchitectTest;
+use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Laravel\Blueprints\User;
 use JPeters\Architect\Tests\Laravel\Models\User as UserModel;
 
-class BlueprintFormTest extends ArchitectTest
+class BlueprintFormTest extends ArchitectTestCase
 {
     /**
      * @var BlueprintFormExtractor

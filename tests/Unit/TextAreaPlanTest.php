@@ -3,9 +3,9 @@
 namespace JPeters\Architect\Tests\Unit;
 
 use JPeters\Architect\Plans\Textarea;
-use JPeters\Architect\Tests\Abstracts\PlanTest;
+use JPeters\Architect\Tests\Abstracts\PlanTestCase;
 
-class TextAreaPlanTest extends PlanTest
+class TextAreaPlanTest extends PlanTestCase
 {
     /** @var Textarea */
     protected $plan;

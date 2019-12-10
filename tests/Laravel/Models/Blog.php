@@ -18,4 +18,9 @@ class Blog extends Model
     {
         return $this->belongsToMany(BlogTag::class, 'blog_assigned_tags', 'blog_id', 'tag_id');
     }
+
+    public function type()
+    {
+        return $this->belongsTo(BlogType::class, 'type_id');
+    }
 }

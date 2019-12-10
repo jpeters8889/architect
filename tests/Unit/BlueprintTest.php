@@ -3,11 +3,11 @@
 namespace JPeters\Architect\Tests\Unit;
 
 use JPeters\Architect\Blueprints\Blueprint;
-use JPeters\Architect\Tests\ArchitectTest;
+use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Laravel\Blueprints\Blog;
 use JPeters\Architect\Tests\Laravel\Blueprints\User;
 
-class BlueprintTest extends ArchitectTest
+class BlueprintTest extends ArchitectTestCase
 {
     /**
      * @var array

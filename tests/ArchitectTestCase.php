@@ -10,7 +10,7 @@ use JPeters\Architect\Tests\Laravel\Models\User;
 use JPeters\Architect\Tests\Laravel\Providers\TestingServiceProvider;
 use Orchestra\Testbench\TestCase;
 
-class ArchitectTest extends TestCase
+class ArchitectTestCase extends TestCase
 {
     /** @var Architect */
     protected $architect;

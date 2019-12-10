@@ -7,6 +7,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Event;
 use JPeters\Architect\Blueprints\BlueprintManager;
 use JPeters\Architect\Events\ArchitectRunning;
+use JPeters\Architect\Lookup\Lookup;
 
 class Architect
 {
@@ -25,6 +26,9 @@ class Architect
     /** @var BlueprintManager */
     public $blueprintManager;
 
+    /** @var Lookup */
+    public $lookup;
+
     public function __construct()
     {
         $this->bootstrapAppDependencies();
@@ -36,6 +40,7 @@ class Architect
         $this->assetManager = new AssetManager();
         $this->authGuard = resolve(Guard::class);
         $this->blueprintManager = new BlueprintManager();
+        $this->lookup = new Lookup($this);
         $this->responseFactory = resolve(ResponseFactory::class);
     }
 

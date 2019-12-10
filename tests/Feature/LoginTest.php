@@ -2,10 +2,10 @@
 
 namespace JPeters\Architect\Tests\Feature;
 
-use JPeters\Architect\Tests\ArchitectTest;
+use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Laravel\Models\User;
 
-class LoginTest extends ArchitectTest
+class LoginTest extends ArchitectTestCase
 {
     /** @test */
     public function it_redirects_to_the_login_page_when_not_authenticated()

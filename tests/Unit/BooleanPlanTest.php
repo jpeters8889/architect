@@ -3,9 +3,9 @@
 namespace JPeters\Architect\Tests\Unit;
 
 use JPeters\Architect\Plans\Boolean;
-use JPeters\Architect\Tests\Abstracts\PlanTest;
+use JPeters\Architect\Tests\Abstracts\PlanTestCase;
 
-class BooleanPlanTest extends PlanTest
+class BooleanPlanTest extends PlanTestCase
 {
     public function getPlan()
     {

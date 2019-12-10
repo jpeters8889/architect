@@ -3,9 +3,9 @@
 namespace JPeters\Architect\Tests\Unit;
 
 use JPeters\Architect\Plans\Textfield;
-use JPeters\Architect\Tests\Abstracts\PlanTest;
+use JPeters\Architect\Tests\Abstracts\PlanTestCase;
 
-class TextFieldPlanTest extends PlanTest
+class TextFieldPlanTest extends PlanTestCase
 {
     public function getPlan()
     {

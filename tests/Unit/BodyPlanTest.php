@@ -3,9 +3,9 @@
 namespace JPeters\Architect\Tests\Unit;
 
 use JPeters\Architect\Plans\Body;
-use JPeters\Architect\Tests\Abstracts\PlanTest;
+use JPeters\Architect\Tests\Abstracts\PlanTestCase;
 
-class BodyPlanTest extends PlanTest
+class BodyPlanTest extends PlanTestCase
 {
     public function getPlan()
     {
