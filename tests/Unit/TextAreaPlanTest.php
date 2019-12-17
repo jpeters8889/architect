@@ -23,10 +23,12 @@ class TextAreaPlanTest extends PlanTestCase
     /** @test */
     public function it_can_set_the_number_of_rows()
     {
-        $this->assertEquals(['rows' => 3], $this->plan->getMetas());
+        $this->assertArrayHasKey('rows', $this->plan->getMetas());
+
+        $this->assertEquals(3, $this->plan->getMetas()['rows']);
 
         $this->plan->rows($rows = 10);
 
-        $this->assertEquals(['rows' => $rows], $this->plan->getMetas());
+        $this->assertEquals($rows, $this->plan->getMetas()['rows']);
     }
 }

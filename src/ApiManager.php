@@ -60,7 +60,7 @@ class ApiManager
 
             return (new $class())->$function(...$this->getDependencies($dependencies, $request));
         } catch (\Exception $exception) {
-            throw new RuntimeException('Unable to execute endpoint');
+            throw new RuntimeException('Unable to execute endpoint, '.$exception->getMessage());
         }
     }
 

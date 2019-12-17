@@ -21,7 +21,7 @@ class SelectPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_has_options_set()
+    public function it_can_have_standard_options_set()
     {
         $this->plan->options(['One', 'Two', 'Three']);
 
@@ -29,7 +29,7 @@ class SelectPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_returns_the_set_options()
+    public function it_returns_the_set_standard_options()
     {
         $options = ['One', 'Two', 'Three'];
 
@@ -39,5 +39,38 @@ class SelectPlanTest extends PlanTestCase
         foreach ($options as $option) {
             $this->assertContains($option, $metas['options']);
         }
+    }
+
+    /** @test */
+    public function it_can_have_an_action_set()
+    {
+        $this->plan->lookupAction(static function () {
+            return 'foo';
+        });
+
+        $this->assertEquals('foo', $this->plan->performLookup(''));
+    }
+
+    /** @test */
+    public function it_passes_a_value_to_the_action_callback()
+    {
+        $this->plan->lookupAction(static function ($value) {
+            return $value;
+        });
+
+        $this->assertEquals('foo', $this->plan->performLookup('foo'));
+    }
+
+    /** @test */
+    public function it_sets_has_lookup_as_true_when_one_is_set()
+    {
+        $this->assertArrayHasKey('hasLookup', $this->plan->getMetas());
+        $this->assertFalse($this->plan->getMetas()['hasLookup']);
+
+        $this->plan->lookupAction(static function () {
+            return 'foo';
+        });
+
+        $this->assertTrue($this->plan->getMetas()['hasLookup']);
     }
 }

@@ -33,7 +33,7 @@ class BlueprintListExtractor extends Extractor
             'labels' => $this->labels,
             'vuePrefixes' => $this->vuePrefix,
             'hiddenOnMobile' => $this->hideOnMobile,
-            'data' => $data->paginate(25),
+            'data' => $data->paginate(25, $this->columns),
             'meta' => [
                 'title' => $this->blueprint->blueprintName(),
             ],

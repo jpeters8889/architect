@@ -1,0 +1,21 @@
+{
+    "name": "{{package-namespace}}",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "{{app-namespace}}\\Architect\\Plans\\{{package-name-namespace}}\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "{{app-namespace}}\\Architect\\Plans\\{{package-name-namespace}}\\PlanServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

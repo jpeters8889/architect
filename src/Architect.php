@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Event;
 use JPeters\Architect\Blueprints\BlueprintManager;
 use JPeters\Architect\Events\ArchitectRunning;
 use JPeters\Architect\Lookup\Lookup;
+use JPeters\Architect\Plans\Listeners\Listener;
 
 class Architect
 {
@@ -29,6 +30,9 @@ class Architect
     /** @var Lookup */
     public $lookup;
 
+    /** @var Listener */
+    public $listener;
+
     public function __construct()
     {
         $this->bootstrapAppDependencies();
@@ -40,6 +44,7 @@ class Architect
         $this->assetManager = new AssetManager();
         $this->authGuard = resolve(Guard::class);
         $this->blueprintManager = new BlueprintManager();
+        $this->listener = new Listener($this);
         $this->lookup = new Lookup($this);
         $this->responseFactory = resolve(ResponseFactory::class);
     }

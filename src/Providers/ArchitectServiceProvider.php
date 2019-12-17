@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use JPeters\Architect\Console\InstallCommand;
+use JPeters\Architect\Console\MakePlanCommand;
 use JPeters\Architect\Console\PublishCommand;
 use JPeters\Architect\Http\Middleware\ArchitectIsRunning;
 
@@ -36,6 +37,7 @@ class ArchitectServiceProvider extends ServiceProvider
     {
         $this->commands([
             InstallCommand::class,
+            MakePlanCommand::class,
             PublishCommand::class,
         ]);
     }

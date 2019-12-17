@@ -2,12 +2,18 @@
 
 namespace JPeters\Architect\Plans;
 
+use JPeters\Architect\Traits\PlanHasLookupAction;
+
 class Select extends InternalPlan
 {
-    /**
-     * @var array
-     */
+    use PlanHasLookupAction {
+        getMetas as protected getMetasFromTrait;
+    }
+
+    /** @var array */
     private $options;
+
+    private $showDefault = true;
 
     public function vuePrefix()
     {
@@ -23,8 +29,10 @@ class Select extends InternalPlan
 
     public function getMetas()
     {
-        return array_merge(parent::getMetas() ?? [], [
+        return array_merge($this->getMetasFromTrait(), [
             'options' => $this->options,
+            'showDefault' => $this->showDefault,
+            'hasLookup' => $this->action !== null,
         ]);
     }
 }

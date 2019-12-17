@@ -10,9 +10,9 @@
             <ul class="absolute bg-7 w-auto b-1 border-8 shadow">
                 <li class="flex justify-between p-2 border-b-1 border-black-50 cursor-pointer hover:bg-black-10"
                     v-for="result in lookupResults"
-                    @click="select(result.town)"
+                    @click="select(result)"
                 >
-                    {{ result.town }}
+                    {{ result.search_name || result[metas.lookupVariable] }}
                 </li>
             </ul>
         </div>
@@ -27,7 +27,8 @@
 
         data: () => ({
             lookupResults: [],
-            searchResultsDisplay: 'hidden'
+            searchResultsDisplay: 'hidden',
+            setEmitterValue: false,
         }),
 
         methods: {
@@ -48,7 +49,8 @@
             select(option) {
                 this.searchResultsDisplay = 'hidden';
                 this.lookupResults = [];
-                this.actualValue = option;
+                this.actualValue = option[this.metas.lookupVariable];
+                this.emitterValue = option;
             }
         }
     }

@@ -2,9 +2,12 @@
 
 namespace JPeters\Architect\Plans;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use JPeters\Architect\Traits\TogglesVisibility;
+use RuntimeException;
 
 abstract class Plan
 {
@@ -14,8 +17,13 @@ abstract class Plan
 
     protected $label;
     protected $column;
+    protected $listeners = [];
 
-    private $metas;
+    protected $metas = [];
+
+    protected $events = ['changed'];
+
+    protected $relationship = false;
 
     public function __construct($column, $label = null)
     {
@@ -26,11 +34,65 @@ abstract class Plan
         }
 
         $this->label = $label;
+
+        $this->bootstrapEvents();
+    }
+
+    public function isInRelationship($relationship)
+    {
+        $this->relationship = $relationship;
+
+        return $this;
+    }
+
+    public function addListener($column, $on, Closure $closure)
+    {
+        if (! in_array($on, $this->events)) {
+            throw new RuntimeException('Unknown event handler');
+        }
+
+        $this->listeners[$on][$column] = $closure;
+
+        return $this;
+    }
+
+    protected function bootstrapEvents()
+    {
+        foreach ($this->events as $event) {
+            $this->listeners[$event] = [];
+        }
+    }
+
+    public function executeEvent($eventName, $value)
+    {
+        $event = last(explode('-', $eventName));
+        $column = str_replace('-' . $event, '', $eventName);
+
+        if (! isset($this->listeners[$event][$column])) {
+            throw new RuntimeException("Couldn't find listener");
+        }
+
+        return call_user_func($this->listeners[$event][$column], $value);
     }
 
     public function getCurrentValue(Model $model)
     {
-        return $model->{$this->getColumn()};
+        $value = $model->{$this->getColumn()};
+
+        if ($this->relationship) {
+            $bits = explode('_', $this->column);
+            array_pop($bits);
+
+            $value = $model;
+
+            foreach ($bits as $bit) {
+                $value = $value->$bit;
+            }
+
+            $value = $value->{$this->relationship};
+        }
+
+        return $value;
     }
 
     public function hasDatabaseColumn()
@@ -48,6 +110,20 @@ abstract class Plan
         return $this->column;
     }
 
+    public function parseListeners()
+    {
+        $listeners = [];
+
+        foreach ($this->listeners as $event => $listener) {
+            $listeners[$event] = [];
+            foreach (array_keys($listener) as $column) {
+                $listeners[$event] = $column;
+            }
+        }
+
+        return $listeners;
+    }
+
     public function withMetas($metas)
     {
         $this->metas = $metas;
@@ -55,7 +131,9 @@ abstract class Plan
 
     public function getMetas()
     {
-        return $this->metas;
+        return array_merge($this->metas, [
+            'listeners' => $this->parseListeners(),
+        ]);
     }
 
     abstract public function vuePrefix();

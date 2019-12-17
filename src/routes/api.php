@@ -16,6 +16,7 @@ Route::middleware('auth:api')->group(static function () {
     });
 
     Route::post('/lookup', 'LookupController@handle');
+    Route::post('/listener', 'ListenerController@handle');
 
     Route::any('/external/{route}/{method}', 'ExternalPlanController@handle');
 });
