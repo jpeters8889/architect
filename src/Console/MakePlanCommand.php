@@ -65,7 +65,7 @@ class MakePlanCommand extends Command
 
         // composer install locally
         if ($this->confirm('Do you want to install the and update your composer autoloader for the new plan?')) {
-            $this->executeCommand('composer install', base_path());
+            $this->executeCommand('composer require ' . $this->packageNamespace, base_path());
         }
 
         // install plan npm dependencies

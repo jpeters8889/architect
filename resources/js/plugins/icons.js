@@ -11,6 +11,8 @@ import {faFacebookSquare} from "@fortawesome/free-brands-svg-icons/faFacebookSqu
 import {faCrop} from "@fortawesome/free-solid-svg-icons/faCrop";
 import {faHome} from "@fortawesome/free-solid-svg-icons/faHome";
 import {faPaste} from "@fortawesome/free-solid-svg-icons/faPaste";
+import {faCaretUp} from "@fortawesome/free-solid-svg-icons/faCaretUp";
+import {faCaretDown} from "@fortawesome/free-solid-svg-icons/faCaretDown";
 
 export default () => {
     // Generic
@@ -25,6 +27,8 @@ export default () => {
     library.add(faHome);
     library.add(faPaste);
     library.add(faCircleNotch);
+    library.add(faCaretUp);
+    library.add(faCaretDown);
 
     // Navigation
     library.add(faBuilding);

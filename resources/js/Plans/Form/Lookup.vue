@@ -29,9 +29,23 @@
             lookupResults: [],
             searchResultsDisplay: 'hidden',
             setEmitterValue: false,
+            emitterValue: null,
         }),
 
+        mounted() {
+          if(this.actualValue) {
+              this.select(this.actualValue);
+          }
+        },
+
         methods: {
+            getFormData() {
+                return {
+                    name: this.name,
+                    value: this.metas.customValueAttribute ? this.emitterValue[this.metas.customValueAttribute] : this.actualValue,
+                }
+            },
+
             lookup() {
                 this.lookupResults = [];
                 Architect.request().post('/lookup', {
@@ -49,7 +63,8 @@
             select(option) {
                 this.searchResultsDisplay = 'hidden';
                 this.lookupResults = [];
-                this.actualValue = option[this.metas.lookupVariable];
+                this.$set(this, 'actualValue', option[this.metas.lookupVariable]);
+                // this.actualValue = option[this.metas.lookupVariable];
                 this.emitterValue = option;
             }
         }

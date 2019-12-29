@@ -2,6 +2,7 @@
 
 namespace JPeters\Architect\Blueprints;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use JPeters\Architect\Plans\Plan;
 
@@ -18,6 +19,7 @@ class BlueprintListExtractor extends Extractor
 
         $this->columns[] = $this->blueprint->primaryField();
 
+        /** @var Builder $data */
         $data = $this->blueprint->getData();
         $ordering = $this->blueprint->ordering();
 

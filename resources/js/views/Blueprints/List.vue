@@ -49,6 +49,10 @@
                 this.initComponent();
                 window.scrollTo(0,0);
             });
+
+            window.Architect.$on('reload-page', () => {
+                this.initComponent();
+            })
         },
 
         watch: {

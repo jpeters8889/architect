@@ -4,7 +4,6 @@ namespace JPeters\Architect\Plans;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use JPeters\Architect\Traits\TogglesVisibility;
 use RuntimeException;

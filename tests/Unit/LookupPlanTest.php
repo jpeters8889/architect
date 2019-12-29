@@ -39,4 +39,9 @@ class LookupPlanTest extends PlanTestCase
 
         $this->assertEquals('foo', $this->plan->performLookup('foo'));
     }
+
+    public function it_can_be_marked_as_being_from_a_relationship()
+    {
+        $this->markTestSkipped();
+    }
 }

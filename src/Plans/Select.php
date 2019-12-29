@@ -27,6 +27,13 @@ class Select extends InternalPlan
         return $this;
     }
 
+    public function hideDefault()
+    {
+        $this->showDefault = false;
+
+        return $this;
+    }
+
     public function getMetas()
     {
         return array_merge($this->getMetasFromTrait(), [

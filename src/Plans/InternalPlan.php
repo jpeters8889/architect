@@ -17,7 +17,7 @@ abstract class InternalPlan extends Plan
             $relationship = $model;
 
             foreach ($bits as $bit) {
-                $relationship = $relationship->$bit;
+                $relationship = $relationship->$bit();
             }
 
             $relationshipModel = $relationship->newModelInstance();

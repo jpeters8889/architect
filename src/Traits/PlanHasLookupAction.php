@@ -11,6 +11,10 @@ trait PlanHasLookupAction
 
     protected $lookupVariable;
 
+    protected $customValueAttribute;
+
+    protected $getValueFrom;
+
     public function lookupAction(Closure $action)
     {
         $this->action = $action;
@@ -18,9 +22,23 @@ trait PlanHasLookupAction
         return $this;
     }
 
+    public function fetchValueFrom(Closure $closure)
+    {
+        $this->getValueFrom = $closure;
+
+        return $this;
+    }
+
     public function setLookupVariable($variable)
     {
         $this->lookupVariable = $variable;
+
+        return $this;
+    }
+
+    public function setLookupAttribute($attribute)
+    {
+        $this->customValueAttribute = $attribute;
 
         return $this;
     }
@@ -34,6 +52,7 @@ trait PlanHasLookupAction
     {
         return array_merge(parent::getMetas() ?? [], [
             'lookupVariable' => $this->lookupVariable,
+            'customValueAttribute' => $this->customValueAttribute,
         ]);
     }
 }

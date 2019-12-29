@@ -11,10 +11,13 @@ import Group from "./Plans/Form/Group";
 import LabelList from "./Plans/List/Label";
 import Select from "./Plans/Form/Select";
 import Lookup from "./Plans/Form/Lookup";
+import Switcher from "./Plans/Form/Switcher";
+import OrderingList from "./Plans/List/Ordering";
 
 Vue.component('bool-list', BoolList);
 Vue.component('date-time-list', DateTimeList);
-Vue.component('label-list', LabelList)
+Vue.component('label-list', LabelList);
+Vue.component('ordering-list', OrderingList);
 Vue.component('text-area-list', TextAreaList);
 Vue.component('text-field-list', TextFieldList);
 
@@ -24,5 +27,6 @@ Vue.component('bool-form', Bool);
 Vue.component('group-form', Group);
 Vue.component('lookup-form', Lookup);
 Vue.component('select-form', Select);
+Vue.component('switcher-form', Switcher);
 Vue.component('text-area-form', TextArea);
 Vue.component('text-field-form', TextField);
