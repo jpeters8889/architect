@@ -65,6 +65,7 @@ class BlueprintManager
             $navigationSettings['blueprints'][$blueprintSite][] = [
                 'label' => $concreteBlueprint->blueprintName(),
                 'route' => $concreteBlueprint->blueprintRoute(),
+                'count' => $concreteBlueprint->displayCount(),
             ];
         });
     }

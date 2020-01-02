@@ -17,6 +17,7 @@ class Users extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('api_token', 80)->unique()->nullable()->default(null);
+            $table->string('image', 128)->nullable();
             $table->timestamps();
         });
     }

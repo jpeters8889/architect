@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use JPeters\Architect\Http\Requests\BlueprintSubmitRequest;
+use JPeters\Architect\Plans\Image;
 use JPeters\Architect\Plans\Plan;
 
 class SaveBlueprint
@@ -56,6 +57,8 @@ class SaveBlueprint
 
             $this->handleDeferredUpdates();
 
+            $this->model->save();
+
             DB::commit();
 
             return $this->returnResponse();
@@ -79,7 +82,7 @@ class SaveBlueprint
         $plan->handleUpdate(
             $this->model,
             $plan->getColumn(),
-            $this->request->input($plan->getColumn())
+            call_user_func([$this->request, $plan->requestMethod()], $plan->getColumn())
         );
     }
 
@@ -99,7 +102,7 @@ class SaveBlueprint
             $plan->handleUpdate(
                 $this->model,
                 $plan->getColumn(),
-                $this->request->input($plan->getColumn())
+                call_user_func([$this->request, $plan->requestMethod()], $plan->getColumn())
             );
         }
     }

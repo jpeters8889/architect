@@ -4,6 +4,7 @@ namespace JPeters\Architect\Blueprints;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use JPeters\Architect\Cards\Card;
 
 abstract class Blueprint
 {
@@ -58,4 +59,14 @@ abstract class Blueprint
     }
 
     abstract public function plans(): array;
+
+    public function card()
+    {
+        return null;
+    }
+
+    public function displayCount()
+    {
+        return 0;
+    }
 }

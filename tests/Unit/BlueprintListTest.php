@@ -32,7 +32,7 @@ class BlueprintListTest extends ArchitectTestCase
     /** @test */
     public function it_creates_a_list_with_the_correct_keys()
     {
-        $keys = ['data', 'hiddenOnMobile', 'labels', 'meta', 'vue-suffix', 'vuePrefixes'];
+        $keys = ['data', 'hiddenOnMobile', 'labels', 'meta', 'vue-suffix', 'vuePrefixes', 'card'];
 
         foreach ($keys as $key) {
             $this->assertArrayHasKey($key, $this->list);
@@ -65,6 +65,19 @@ class BlueprintListTest extends ArchitectTestCase
             $this->assertArrayHasKey($plan->getColumn(), $this->list['labels']);
             $this->assertEquals($plan->getLabel(), $this->list['labels'][$plan->getColumn()]);
         }
+    }
+
+    /** @test */
+    public function it_shows_the_blueprints_card()
+    {
+        $card = (new User())->card();
+
+        $this->assertEquals((new $card())->make(), $this->list['card']);
+
+        $this->assertArrayHasKey('labels', $this->list['card']);
+        $this->assertArrayHasKey('component', $this->list['card']);
+
+        $this->assertIsArray($this->list['card']['labels']);
     }
 
     /** @test */

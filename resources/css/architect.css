@@ -9,6 +9,8 @@
     --negative: #CF221F;
     --highlight: #225669;
 
+    --negative-50: rgba(207, 34, 31, 0.5);
+
     --black-90: rgba(0,0,0,0.9);
     --black-50: rgba(0,0,0,0.5);
     --black-10: rgba(0,0,0,0.1);
@@ -19,6 +21,7 @@
 
     --highlight-75: rgba(34, 86, 105, 0.75);
     --highlight-50: rgba(34, 86, 105, 0.5);
+    --highlight-10: rgba(34, 86, 105, 0.1);
 
     --primary-10: rgba(34, 154, 163, 0.1);
     --primary-50: rgba(34, 154, 163, 0.5);

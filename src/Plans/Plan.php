@@ -94,6 +94,11 @@ abstract class Plan
         return $value;
     }
 
+    public function requestMethod()
+    {
+        return 'input';
+    }
+
     public function hasDatabaseColumn()
     {
         return true;

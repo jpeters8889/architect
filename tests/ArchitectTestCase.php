@@ -48,6 +48,7 @@ class ArchitectTestCase extends TestCase
 
     protected function getEnvironmentSetUp($app)
     {
+        $app->useStoragePath('');
         $app->instance('path.public', __DIR__ . '/../public');
 
         $app['config']->set(['auth.providers.users.model' => User::class]);

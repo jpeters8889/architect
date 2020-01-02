@@ -4,6 +4,7 @@ namespace JPeters\Architect\Blueprints;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use JPeters\Architect\Cards\Card;
 use JPeters\Architect\Plans\Plan;
 
 class BlueprintListExtractor extends Extractor
@@ -30,9 +31,20 @@ class BlueprintListExtractor extends Extractor
             $data->orderBy(...$order);
         }
 
+        $cardClass = $this->blueprint->card();
+        $card = null;
+
+        if ($cardClass) {
+            /** @var Card $concreteCard */
+            $concreteCard = (new $cardClass());
+            $this->columns = array_merge($this->columns, $concreteCard->modelParameters());
+            $card = $concreteCard->make();
+        }
+
         return [
             'vue-suffix' => 'list',
             'labels' => $this->labels,
+            'card' => $card,
             'vuePrefixes' => $this->vuePrefix,
             'hiddenOnMobile' => $this->hideOnMobile,
             'data' => $data->paginate(25, $this->columns),

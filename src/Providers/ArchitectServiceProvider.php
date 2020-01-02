@@ -8,8 +8,11 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use JPeters\Architect\Console\InstallCommand;
 use JPeters\Architect\Console\MakePlanCommand;
+use JPeters\Architect\Console\MakeCardCommand;
 use JPeters\Architect\Console\PublishCommand;
+use JPeters\Architect\Contracts\ImageUploaderContract;
 use JPeters\Architect\Http\Middleware\ArchitectIsRunning;
+use JPeters\Architect\Resources\ImageUploader;
 
 class ArchitectServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,7 @@ class ArchitectServiceProvider extends ServiceProvider
             $this->mergeConfigFrom(__DIR__ . '/../../config/architect.php', 'architect');
         }
 
+        $this->registerInterfaces();
         $this->registerViews();
         $this->registerRoutes();
 
@@ -37,9 +41,15 @@ class ArchitectServiceProvider extends ServiceProvider
     {
         $this->commands([
             InstallCommand::class,
+            MakeCardCommand::class,
             MakePlanCommand::class,
             PublishCommand::class,
         ]);
+    }
+
+    public function registerInterfaces()
+    {
+        $this->app->instance(ImageUploaderContract::class, new ImageUploader());
     }
 
     protected function registerPublishCommands()

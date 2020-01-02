@@ -42,7 +42,7 @@ class ApiManager
         return $this->endpoints[$method][$route];
     }
 
-    public function loadEndpoint($method, $route, Request $request)
+    public function loadEndpoint($method, $route, Request $request, $id = null)
     {
         $this->validateMethod($method);
 
@@ -58,25 +58,31 @@ class ApiManager
 
             $dependencies = $reflectedMethod->getParameters();
 
-            return (new $class())->$function(...$this->getDependencies($dependencies, $request));
+            return (new $class())->$function(...$this->getDependencies($dependencies, $request, $id));
         } catch (\Exception $exception) {
-            throw new RuntimeException('Unable to execute endpoint, '.$exception->getMessage());
+            throw new RuntimeException('Unable to execute endpoint, ' . $exception->getMessage());
         }
     }
 
-    private function getDependencies($dependencies, Request $request)
+    private function getDependencies($dependencies, Request $request, $id = null)
     {
         $bootableDependencies = [];
 
         foreach ($dependencies as $dependency) {
-            /** @var ReflectionParameter $dependency  */
-            if ($dependency === Request::class) {
+            /** @var ReflectionParameter $dependency */
+            if (! $typeHint = $dependency->getType()) {
+                continue;
+            }
+
+            if ($typeHint === Request::class) {
                 $bootableDependencies[] = $request;
                 continue;
             }
 
-            $bootableDependencies[] = resolve($dependency->getType()->getName());
+            $bootableDependencies[] = resolve($typeHint->getName());
         }
+
+        $bootableDependencies[] = $id;
 
         return $bootableDependencies;
     }

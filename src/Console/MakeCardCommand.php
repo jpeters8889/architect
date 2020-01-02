@@ -12,11 +12,11 @@ use Illuminate\Support\Str;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Process\Process;
 
-class MakePlanCommand extends Command
+class MakeCardCommand extends Command
 {
-    protected $signature = 'architect:createPlan {plan}';
+    protected $signature = 'architect:createCard {card}';
 
-    protected $description = 'Make a custom Architect Plan';
+    protected $description = 'Make a custom Architect Card';
 
     /** @var string */
     private $packageNamespace;
@@ -25,7 +25,7 @@ class MakePlanCommand extends Command
     private $packageName;
 
     /** @var string */
-    private $planPath;
+    private $cardPath;
 
     /** @var string */
     private $relativePath;
@@ -42,43 +42,43 @@ class MakePlanCommand extends Command
 
     public function handle()
     {
-        $this->packageNamespace = $this->argument('plan');
+        $this->packageNamespace = $this->argument('card');
         $this->packageName = Str::kebab(Arr::last(explode('/', $this->packageNamespace)));
-        $this->planPath = base_path($this->relativePath = 'architect/plans/' . $this->packageName);
+        $this->cardPath = base_path($this->relativePath = 'architect/cards/' . $this->packageName);
 
-        // make architect/plans folder in root if it doesnt exist
-        $this->info('Creating architect/plans folder');
-        $this->makeDirectory(base_path('architect/plans'));
+        // make architect/cards folder in root if it doesnt exist
+        $this->info('Creating architect/cards folder');
+        $this->makeDirectory(base_path('architect/cards'));
 
-        // make plan folder using tail part of plan name
+        // make card folder using tail part of card name
         $this->info('Creating ' . $this->packageName . ' folder');
-        $this->makeDirectory($this->planPath);
+        $this->makeDirectory($this->cardPath);
 
-        // copy plan stubs
-        $this->info('Copying plan skeleton');
-        $this->filesystem->copyDirectory(__DIR__ . '/Stubs/plan', $this->planPath);
+        // copy card stubs
+        $this->info('Copying card skeleton');
+        $this->filesystem->copyDirectory(__DIR__ . '/Stubs/card', $this->cardPath);
 
         // update place holders in the files
-        $this->info('Configuring plan skeleton');
-        $this->configurePlanSkeleton();
+        $this->info('Configuring card skeleton');
+        $this->configureCardSkeleton();
 
-        // read and update main composer.json to add the new plan
+        // read and update main composer.json to add the new card
         $this->info('Updating Composer File');
         $this->updateComposer();
 
         // composer install locally
-        if ($this->confirm('Do you want to install the and update your composer autoloader for the new plan?')) {
+        if ($this->confirm('Do you want to install the and update your composer autoloader for the new card?')) {
             $this->executeCommand('composer require ' . $this->packageNamespace, base_path());
         }
 
-        // install plan npm dependencies
-        if ($this->confirm('Do you want to install your plans NPM dependencies?')) {
-            $this->executeCommand('npm set progress=false && npm install', $this->planPath);
+        // install card npm dependencies
+        if ($this->confirm('Do you want to install your cards NPM dependencies?')) {
+            $this->executeCommand('npm set progress=false && npm install', $this->cardPath);
         }
 
         // build app
-        if ($this->confirm('Do you want to build the provided plan skeleton?')) {
-            $this->executeCommand('npm run dev', $this->planPath);
+        if ($this->confirm('Do you want to build the provided card skeleton?')) {
+            $this->executeCommand('npm run dev', $this->cardPath);
         }
     }
 
@@ -96,9 +96,9 @@ class MakePlanCommand extends Command
         }
     }
 
-    protected function configurePlanSkeleton(): void
+    protected function configureCardSkeleton(): void
     {
-        (new Collection($this->filesystem->allFiles($this->planPath)))
+        (new Collection($this->filesystem->allFiles($this->cardPath)))
             ->each(function (SplFileInfo $file) {
                 $contents = str_replace(
                     [
@@ -132,7 +132,7 @@ class MakePlanCommand extends Command
 
         $composer['repositories'][] = [
             'type' => 'path',
-            'url' => str_replace('/', '\\', './' . $this->relativePath),
+            'url' => './' . $this->relativePath,
         ];
 
         $composer['require'][$this->packageNamespace] = 'dev-master';

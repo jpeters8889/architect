@@ -18,7 +18,14 @@
                     <div class="mr-1 text-center w-8">
                         <font-awesome-icon :icon="['fas', 'cogs']"></font-awesome-icon>
                     </div>
-                    {{ $blueprint['label'] }}
+
+                    <div class="flex-1">{{ $blueprint['label'] }}</div>
+
+                    @if($blueprint['count'] > 0)
+                        <div class="bg-negative rounded-full p-2 text-sm text-white font-semibold">
+                            {{ $blueprint['count'] }}
+                        </div>
+                    @endif
                 </router-link>
             </li>
         @endforeach
