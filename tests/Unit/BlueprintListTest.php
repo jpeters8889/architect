@@ -4,10 +4,12 @@ namespace JPeters\ArchitectTests\Unit;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Blueprints\BlueprintListExtractor;
 use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Laravel\Blueprints\User;
+use JPeters\Architect\Tests\Laravel\Models\Blog;
 use JPeters\Architect\Tests\Laravel\Models\User as UserModel;
 
 class BlueprintListTest extends ArchitectTestCase
@@ -32,7 +34,7 @@ class BlueprintListTest extends ArchitectTestCase
     /** @test */
     public function it_creates_a_list_with_the_correct_keys()
     {
-        $keys = ['data', 'hiddenOnMobile', 'labels', 'meta', 'vue-suffix', 'vuePrefixes', 'card'];
+        $keys = ['data', 'hiddenOnMobile', 'labels', 'meta', 'vue-suffix', 'vuePrefixes', 'card', 'canEdit'];
 
         foreach ($keys as $key) {
             $this->assertArrayHasKey($key, $this->list);
@@ -106,6 +108,31 @@ class BlueprintListTest extends ArchitectTestCase
             $this->assertArrayHasKey($plan->getColumn(), $this->list['vuePrefixes']);
             $this->assertEquals($plan->vuePrefix(), $this->list['vuePrefixes'][$plan->getColumn()]);
         }
+    }
+
+    /** @test */
+    public function it_shows_the_can_edit_option()
+    {
+        $this->assertTrue($this->list['canEdit']);
+
+        $this->list = (new BlueprintListExtractor(new class extends Blueprint {
+            public function model(): string
+            {
+                return Blog::class;
+            }
+
+            public function plans(): array
+            {
+                return [];
+            }
+
+            public function canEdit(): bool
+            {
+                return false;
+            }
+        }))->make();
+
+        $this->assertFalse($this->list['canEdit']);
     }
 
     /** @test */

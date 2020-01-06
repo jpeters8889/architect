@@ -6,13 +6,14 @@
 
         <!-- List -->
         <div class="bg-white w-full p-2">
-            <div v-if="headers.length > 0">
+            <div v-if="Object.keys(headers).length > 0">
                 <table-component
                         :blueprint="blueprint"
                         :headers="headers"
                         :rows="data.data"
                         :components="components"
                         :hide-on-mobile="hideOnMobile"
+                        :can-edit="canEdit"
                 >
                 </table-component>
             </div>
@@ -52,6 +53,7 @@
             data: {},
             components: {},
             hideOnMobile: {},
+            canEdit: true,
             card: {
                 component: null,
                 labels: [],
@@ -93,6 +95,7 @@
                         this.card = response.data.card;
                         this.data = response.data.data;
                         this.components = response.data.vuePrefixes;
+                        this.canEdit = response.data.canEdit;
                     })
                     .catch(error => {
                         if (error.response.status >= 500) {

@@ -48,6 +48,7 @@ class BlueprintListExtractor extends Extractor
             'vuePrefixes' => $this->vuePrefix,
             'hiddenOnMobile' => $this->hideOnMobile,
             'data' => $data->paginate(25, $this->columns),
+            'canEdit' => $this->blueprint->canEdit(),
             'meta' => [
                 'title' => $this->blueprint->blueprintName(),
             ],

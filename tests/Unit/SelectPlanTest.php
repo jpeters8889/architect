@@ -73,9 +73,4 @@ class SelectPlanTest extends PlanTestCase
 
         $this->assertTrue($this->plan->getMetas()['hasLookup']);
     }
-
-    public function it_can_be_marked_as_being_from_a_relationship()
-    {
-        $this->markTestSkipped();
-    }
 }

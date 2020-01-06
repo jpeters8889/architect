@@ -9,7 +9,7 @@
             </th>
 
             <!-- Buttons -->
-            <th>&nbsp;</th>
+            <th v-if="canEdit">&nbsp;</th>
         </tr>
 
         <tr class="border-b border-primary-10" v-for="row in rows" :data-id="row.id">
@@ -24,7 +24,7 @@
                 ></blueprint-field>
             </td>
 
-            <td class="p-2 align-top">
+            <td class="p-2 align-top" v-if="canEdit">
                 <router-link
                         class="button button-default button-primary cursor-pointer hover:bg-highlight flex items-center transition-bg"
                         :to="{
@@ -54,6 +54,7 @@
             rows: Object | Array,
             components: Object | Array,
             hideOnMobile: Object | Array,
+            canEdit: Boolean,
         }
     }
 </script>

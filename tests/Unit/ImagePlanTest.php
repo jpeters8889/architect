@@ -22,18 +22,6 @@ class ImagePlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_can_be_marked_as_being_from_a_relationship()
-    {
-        $this->markTestSkipped();
-    }
-
-    /** @test */
-    public function it_updates_a_plan_when_marked_as_in_a_relationship()
-    {
-        $this->markTestSkipped();
-    }
-
-    /** @test */
     public function it_updates_the_model()
     {
         Storage::fake();

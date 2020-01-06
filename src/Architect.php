@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Event;
 use JPeters\Architect\Blueprints\BlueprintManager;
+use JPeters\Architect\Buttons\Button;
 use JPeters\Architect\Events\ArchitectRunning;
 use JPeters\Architect\Lookup\Lookup;
 use JPeters\Architect\Plans\Listeners\Listener;
@@ -27,6 +28,9 @@ class Architect
     /** @var BlueprintManager */
     public $blueprintManager;
 
+    /** @var Button */
+    public $button;
+
     /** @var Lookup */
     public $lookup;
 
@@ -44,6 +48,7 @@ class Architect
         $this->assetManager = new AssetManager();
         $this->authGuard = resolve(Guard::class);
         $this->blueprintManager = new BlueprintManager();
+        $this->button = new Button($this);
         $this->listener = new Listener($this);
         $this->lookup = new Lookup($this);
         $this->responseFactory = resolve(ResponseFactory::class);

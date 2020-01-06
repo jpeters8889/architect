@@ -7,6 +7,7 @@ use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Plans\Switcher;
 use JPeters\Architect\Plans\Textfield;
 use JPeters\Architect\Tests\Abstracts\PlanTestCase;
+use JPeters\Architect\Tests\Laravel\Models\User;
 
 class SwitcherPlanTest extends PlanTestCase
 {
@@ -49,18 +50,17 @@ class SwitcherPlanTest extends PlanTestCase
     /** @test */
     public function it_updates_the_model()
     {
-        $this->markTestSkipped();
-    }
+        $this->plan->addPlansForOption(1, $plans = [
+            new Textfield('foo'),
+            new Textfield('bar'),
+        ]);
 
-    /** @test */
-    public function it_updates_a_plan_when_marked_as_in_a_relationship()
-    {
-        $this->markTestSkipped();
-    }
+        $user = new User();
 
-    /** @test */
-    public function it_can_be_marked_as_being_from_a_relationship()
-    {
-        $this->markTestSkipped();
+        foreach ($plans as $index => $plan) {
+            /** @var Plan $plan */
+            $plan->handleUpdate($user, $plan->getColumn(), $plan->getColumn());
+            $this->assertEquals($plan->getColumn(), $user->{$plan->getColumn()});
+        }
     }
 }

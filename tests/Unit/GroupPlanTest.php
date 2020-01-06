@@ -253,14 +253,4 @@ class GroupPlanTest extends PlanTestCase
         $this->assertEquals($blog->id, $tag->blog_id);
         $this->assertEquals(2, $tag->tag_id);
     }
-
-    public function it_can_be_marked_as_being_from_a_relationship()
-    {
-        $this->assertTrue(true);
-    }
-
-    public function it_updates_a_plan_when_marked_as_in_a_relationship()
-    {
-        $this->assertTrue(true);
-    }
 }

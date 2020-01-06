@@ -69,4 +69,9 @@ abstract class Blueprint
     {
         return 0;
     }
+
+    public function canEdit(): bool
+    {
+        return true;
+    }
 }
