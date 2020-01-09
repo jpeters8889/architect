@@ -6,6 +6,7 @@ import BlueprintField from "./Components/BlueprintField";
 import Modal from "./Components/Modal";
 import Paginator from "./Components/Paginator";
 import Card from "./Components/Card";
+import Loader from "./Components/Loader";
 
 Vue.component('blueprint-field', BlueprintField);
 Vue.component('header-component', Header);
@@ -13,3 +14,4 @@ Vue.component('table-component', Table);
 Vue.component('pagination', Paginator);
 Vue.component('modal', Modal);
 Vue.component('card-component', Card);
+Vue.component('loader', Loader)

@@ -13,9 +13,6 @@ class BlueprintManager
     {
         $blueprints = new Collection($this->blueprints);
 
-        /** @var ResponseFactory $responseFactory */
-        $responseFactory = resolve(ResponseFactory::class);
-
         $navigationSettings = [
             'buildings' => [],
             'blueprints' => [],
@@ -23,9 +20,7 @@ class BlueprintManager
 
         $this->processBlueprintsForNavigation($blueprints, $navigationSettings);
 
-        return $responseFactory
-            ->view('architect::navigation', compact('navigationSettings'))
-            ->content();
+        return $navigationSettings;
     }
 
     public function registerBlueprint($blueprint)

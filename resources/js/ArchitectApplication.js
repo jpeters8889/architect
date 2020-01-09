@@ -5,6 +5,8 @@ import routes from './routes';
 import request from "./utilities/requestHandler";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import PortalVue from 'portal-vue'
+import ArchitectApp from "./views/ArchitectApp";
+import Navigation from "./views/Blueprints/Navigation";
 
 Vue.use(Toasted, {
     router: routes,
@@ -29,6 +31,8 @@ export default class Architect {
 
         this.afterBoot();
 
+        Vue.component('architect-app', ArchitectApp);
+        Vue.component('architect-nav', Navigation);
         Vue.component('font-awesome-icon', FontAwesomeIcon);
         Vue.use(Toasted);
         Vue.use(VTooltip);

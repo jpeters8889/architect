@@ -20,6 +20,7 @@
                 <blueprint-field
                         :component="components[key]+'-list'"
                         :value="row[key]"
+                        :label="header"
                         :name="key"
                 ></blueprint-field>
             </td>

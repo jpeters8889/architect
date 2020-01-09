@@ -46,4 +46,16 @@ class ButtonPlanTest extends PlanTestCase
 
         $this->assertEquals('foo', $this->plan->handleUpdate(new User()));
     }
+
+    /** @test */
+    public function it_can_be_marked_as_being_a_click_button()
+    {
+        $this->assertArrayHasKey('click_method', $this->plan->getMetas());
+
+        $this->assertEquals('ajax', $this->plan->getMetas()['click_method']);
+
+        $this->plan->openAsLink();
+
+        $this->assertEquals('link', $this->plan->getMetas()['click_method']);
+    }
 }

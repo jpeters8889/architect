@@ -123,6 +123,7 @@
 
         methods: {
             async initComponent() {
+                window.Architect.$emit('load-start');
                 this.getBlueprint();
             },
 
@@ -148,6 +149,8 @@
 
                         Architect.error("Can't find Blueprint");
                     });
+
+                window.Architect.$emit('load-end');
             },
 
             submitForm() {

@@ -71,11 +71,12 @@ class Architect
         $this->blueprintManager->registerBlueprint($blueprint);
     }
 
-    public static function coreJavascript()
+    public static function coreJavascript(BlueprintManager $manager)
     {
         return [
             'prefix' => '/' . config('architect.route'),
             'apiRoot' => '/' . config('architect.route') . '/api',
+            'navigation' => $manager->renderForNavigation(),
         ];
     }
 }

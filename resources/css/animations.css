@@ -1,0 +1,28 @@
+.animate-spin {
+    animation-name: spin;
+}
+
+.animate-linear {
+    animation-timing-function: linear;
+}
+
+.animate-infinite {
+    animation-iteration-count: infinite;
+}
+
+.animate {
+    animation-duration: 3000ms;
+}
+
+.animate-fast {
+    animation-duration: 2000ms;
+}
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}

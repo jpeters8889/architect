@@ -15,8 +15,10 @@ import Switcher from "./Plans/Form/Switcher";
 import OrderingList from "./Plans/List/Ordering";
 import ImageList from "./Plans/List/Image";
 import ImageForm from "./Plans/Form/Image";
+import Button from "./Plans/List/Button";
 
 Vue.component('bool-list', BoolList);
+Vue.component('button-list', Button);
 Vue.component('date-time-list', DateTimeList);
 Vue.component('image-list', ImageList);
 Vue.component('label-list', LabelList);

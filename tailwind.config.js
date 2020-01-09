@@ -6,6 +6,8 @@ const colours = {
     negative: 'var(--negative)',
     highlight: 'var(--highlight)',
 
+    'positive-75': 'var(--positive-75)',
+
     'negative-50': 'var(--negative-50)',
 
     'black-10': 'var(--black-10)',
@@ -15,9 +17,11 @@ const colours = {
     'white-05': 'var(--white-05)',
     'white-10': 'var(--white-10)',
     'white-20': 'var(--white-20)',
+    'white-50': 'var(--white-50)',
 
     'highlight-75': 'var(--highlight-75)',
     'highlight-50': 'var(--highlight-50)',
+    'highlight-25': 'var(--highlight-25)',
     'highlight-10': 'var(--highlight-10)',
 
     'primary-10': 'var(--primary-10)',

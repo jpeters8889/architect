@@ -8,47 +8,45 @@
     <title>{{ config('architect.name') }}</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i"
+          rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('architect.css', 'vendor/architect') }}">
 
 </head>
-<body class="bg-5 h-full text-black">
-<div class="h-full">
-    <div class="px-12 py-12 mx-auto">
-        <div class="mx-auto max-w-sm py-8 text-center text-highlight">
-            Logo
+<body class="bg-highlight h-full text-black h-full flex justify-center items-center">
+<div class="bg-8 max-w-xs mx-auto rounded-lg shadow mx-auto w-full border-primary border-t-4">
+    <div class="mx-auto text-center text-highlight">
+        Logo
+    </div>
+
+    <form class="p-4" method="post" action="./login">
+        @csrf
+
+        <h2 class="font-normal mb-6 text-2xl text-center text-2">Please login</h2>
+
+        <div class="mb-2">
+            <input class="form-control form-control-input w-full {{ $errors->has('email') ? 'form-control-error' : '' }}"
+                   placeholder="Email" id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
         </div>
 
-        <form class="bg-primary p-8 max-w-md mx-auto rounded-lg shadow" method="post" action="./login">
-            @csrf
+        <div class="mb-6">
+            <input class="form-control form-control-input w-full {{ $errors->has('password') ? 'form-control-error' : '' }}"
+                   placeholder="Password" id="password" type="password" name="password" required>
+        </div>
 
-            <h2 class="font-normal mb-6 text-2xl text-center text-2">Please login</h2>
+        @if ($errors->any())
+            <p class="text-center font-semibold text-negative my-3">
+                There was an error logging you in...
+            </p>
+        @endif
 
-            <div class="mb-6">
-                <label class="block font-bold mb-2" for="email">Email</label>
-                <input class="form-control form-control-input w-full {{ $errors->has('email') ? 'form-control-error' : '' }}"
-                       id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
-            </div>
-
-            <div class="mb-6">
-                <label class="block font-bold mb-2" for="password">Password</label>
-                <input class="form-control form-control-input w-full {{ $errors->has('password') ? 'form-control-error' : '' }}"
-                       id="password" type="password" name="password" required>
-            </div>
-
-            @if ($errors->any())
-                <p class="text-center font-semibold text-negative my-3">
-                    There was an error logging you in...
-                </p>
-            @endif
-
-            <button class="w-full button button-default button-white transition-bg hover:bg-positive hover:text-white" type="submit">
-                Login
-            </button>
-        </form>
-    </div>
+        <button class="w-full button button-default button-positive transition-bg"
+                type="submit">
+            Login
+        </button>
+    </form>
 </div>
 </body>
 </html>

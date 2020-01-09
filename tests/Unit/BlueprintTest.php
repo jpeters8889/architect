@@ -48,12 +48,24 @@ class BlueprintTest extends ArchitectTestCase
     {
         $navigation = $this->architect->blueprintManager->renderForNavigation();
 
-        foreach ($this->blueprints as $blueprint) {
+        $this->assertArrayHasKey('buildings', $navigation);
+        $this->assertArrayHasKey('blueprints', $navigation);
+
+        $building = $navigation['blueprints']['Main'];
+
+        foreach ($this->blueprints as $index => $blueprint) {
             /** @var Blueprint $concreteBlueprint */
             $concreteBlueprint = new $blueprint();
 
-            $this->assertStringContainsString($concreteBlueprint->url(), $navigation);
-            $this->assertStringContainsString($concreteBlueprint->blueprintName(), $navigation);
+            $this->assertArrayHasKey($concreteBlueprint->blueprintSite(), $navigation['blueprints']);
+
+            $this->assertArrayHasKey('label', $building[$index]);
+            $this->assertArrayHasKey('route', $building[$index]);
+            $this->assertArrayHasKey('count', $building[$index]);
+
+            $this->assertEquals($concreteBlueprint->blueprintName(), $building[$index]['label']);
+            $this->assertEquals($concreteBlueprint->blueprintRoute(), $building[$index]['route']);
+            $this->assertEquals($concreteBlueprint->displayCount(), $building[$index]['count']);
         }
     }
 }

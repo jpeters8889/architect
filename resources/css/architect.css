@@ -1,3 +1,5 @@
+@import "animations.css";
+
 @tailwind base;
 @tailwind components;
 
@@ -11,6 +13,8 @@
 
     --negative-50: rgba(207, 34, 31, 0.5);
 
+    --positive-75: rgba(44, 222, 37, 0.75);
+
     --black-90: rgba(0,0,0,0.9);
     --black-50: rgba(0,0,0,0.5);
     --black-10: rgba(0,0,0,0.1);
@@ -18,9 +22,11 @@
     --white-05: rgba(255,255,255,0.05);
     --white-10: rgba(255,255,255,0.1);
     --white-20: rgba(255,255,255,0.2);
+    --white-50: rgba(255,255,255,0.5);
 
     --highlight-75: rgba(34, 86, 105, 0.75);
     --highlight-50: rgba(34, 86, 105, 0.5);
+    --highlight-25: rgba(34, 86, 105, 0.25);
     --highlight-10: rgba(34, 86, 105, 0.1);
 
     --primary-10: rgba(34, 154, 163, 0.1);
@@ -63,6 +69,14 @@
 
 .button-white {
     @apply bg-white text-primary
+}
+
+.button-positive {
+    @apply bg-positive text-white
+}
+
+.button-positive:hover {
+    @apply bg-positive-75;
 }
 
 .button-text-shadow {
