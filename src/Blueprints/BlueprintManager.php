@@ -4,6 +4,7 @@ namespace JPeters\Architect\Blueprints;
 
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class BlueprintManager
 {
@@ -11,6 +12,10 @@ class BlueprintManager
 
     public function renderForNavigation()
     {
+        if (!Auth::check()) {
+            return [];
+        }
+
         $blueprints = new Collection($this->blueprints);
 
         $navigationSettings = [

@@ -3,19 +3,24 @@
 namespace JPeters\Architect\Http\Controllers;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends BaseController
 {
     use AuthenticatesUsers;
 
-    public function showLoginForm()
+    protected function authenticated(Request $request, $user)
     {
-        if ($this->architect->authGuard->check()) {
-            return $this->architect->responseFactory
-                ->redirectTo($this->architect->buildPathTo('/'));
-        }
+        return [
+          'data' => 'Logged In',
+        ];
+    }
 
-        return $this->architect->responseFactory->view('architect::auth.login')->content();
+    protected function loggedOut(Request $request)
+    {
+        return [
+            'data' => 'Logged Out',
+        ];
     }
 
     public function redirectPath()

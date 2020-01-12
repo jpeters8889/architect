@@ -3,7 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    @if(Illuminate\Support\Facades\Auth::user())
     <meta name="api-token" content="{{ Illuminate\Support\Facades\Auth::user()->api_token }}">
+    @endif
 
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
 

@@ -8,13 +8,6 @@ use JPeters\Architect\Tests\Laravel\Models\User;
 class LoginTest extends ArchitectTestCase
 {
     /** @test */
-    public function it_redirects_to_the_login_page_when_not_authenticated()
-    {
-        $this->get('/architect')
-            ->assertRedirect('/architect/login');
-    }
-
-    /** @test */
     public function it_shows_the_login_page()
     {
         $this->get('/architect/login')
@@ -24,7 +17,7 @@ class LoginTest extends ArchitectTestCase
     /** @test */
     public function it_errors_when_trying_to_login_an_unknown_user()
     {
-        $this->post('/architect/login', [
+        $this->post('/architect/api/auth', [
             'email' => 'foo',
             'password' => 'bar',
         ])
@@ -39,10 +32,10 @@ class LoginTest extends ArchitectTestCase
         ]);
 
         $this->withoutExceptionHandling()
-            ->post('/architect/login', [
+            ->post('/architect/api/auth', [
             'email' => 'jamie@jamie-peters.co.uk',
             'password' => 'secret'
-        ])->assertStatus(302);
+        ])->assertStatus(200);
 
         $this->assertAuthenticated();
     }

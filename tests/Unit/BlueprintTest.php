@@ -6,9 +6,12 @@ use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Laravel\Blueprints\Blog;
 use JPeters\Architect\Tests\Laravel\Blueprints\User;
+use JPeters\Architect\Tests\Traits\LogsInUses;
 
 class BlueprintTest extends ArchitectTestCase
 {
+    use LogsInUses;
+
     /**
      * @var array
      */
@@ -46,6 +49,8 @@ class BlueprintTest extends ArchitectTestCase
     /** @test */
     public function it_renders_the_blueprint_navigation()
     {
+        $this->logIn();
+
         $navigation = $this->architect->blueprintManager->renderForNavigation();
 
         $this->assertArrayHasKey('buildings', $navigation);

@@ -3,9 +3,11 @@
 namespace JPeters\Architect\Providers;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use JPeters\Architect\Architect;
 use JPeters\Architect\CoreRoutes;
+use JPeters\Architect\Http\Middleware\ArchitectIsRunning;
 
 class ArchitectApplicationServiceProvider extends ServiceProvider
 {
@@ -34,9 +36,24 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
 
     protected function registerCoreRoutes()
     {
-        (new CoreRoutes())
-            ->registerAuthRoutes()
-            ->registerViewRoutes();
+        Route::post(config('architect.route') . '/api/auth', [
+            'middleware' => ['web', ArchitectIsRunning::class],
+            'uses' => 'JPeters\Architect\Http\Controllers\LoginController@login',
+        ]);
+
+        Route::post(config('architect.route') . '/api/logout', [
+            'middleware' => ['web', ArchitectIsRunning::class],
+            'uses' => 'JPeters\Architect\Http\Controllers\LoginController@logout',
+        ]);
+
+        Route::namespace('JPeters\Architect\Http\Controllers')
+            ->middleware(config('architect.middleware'))
+            ->prefix(config('architect.route'))
+            ->group(static function () {
+                Route::get('/', 'ViewController@handle');
+                Route::get('/{view}', 'ViewController@handle')
+                    ->where('view', '.*');
+            });
     }
 
     private function registerBlueprints()

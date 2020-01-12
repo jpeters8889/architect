@@ -60,7 +60,7 @@
 }
 
 .button-default {
-    @apply h-8 px-6 leading-loose rounded-lg shadow button-text-shadow;
+    @apply h-8 px-6 leading-loose rounded-lg uppercase text-sm;
 }
 
 .button-primary {

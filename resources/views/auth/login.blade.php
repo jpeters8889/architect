@@ -21,7 +21,7 @@
         Logo
     </div>
 
-    <form class="p-4" method="post" action="./login">
+    <form class="p-8" method="post" action="./login">
         @csrf
 
         <h2 class="font-normal mb-6 text-2xl text-center text-2">Please login</h2>
@@ -42,10 +42,7 @@
             </p>
         @endif
 
-        <button class="w-full button button-default button-positive transition-bg"
-                type="submit">
-            Login
-        </button>
+        <jp-ui-button class="w-full" theme="positive">Login</jp-ui-button>
     </form>
 </div>
 </body>

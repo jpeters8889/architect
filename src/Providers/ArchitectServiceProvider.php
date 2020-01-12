@@ -78,7 +78,7 @@ class ArchitectServiceProvider extends ServiceProvider
             [
                 'namespace' => 'JPeters\Architect\Http\Controllers',
                 'prefix' => config('architect.route') . '/api',
-                'middleware' => ArchitectIsRunning::class,
+                'middleware' => config('architect.middleware'),
             ],
             function () {
                 $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');

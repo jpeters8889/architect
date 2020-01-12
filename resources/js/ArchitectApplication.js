@@ -6,7 +6,8 @@ import request from "./utilities/requestHandler";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import PortalVue from 'portal-vue'
 import ArchitectApp from "./views/ArchitectApp";
-import Navigation from "./views/Blueprints/Navigation";
+import Navigation from "./Components/Navigation";
+import JPetersVueUI from 'jpeters-vue-ui';
 
 Vue.use(Toasted, {
     router: routes,
@@ -37,20 +38,23 @@ export default class Architect {
         Vue.use(Toasted);
         Vue.use(VTooltip);
         Vue.use(PortalVue);
+        Vue.use(JPetersVueUI);
+        console.log(JPetersVueUI);
 
         this.app = new Vue({
             el: '#architect',
             router: routes,
-            components: {},
             mounted: () => {
-                document.querySelector('.hamburger').addEventListener('click', () => {
-                    document.querySelector('.navigation').classList.toggle('hidden');
-                });
+                if (document.querySelector('.hamburger')) {
+                    document.querySelector('.hamburger').addEventListener('click', () => {
+                        document.querySelector('.navigation').classList.toggle('hidden');
+                    });
 
-                architect.$on('error', message => {
-                    console.log(message);
-                    this.vue.$toasted.show(message, {type: 'error'});
-                });
+                    architect.$on('error', message => {
+                        console.log(message);
+                        this.vue.$toasted.show(message, {type: 'error'});
+                    });
+                }
             }
         });
     }

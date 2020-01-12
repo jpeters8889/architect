@@ -5,7 +5,10 @@ const request = axios.create();
 
 request.defaults.baseURL = window.config.apiRoot;
 request.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').content;
-request.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').content;
+
+if(document.querySelector('meta[name="api-token"]')) {
+    request.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').content;
+}
 
 request.interceptors.response.use(
     response => response,

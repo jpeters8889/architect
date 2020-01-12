@@ -2,38 +2,52 @@
     <div>
         <loader :show="showLoader"></loader>
 
-        <div v-cloak class="flex min-h-screen">
-            <!-- navigation -->
-            <div class="navigation absolute z-30 hidden bg-highlight flex-none min-h-screen pt-15 w-56 max-w-225 sm:block sm:relative">
-                <a :href="homeLink">
-                    <div class="absolute bg-blue-500 flex h-15 items-center left-0 pxx-6 right-0 text-center top-0">
-                        Logo
-                    </div>
-                </a>
+        <template v-if="!isLoggedIn">
+            <router-view></router-view>
+        </template>
 
-                <architect-nav></architect-nav>
-            </div>
-
-            <!-- main content -->
-            <div class="architect-container">
-                <div class="bg-primary flex h-15 items-center px-2 relative shadow z-20">
-                    <div class="flex-1">
-                        <a class="font-bold mr-6 no-underline text-grey-800" :href="homeLink">
-
-                        </a>
-                    </div>
-                    <div class="hamburger md:hidden text-4xl cursor-pointer float-right">
-                        <font-awesome-icon :icon="['fas', 'bars']"></font-awesome-icon>
+        <template v-else>
+            <div v-cloak class="flex flex-col min-h-screen">
+                <!-- Header bar -->
+                <div class="bg-highlight p-2 h-15 flex justify-between">
+                    <div class="flex">
+                        <div class="mr-1 p-1 flex justify-center items-center text-white font-bold text-3xl cursor-pointer sm:hidden"
+                             @click="showMobileNav = true">
+                            <font-awesome-icon :icon="['fas', 'bars']"></font-awesome-icon>
+                        </div>
+                        <router-link :to="{name: 'home'}">
+                            Logo
+                        </router-link>
                     </div>
                 </div>
 
-                <div class="p-2 mx-auto">
-                    <router-view></router-view>
+                <div class="flex">
+                    <div class="navigation absolute z-30 hidden bg-highlight flex-none min-h-screen w-56 max-w-225 sm:block sm:relative">
+                        <architect-nav></architect-nav>
+                    </div>
+
+                    <div class="p-2 mx-auto">
+                        <router-view></router-view>
+                    </div>
+                </div>
+
+            </div>
+
+            <div v-if="showMobileNav" class="fixed top-0 left-0 w-full h-full bg-highlight overflow-auto">
+                <div class="mb-15">
+                    <architect-nav></architect-nav>
+                </div>
+
+                <div class="w-full fixed bottom-0 leading-tight border-b border-highlight transition-bg bg-primary cursor-pointer">
+                    <a class="no-underline text-center text-7 text-xl flex items-center p-2"
+                       @click="showMobileNav = false">
+                        Close
+                    </a>
                 </div>
             </div>
-        </div>
 
-        <portal-target name="modal"></portal-target>
+            <portal-target name="modal"></portal-target>
+        </template>
     </div>
 </template>
 
@@ -41,11 +55,16 @@
     export default {
         data: () => ({
             showLoader: true,
+            showMobileNav: false,
         }),
 
         computed: {
-            homeLink() {
-                return window.config.prefix;
+            isLoggedIn() {
+                if (this.$route.name === 'logout') {
+                    return false;
+                }
+
+                return !!document.querySelector('meta[name="api-token"]');
             }
         },
 

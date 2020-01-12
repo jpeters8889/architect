@@ -1,6 +1,7 @@
 <?php
 
 use JPeters\Architect\Http\Middleware\ArchitectIsRunning;
+use JPeters\Architect\Http\Middleware\Authenticate;
 
 return [
     'name' => 'Architect',
@@ -12,7 +13,7 @@ return [
 
     'middleware' => [
         'web',
-        'auth',
+        Authenticate::class,
         ArchitectIsRunning::class,
     ],
 ];

@@ -56,7 +56,7 @@ class Architect
 
     public function buildPathTo($path)
     {
-        $route = trim(config('architecture.route'), '/');
+        $route = trim(config('architect.route'), '/');
 
         return "{$route}/{$path}";
     }

@@ -4,6 +4,7 @@ import './plugins';
 
 Vue.config.productionTip = false;
 
+
 import './components';
 
 import './plans';
