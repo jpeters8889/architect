@@ -17,9 +17,11 @@ class InstallCommand extends Command
         $this->comment('Publishing Architect Assets');
         $this->callSilent('architect:publish');
 
+        $this->info('Publishing Service Provider');
         $this->comment('Publishing Architect Service Provider');
         $this->callSilent('vendor:publish', ['--tag' => 'architect-provider']);
 
+        $this->info('Registering Service Provider');
         $this->registerServiceProvider();
 
         $this->writeAppNamespace();

@@ -3,56 +3,16 @@
 @tailwind base;
 @tailwind components;
 
-:root {
-    --black: #000;
-    --white: #fff;
-    --primary: #229aa3;
-    --positive: #2cde25;
-    --negative: #CF221F;
-    --highlight: #225669;
-
-    --negative-50: rgba(207, 34, 31, 0.5);
-
-    --positive-75: rgba(44, 222, 37, 0.75);
-
-    --black-90: rgba(0,0,0,0.9);
-    --black-50: rgba(0,0,0,0.5);
-    --black-10: rgba(0,0,0,0.1);
-
-    --white-05: rgba(255,255,255,0.05);
-    --white-10: rgba(255,255,255,0.1);
-    --white-20: rgba(255,255,255,0.2);
-    --white-50: rgba(255,255,255,0.5);
-
-    --highlight-75: rgba(34, 86, 105, 0.75);
-    --highlight-50: rgba(34, 86, 105, 0.5);
-    --highlight-25: rgba(34, 86, 105, 0.25);
-    --highlight-10: rgba(34, 86, 105, 0.1);
-
-    --primary-10: rgba(34, 154, 163, 0.1);
-    --primary-50: rgba(34, 154, 163, 0.5);
-
-    --1: #111;
-    --2: #222;
-    --3: #666;
-    --4: #787878;
-    --5: #bbb;
-    --6: #ccc;
-    --7: #e8e8e8;
-    --8: #f7f7f7;
-    --9: #fbfbfb;
-}
-
 .form-control {
     line-height: normal;
 }
 
 .form-control-input {
-    @apply bg-white border border-5 p-1 text-lg rounded-lg;
+    @apply bg-white border border-gray-500 p-1 text-lg rounded-lg;
 }
 
 .form-control-error {
-    @apply border-negative;
+    @apply border-red-500;
 }
 
 .button {
@@ -64,19 +24,27 @@
 }
 
 .button-primary {
-    @apply bg-primary text-white;
+    @apply bg-blue-500 text-white;
 }
 
 .button-white {
-    @apply bg-white text-primary
+    @apply bg-white text-blue-500
 }
 
 .button-positive {
-    @apply bg-positive text-white
+    @apply bg-green-500 text-white
 }
 
 .button-positive:hover {
-    @apply bg-positive-75;
+    @apply bg-green-700;
+}
+
+.button-negative {
+    @apply bg-red-500 text-white
+}
+
+.button-positive:hover {
+    @apply bg-red-700;
 }
 
 .button-text-shadow {
@@ -95,20 +63,24 @@
     transition: colour 0.5s ease;
 }
 
+.transition-both {
+    transition: background-colour 0.5s ease, colour 0.5s ease;
+}
+
 .paginator-page {
-    @apply py-1 px-2 text-primary font-bold cursor-pointer transition-colour transition-bg bg-white;
+    @apply py-1 px-2 text-blue-500 font-bold cursor-pointer transition-both bg-white;
 }
 
 .paginator-page:hover {
-    @apply bg-primary text-white;
+    @apply bg-blue-500 text-white;
 }
 
 .paginator-page-border {
-    @apply border-r-2 border-primary;
+    @apply border-r-2 border-blue-500;
 }
 
 .paginator-page-active {
-    @apply border-r-2 border-primary py-1 px-2 text-white font-bold cursor-pointer bg-primary;
+    @apply border-r-2 border-blue-500 py-1 px-2 text-white font-bold cursor-pointer bg-blue-500;
 }
 
 .tooltip {
@@ -116,11 +88,11 @@
 }
 
 .tooltip .tooltip-inner {
-    @apply bg-primary text-white rounded px-8 py-1;
+    @apply bg-blue-500 text-white rounded px-8 py-1;
 }
 
 .tooltip .tooltip-arrow {
-    @apply w-0 h-0 absolute m-2 border-primary z-10;
+    @apply w-0 h-0 absolute m-2 border-blue-500 z-10;
 }
 
 .tooltip[x-placement^="bottom"] {
@@ -139,7 +111,7 @@
 }
 
 .tooltip.popover .popover-inner {
-    @apply bg-8 text-primary p-6 rounded shadow;
+    @apply bg-gray-800 text-blue-500 p-6 rounded shadow;
 }
 
 .tooltip.popover .popover-arrow {

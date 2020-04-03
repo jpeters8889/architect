@@ -73,7 +73,7 @@ class MakePlanCommand extends Command
 
         // install plan npm dependencies
         if ($this->confirm('Do you want to install your plans NPM dependencies?')) {
-            $this->executeCommand('npm set progress=false && npm install', $this->planPath);
+            $this->executeCommand('npm install', $this->planPath);
         }
 
         // build app
@@ -84,7 +84,7 @@ class MakePlanCommand extends Command
 
     protected function executeCommand($command, $path)
     {
-        (new Process($command, $path))->setTimeout(null)->run(function ($type, $line) {
+        (new Process(explode(' ', $command), $path))->setTimeout(null)->run(function ($type, $line) {
             $this->output->write($line);
         });
     }
@@ -92,7 +92,7 @@ class MakePlanCommand extends Command
     protected function makeDirectory($directory)
     {
         if (! $this->filesystem->exists($directory)) {
-            $this->filesystem->makeDirectory($directory);
+            $this->filesystem->makeDirectory($directory, 0755, true);
         }
     }
 
@@ -132,7 +132,7 @@ class MakePlanCommand extends Command
 
         $composer['repositories'][] = [
             'type' => 'path',
-            'url' => str_replace('/', '\\', './' . $this->relativePath),
+            'url' => './' . $this->relativePath,
         ];
 
         $composer['require'][$this->packageNamespace] = 'dev-master';

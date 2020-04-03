@@ -9,9 +9,9 @@
         <template v-else>
             <div v-cloak class="flex flex-col min-h-screen">
                 <!-- Header bar -->
-                <div class="bg-highlight p-2 h-15 flex justify-between">
-                    <div class="flex">
-                        <div class="mr-1 p-1 flex justify-center items-center text-white font-bold text-3xl cursor-pointer sm:hidden"
+                <div class="flex justify-between">
+                    <div class="w-full bg-blue-900 p-2 h-15 flex sm:w-255">
+                        <div class="mr-1 p-1 flex justify-center items-center text-blue-100 font-bold text-3xl cursor-pointer sm:hidden"
                              @click="showMobileNav = true">
                             <font-awesome-icon :icon="['fas', 'bars']"></font-awesome-icon>
                         </div>
@@ -19,27 +19,32 @@
                             Logo
                         </router-link>
                     </div>
+                    <div class="hidden sm:block bg-gray-100 flex-1 p-2 h-15 flex shadow">
+                        Title?
+                    </div>
                 </div>
 
-                <div class="flex">
-                    <div class="navigation absolute z-30 hidden bg-highlight flex-none min-h-screen w-56 max-w-225 sm:block sm:relative">
-                        <architect-nav></architect-nav>
+                <div class="flex flex-1">
+                    <div class="hidden navigation w-255 max-w-255 sm:block sm:relative p-2 flex-1 bg-blue-700 shadow" style="flex: 0 0 255px">
+                        <architect-nav class="flex-1"></architect-nav>
                     </div>
 
-                    <div class="p-2 mx-auto">
-                        <router-view></router-view>
+                    <div class="p-2 mx-auto flex-1">
+                        <div class="bg-gray-100 rounded p-4 shadow">
+                            <router-view></router-view>
+                        </div>
                     </div>
                 </div>
 
             </div>
 
-            <div v-if="showMobileNav" class="fixed top-0 left-0 w-full h-full bg-highlight overflow-auto">
-                <div class="mb-15">
-                    <architect-nav></architect-nav>
+            <div v-if="showMobileNav" class="fixed top-0 left-0 w-full h-full bg-blue-700 overflow-auto">
+                <div class="h-full p-4">
+                    <architect-nav class="pb-15"></architect-nav>
                 </div>
 
-                <div class="w-full fixed bottom-0 leading-tight border-b border-highlight transition-bg bg-primary cursor-pointer">
-                    <a class="no-underline text-center text-7 text-xl flex items-center p-2"
+                <div class="w-full fixed bottom-0 leading-tight cursor-pointer">
+                    <a class="no-underline text-center text-7 text-xl p-6 text-center text-gray-100 block"
                        @click="showMobileNav = false">
                         Close
                     </a>

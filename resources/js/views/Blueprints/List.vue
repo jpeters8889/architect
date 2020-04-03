@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header-component :blueprint="blueprint">
+        <header-component :blueprint="blueprint" :can-add="canEdit">
             {{ this.title }}
         </header-component>
 

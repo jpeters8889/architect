@@ -73,7 +73,7 @@ class MakeCardCommand extends Command
 
         // install card npm dependencies
         if ($this->confirm('Do you want to install your cards NPM dependencies?')) {
-            $this->executeCommand('npm set progress=false && npm install', $this->cardPath);
+            $this->executeCommand('npm install', $this->cardPath);
         }
 
         // build app
@@ -84,7 +84,7 @@ class MakeCardCommand extends Command
 
     protected function executeCommand($command, $path)
     {
-        (new Process($command, $path))->setTimeout(null)->run(function ($type, $line) {
+        (new Process(explode(' ', $command), $path))->setTimeout(null)->run(function ($type, $line) {
             $this->output->write($line);
         });
     }

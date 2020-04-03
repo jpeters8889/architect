@@ -1,7 +1,7 @@
 <template>
-    <div v-bind:class="[this.wrap ? 'flex-wrap' : '']" class="flex p-1 bg-8 rounded-lg shadow-inner-lg shadow">
+    <div v-bind:class="[this.wrap ? 'flex-wrap' : '']" class="flex p-1 bg-gray-200 rounded-lg shadow-inner-lg shadow">
         <plan-form-field
-                class="px-2 my-2 border-r-1 border-primary-50"
+                class="px-2 my-2 border-r-1 border-blue-700"
                 v-for="plan in plans"
                 v-bind:key="plan.column"
                 :plan="plan"

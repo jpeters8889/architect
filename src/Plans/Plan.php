@@ -5,6 +5,7 @@ namespace JPeters\Architect\Plans;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Traits\TogglesVisibility;
 use RuntimeException;
 
@@ -35,6 +36,11 @@ abstract class Plan
         $this->label = $label;
 
         $this->bootstrapEvents();
+    }
+
+    public static function generate(...$args): Plan
+    {
+        return new static(...$args);
     }
 
     public function isInRelationship($relationship)

@@ -1,41 +1,63 @@
 const colours = {
-    black: 'var(--black)',
-    white: 'var(--white)',
-    primary: 'var(--primary)',
-    positive: 'var(--positive)',
-    negative: 'var(--negative)',
-    highlight: 'var(--highlight)',
+    transparent: 'transparent',
+    current: 'currentColor',
 
-    'positive-75': 'var(--positive-75)',
+    black: {
+      default: '#000',
+        90: 'rgba(0,0,0,0.9)'
+    },
+    white: {
+        default: '#fff',
+        80: 'rgba(255,255,255,0.8)',
+        50: 'rgba(255,255,255,0.5)',
+        20: 'rgba(255,255,255,0.2)',
+        10: 'rgba(255,255,255,0.1)',
+    },
 
-    'negative-50': 'var(--negative-50)',
-
-    'black-10': 'var(--black-10)',
-    'black-50': 'var(--black-50)',
-    'black-90': 'var(--black-90)',
-
-    'white-05': 'var(--white-05)',
-    'white-10': 'var(--white-10)',
-    'white-20': 'var(--white-20)',
-    'white-50': 'var(--white-50)',
-
-    'highlight-75': 'var(--highlight-75)',
-    'highlight-50': 'var(--highlight-50)',
-    'highlight-25': 'var(--highlight-25)',
-    'highlight-10': 'var(--highlight-10)',
-
-    'primary-10': 'var(--primary-10)',
-    'primary-50': 'var(--primary-50)',
-
-    1: 'var(--1)',
-    2: 'var(--2)',
-    3: 'var(--3)',
-    4: 'var(--4)',
-    5: 'var(--5)',
-    6: 'var(--6)',
-    7: 'var(--7)',
-    8: 'var(--8)',
-    9: 'var(--9)',
+    gray: {
+        100: '#e5e5e5',
+        200: '#cccccc',
+        300: '#b2b2b2',
+        400: '#999999',
+        500: '#7f7f7f',
+        600: '#666666',
+        700: '#4c4c4c',
+        800: '#333333',
+        900: '#191919',
+    },
+    red: {
+        100: '#fff5f5',
+        200: '#fed7d7',
+        300: '#feb2b2',
+        400: '#fc8181',
+        500: '#f56565',
+        600: '#e53e3e',
+        700: '#c53030',
+        800: '#9b2c2c',
+        900: '#742a2a',
+    },
+    green: {
+        100: '#f0fff4',
+        200: '#c6f6d5',
+        300: '#9ae6b4',
+        400: '#68d391',
+        500: '#48bb78',
+        600: '#38a169',
+        700: '#2f855a',
+        800: '#276749',
+        900: '#22543d',
+    },
+    blue: {
+        100: '#d8deec',
+        200: '#b2bdda',
+        300: '#8c9dc7',
+        400: '#657cb5',
+        500: '#496099',
+        600: '#364873',
+        700: '#252f3f',
+        800: '#121826',
+        900: '#161d2e',
+    },
 };
 
 const spacing = {
@@ -277,7 +299,7 @@ module.exports = {
             '6xl': '72rem',
             full: '100%',
             imageManager: '150px',
-            225: '255px',
+            255: '255px',
         },
 
         minHeight: {
@@ -374,6 +396,7 @@ module.exports = {
             full: '100%',
             screen: '100vw',
             imageManager: '150px',
+            '255': '255px',
         },
 
         zIndex: {

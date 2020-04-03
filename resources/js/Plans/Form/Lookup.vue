@@ -7,8 +7,8 @@
                @keyup="lookup()" />
 
         <div :class="searchResultsDisplay" class="relative">
-            <ul class="absolute bg-7 w-auto b-1 border-8 shadow">
-                <li class="flex justify-between p-2 border-b-1 border-black-50 cursor-pointer hover:bg-black-10"
+            <ul class="absolute bg-blue-700 w-auto b-1 border-blue-900 shadow rounded-lg text-white">
+                <li class="flex justify-between p-2 border-b-1 border-white-50 cursor-pointer hover:bg-white-10"
                     v-for="result in lookupResults"
                     @click="select(result)"
                 >
@@ -34,7 +34,7 @@
 
         mounted() {
           if(this.actualValue) {
-              this.select(this.actualValue);
+              // this.select(this.actualValue);
           }
         },
 
@@ -63,8 +63,13 @@
             select(option) {
                 this.searchResultsDisplay = 'hidden';
                 this.lookupResults = [];
-                this.$set(this, 'actualValue', option[this.metas.lookupVariable]);
-                // this.actualValue = option[this.metas.lookupVariable];
+
+                let newValue = option;
+                if(option[this.metas.lookupVariable]) {
+                    newValue = option[this.metas.lookupVariable];
+                }
+
+                this.$set(this, 'actualValue', newValue);
                 this.emitterValue = option;
             }
         }

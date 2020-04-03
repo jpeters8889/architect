@@ -6,7 +6,7 @@
             </option>
         </select>
 
-        <div class="p-1 bg-8 rounded-lg shadow-inner-lg shadow mt-2" v-if="actualValue !== ''">
+        <div class="p-1 bg-blue-100 rounded-lg shadow-inner-lg shadow mt-2" v-if="actualValue !== ''">
             <div v-for="(plans, option) in metas.switches" v-if="parseInt(actualValue) === parseInt(option)">
                 <plan-form-field
                         class="px-2 my-2"

@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-highlight h-full text-black h-full flex justify-center items-center w-full absolute">
-        <div class="bg-8 max-w-xs mx-auto rounded-lg shadow mx-auto w-full border-primary border-t-4">
+    <div class="bg-blue-900 h-full text-black h-full flex justify-center items-center w-full absolute">
+        <div class="bg-blue-100 max-w-xs mx-auto rounded-lg shadow mx-auto w-full border-green-500 border-t-4">
             <div class="mx-auto text-center text-highlight">
                 Logo
             </div>
@@ -12,18 +12,18 @@
                     <!-- csrf -->
 
                     <div class="mb-2">
-                        <jp-ui-form-input name="email" type="email" placeholder="Email Address"
-                                          required :value="fields.email.value"></jp-ui-form-input>
+                        <form-input name="email" type="email" placeholder="Email Address"
+                                          required :value="fields.email.value"></form-input>
                     </div>
 
                     <div class="mb-6">
-                        <jp-ui-form-input name="password" type="password" placeholder="Password"
-                                          required></jp-ui-form-input>
+                        <form-input name="password" type="password" placeholder="Password"
+                                          required></form-input>
                     </div>
 
-                    <jp-ui-form-button class="w-full" theme="positive" error-event-listener="loginError"
+                    <form-button class="w-full" theme="positive" error-event-listener="loginError"
                                        :click="processLogin">Login
-                    </jp-ui-form-button>
+                    </form-button>
                 </form>
 
             </div>

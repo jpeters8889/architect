@@ -8,10 +8,16 @@ import Paginator from "./Components/Paginator";
 import Card from "./Components/Card";
 import Loader from "./Components/Loader";
 
+import Input from "./Forms/Input";
+import Button from "./Forms/Button";
+
 Vue.component('blueprint-field', BlueprintField);
 Vue.component('header-component', Header);
 Vue.component('table-component', Table);
 Vue.component('pagination', Paginator);
 Vue.component('modal', Modal);
 Vue.component('card-component', Card);
-Vue.component('loader', Loader)
+Vue.component('loader', Loader);
+
+Vue.component('form-input', Input);
+Vue.component('form-button', Button);

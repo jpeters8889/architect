@@ -28,6 +28,15 @@ abstract class PlanTestCase extends ArchitectTestCase
     abstract public function getColumnName();
 
     /** @test */
+    public function it_returns_a_new_plan_from_the_static_generator()
+    {
+        $this->assertInstanceOf(
+            $this->getPlan(),
+            $this->getPlan()::generate('Foo')
+        );
+    }
+
+    /** @test */
     public function it_can_be_hidden_from_the_index()
     {
         $this->plan->hideOnIndex();

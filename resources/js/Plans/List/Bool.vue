@@ -1,6 +1,6 @@
 <template>
     <div class="flex">
-        <div class="flex items-center justify-center text-xs mr-2" :class="parseInt(value) === 1 ? 'text-positive' : 'text-negative'">
+        <div class="flex items-center justify-center text-xs mr-2" :class="parseInt(value) === 1 ? 'text-green-500' : 'text-red-500'">
             <font-awesome-icon :icon="['fas', 'circle']"></font-awesome-icon>
         </div>
         <div class="flex-1">{{ parseInt(value) === 1 ? 'Yes' : 'No' }}</div>
