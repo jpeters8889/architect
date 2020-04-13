@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import PortalVue from 'portal-vue'
 import ArchitectApp from "./views/ArchitectApp";
 import Navigation from "./Components/Navigation";
-import JPetersVueUI from 'jpeters-vue-ui';
+import Datetime from 'vue-datetime'
 
 Vue.use(Toasted, {
     router: routes,
@@ -38,8 +38,7 @@ export default class Architect {
         Vue.use(Toasted);
         Vue.use(VTooltip);
         Vue.use(PortalVue);
-        Vue.use(JPetersVueUI);
-        console.log(JPetersVueUI);
+        Vue.use(Datetime);
 
         this.app = new Vue({
             el: '#architect',

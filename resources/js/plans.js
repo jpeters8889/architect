@@ -16,6 +16,7 @@ import OrderingList from "./Plans/List/Ordering";
 import ImageList from "./Plans/List/Image";
 import ImageForm from "./Plans/Form/Image";
 import Button from "./Plans/List/Button";
+import DateTimeForm from "./Plans/Form/DateTime";
 
 Vue.component('bool-list', BoolList);
 Vue.component('button-list', Button);
@@ -29,6 +30,7 @@ Vue.component('text-field-list', TextFieldList);
 Vue.component('plan-form-field', PlanFormField);
 
 Vue.component('bool-form', Bool);
+Vue.component('date-time-form', DateTimeForm);
 Vue.component('group-form', Group);
 Vue.component('image-form', ImageForm);
 Vue.component('lookup-form', Lookup);

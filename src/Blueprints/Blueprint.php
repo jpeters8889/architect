@@ -43,6 +43,11 @@ abstract class Blueprint
         ];
     }
 
+    public function makeVisible()
+    {
+        return [];
+    }
+
     public function blueprintName()
     {
         return Str::plural(Str::title(class_basename($this->model())));

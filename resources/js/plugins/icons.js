@@ -13,10 +13,12 @@ import {faHome} from "@fortawesome/free-solid-svg-icons/faHome";
 import {faPaste} from "@fortawesome/free-solid-svg-icons/faPaste";
 import {faCaretUp} from "@fortawesome/free-solid-svg-icons/faCaretUp";
 import {faCaretDown} from "@fortawesome/free-solid-svg-icons/faCaretDown";
+import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons/faExclamationCircle";
 
 export default () => {
     // Generic
     library.add(faBars);
+    library.add(faExclamationCircle);
 
     // Fields
     library.add(faEdit);

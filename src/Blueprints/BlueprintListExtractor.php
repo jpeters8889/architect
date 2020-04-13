@@ -41,13 +41,19 @@ class BlueprintListExtractor extends Extractor
             $card = $concreteCard->make();
         }
 
+        $data = $data->paginate(25, $this->columns);
+
+        if ($this->blueprint->makeVisible() !== []) {
+            $data->setCollection($data->getCollection()->makeVisible($this->blueprint->makeVisible()));
+        }
+
         return [
             'vue-suffix' => 'list',
             'labels' => $this->labels,
             'card' => $card,
             'vuePrefixes' => $this->vuePrefix,
             'hiddenOnMobile' => $this->hideOnMobile,
-            'data' => $data->paginate(25, $this->columns),
+            'data' => $data,
             'canEdit' => $this->blueprint->canEdit(),
             'meta' => [
                 'title' => $this->blueprint->blueprintName(),
