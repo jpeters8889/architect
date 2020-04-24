@@ -7,7 +7,9 @@
   "require": {
     "laravel/framework": "^7.0",
     "ext-json": "*",
-    "laravel/ui": "^2.0"
+    "laravel/ui": "^2.0",
+    "orchestra/testbench": "5.1.0",
+    "phpunit/phpunit": "^9.0"
   },
   "authors": [
     {
@@ -19,12 +21,8 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "JPeters\\Architect\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "JPeters\\Architect\\Tests\\": "tests"
+      "JPeters\\Architect\\": "src",
+      "JPeters\\Architect\\Tests\\": "Tests"
     }
   },
   "extra": {
@@ -38,8 +36,6 @@
     "nunomaduro/phpinsights": "^1.14",
     "friendsofphp/php-cs-fixer": "^2.16",
     "phpmd/phpmd": "^2.8",
-    "squizlabs/php_codesniffer": "^3.5",
-    "orchestra/testbench": "5.1.0",
-    "phpunit/phpunit": "^9.0"
+    "squizlabs/php_codesniffer": "^3.5"
   }
 }

@@ -9,11 +9,24 @@
 
 <script>
     export default {
-        props: ['name', 'label', 'value'],
+        props: ['name', 'label', 'value', 'id'],
 
         methods: {
             handleClick() {
-                //
+                Architect.request().post('button', {
+                    blueprint: this.$route.params.blueprint,
+                    button: this.name,
+                    id: this.id,
+                }).then((response) => {
+                    if(response.status === 200) {
+                        if(response.data !== '') {
+                            window.open(response.data);
+                        }
+                        return;
+                    }
+
+                    Architect.error('An error has occurred');
+                });
             }
         }
     }

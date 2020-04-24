@@ -17,6 +17,8 @@ import ImageList from "./Plans/List/Image";
 import ImageForm from "./Plans/Form/Image";
 import Button from "./Plans/List/Button";
 import DateTimeForm from "./Plans/Form/DateTime";
+import SelectList from "./Plans/List/Select";
+import Password from "./Plans/Form/Password";
 
 Vue.component('bool-list', BoolList);
 Vue.component('button-list', Button);
@@ -24,6 +26,7 @@ Vue.component('date-time-list', DateTimeList);
 Vue.component('image-list', ImageList);
 Vue.component('label-list', LabelList);
 Vue.component('ordering-list', OrderingList);
+Vue.component('select-list', SelectList);
 Vue.component('text-area-list', TextAreaList);
 Vue.component('text-field-list', TextFieldList);
 
@@ -34,6 +37,7 @@ Vue.component('date-time-form', DateTimeForm);
 Vue.component('group-form', Group);
 Vue.component('image-form', ImageForm);
 Vue.component('lookup-form', Lookup);
+Vue.component('password-form', Password);
 Vue.component('select-form', Select);
 Vue.component('switcher-form', Switcher);
 Vue.component('text-area-form', TextArea);

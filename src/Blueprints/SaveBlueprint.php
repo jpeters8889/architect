@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use JPeters\Architect\Http\Requests\BlueprintSubmitRequest;
 use JPeters\Architect\Plans\Image;
+use JPeters\Architect\Plans\Password;
 use JPeters\Architect\Plans\Plan;
 
 class SaveBlueprint

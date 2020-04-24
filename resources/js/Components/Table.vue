@@ -22,6 +22,7 @@
                         :value="row[key]"
                         :label="header"
                         :name="key"
+                        :id="row.id"
                 ></blueprint-field>
             </td>
 
