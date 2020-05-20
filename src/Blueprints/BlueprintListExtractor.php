@@ -41,7 +41,7 @@ class BlueprintListExtractor extends Extractor
             $card = $concreteCard->make();
         }
 
-        $data = $data->paginate(25, $this->columns);
+        $data = $data->paginate($this->blueprint->perPage(), $this->columns);
 
         if ($this->blueprint->makeVisible() !== []) {
             $data->setCollection($data->getCollection()->makeVisible($this->blueprint->makeVisible()));

@@ -40,7 +40,7 @@
 
             <div v-if="showMobileNav" class="fixed top-0 left-0 w-full h-full bg-blue-700 overflow-auto">
                 <div class="h-full p-4">
-                    <architect-nav class="pb-15"></architect-nav>
+                    <architect-nav class="pb-15 overflow-y-scroll"></architect-nav>
                 </div>
 
                 <div class="w-full fixed bottom-0 leading-tight cursor-pointer">

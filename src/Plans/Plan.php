@@ -25,11 +25,13 @@ abstract class Plan
 
     protected $relationship = false;
 
+    protected $default = null;
+
     public function __construct($column, $label = null)
     {
         $this->column = $column;
 
-        if (! $label) {
+        if (!$label) {
             $label = str_replace('_', ' ', Str::title($column));
         }
 
@@ -52,7 +54,7 @@ abstract class Plan
 
     public function addListener($column, $on, Closure $closure)
     {
-        if (! in_array($on, $this->events)) {
+        if (!in_array($on, $this->events)) {
             throw new RuntimeException('Unknown event handler');
         }
 
@@ -73,7 +75,7 @@ abstract class Plan
         $event = last(explode('-', $eventName));
         $column = str_replace('-' . $event, '', $eventName);
 
-        if (! isset($this->listeners[$event][$column])) {
+        if (!isset($this->listeners[$event][$column])) {
             throw new RuntimeException("Couldn't find listener");
         }
 
@@ -144,6 +146,18 @@ abstract class Plan
         return array_merge($this->metas, [
             'listeners' => $this->parseListeners(),
         ]);
+    }
+
+    public function getDefault()
+    {
+        return $this->default;
+    }
+
+    public function setDefault($default)
+    {
+        $this->default = $default;
+
+        return $this;
     }
 
     abstract public function vuePrefix();

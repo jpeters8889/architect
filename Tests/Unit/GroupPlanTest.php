@@ -111,11 +111,13 @@ class GroupPlanTest extends PlanTestCase
             ->insert([
                 [
                     'tag' => 'First Tag',
+                    'slug' => 'first-tag',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ],
                 [
-                    'tag' => 'First Tag',
+                    'tag' => 'Second Tag',
+                    'slug' => 'second-tag',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ],
@@ -219,11 +221,13 @@ class GroupPlanTest extends PlanTestCase
             ->insert([
                 [
                     'tag' => 'First Tag',
+                    'slug' => 'first-tag',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ],
                 [
-                    'tag' => 'First Tag',
+                    'tag' => 'Second Tag',
+                    'slug' => 'second-tag',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ],

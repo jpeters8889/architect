@@ -3,6 +3,7 @@ import BlueprintList from './../views/Blueprints/List'
 import BlueprintForm from './../views/Blueprints/Form'
 import Login from "../views/Login";
 import Logout from "../views/Logout";
+import CustomPage from "../views/CustomPage";
 
 export default [
     {
@@ -41,6 +42,13 @@ export default [
         path: '/blueprints/:blueprint/:id',
         name: 'blueprintEdit',
         component: BlueprintForm,
+        props: true,
+    },
+
+    {
+        path: '/page/:page/:id?',
+        name: 'customPage',
+        component: CustomPage,
         props: true,
     }
 ];

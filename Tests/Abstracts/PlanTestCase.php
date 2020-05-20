@@ -107,6 +107,21 @@ abstract class PlanTestCase extends ArchitectTestCase
     }
 
     /** @test */
+    public function it_can_have_a_default()
+    {
+        $class = $this->getPlan();
+
+        /** @var Plan $plan */
+        $plan = new $class('email');
+
+        $this->assertNull($plan->getDefault());
+
+        $plan->setDefault('foo');
+
+        $this->assertEquals('foo', $plan->getDefault());
+    }
+
+    /** @test */
     public function it_can_have_event_listeners_set()
     {
         $this->assertArrayHasKey('listeners', $this->plan->getMetas());

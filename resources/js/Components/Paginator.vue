@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-between items-center">
-        <div v-if="last_page > 2" class="flex border-2 border-primary rounded-lg overflow-hidden">
+        <div v-if="last_page >= 2" class="flex border-2 border-primary rounded-lg overflow-hidden">
             <div v-if="current_page > 1" class="paginator-page paginator-page-border" @click="changePage(1)">
                 First
             </div>

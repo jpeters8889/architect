@@ -22,6 +22,6 @@ class ArchitectTest extends BaseArchitectTest
     public function it_shows_the_core_javascript_in_the_view()
     {
         $this->get('/architect')
-            ->assertSee(json_encode(Architect::coreJavascript($this->architect->blueprintManager)));
+            ->assertSee(json_encode(Architect::coreJavascript($this->architect->blueprintManager)), false);
     }
 }

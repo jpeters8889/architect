@@ -35,7 +35,7 @@
 
         computed: {
             value() {
-                if(!this.plan.value) {
+                if(!this.plan.value && this.plan.value !== 0) {
                     return ''
                 }
 
