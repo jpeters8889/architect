@@ -15,19 +15,21 @@ class ApiTest extends ArchitectTestCase
         parent::setUp();
 
         $this->logIn();
-
-        $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'handle');
     }
 
     /** @test */
     public function it_loads_an_api_endpoint()
     {
+        $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'handle');
+
         $this->makeRequest()->assertStatus(200);
     }
 
     /** @test */
     public function it_handles_the_request()
     {
+        $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'handle');
+
         $this->makeRequest()->assertSee((new ApiManagerHandler())->handle());
     }
 

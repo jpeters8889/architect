@@ -88,7 +88,7 @@ class ApiManagerTest extends ArchitectTestCase
     {
         $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'handleWithDependencies');
 
-        $endpoint = $this->architect->apiManager->loadEndpoint('get', 'foo', resolve(Request::class));
+        $endpoint = $this->architect->apiManager->loadEndpoint('get', 'foo/handleWithDependencies', resolve(Request::class));
 
         $this->assertInstanceOf(Request::class, $endpoint[0]);
         $this->assertInstanceOf(Factory::class, $endpoint[1]);
@@ -100,8 +100,24 @@ class ApiManagerTest extends ArchitectTestCase
         $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'bar');
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Unable to execute endpoint');
+        $this->expectExceptionMessage('External endpoint not registered');
 
         $this->architect->apiManager->loadEndpoint('get', 'foo', resolve(Request::class));
+    }
+
+    /** @test */
+    public function it_loads_two_seperate_endpoints_when_registered_as_the_same_http_method()
+    {
+        $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'first');
+        $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'second');
+
+        $request = resolve(Request::class);
+        $apiManager = new ApiManagerHandler();
+
+        $first = $this->architect->apiManager->loadEndpoint('get', 'foo/first', $request);
+        $second = $this->architect->apiManager->loadEndpoint('get', 'foo/second', $request);
+
+        $this->assertEquals($apiManager->first(), $first);
+        $this->assertEquals($apiManager->second(), $second);
     }
 }

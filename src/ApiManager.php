@@ -3,6 +3,7 @@
 namespace JPeters\Architect;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use ReflectionParameter;
 use RuntimeException;
 
@@ -20,7 +21,7 @@ class ApiManager
     {
         $this->validateMethod($method);
 
-        $this->endpoints[$method][$route] = [
+        $this->endpoints[$method][$route.'/'.$function] = [
             'class' => $class,
             'function' => $function,
         ];
@@ -29,6 +30,7 @@ class ApiManager
     public function checkEndpointExists($method, $route)
     {
         $this->validateMethod($method);
+        $this->validateRoute($route);
 
         return isset($this->endpoints[$method][$route]);
     }
@@ -36,6 +38,7 @@ class ApiManager
     public function getEndpointDetails($method, $route)
     {
         $this->validateMethod($method);
+        $this->validateRoute($route);
 
         $this->checkEndpointIsRegistered($method, $route);
 
@@ -45,6 +48,7 @@ class ApiManager
     public function loadEndpoint($method, $route, Request $request, $id = null)
     {
         $this->validateMethod($method);
+        $this->validateRoute($route);
 
         $this->checkEndpointIsRegistered($method, $route);
 
@@ -107,6 +111,16 @@ class ApiManager
     {
         if (! isset($this->endpoints[$method][$route])) {
             throw new RuntimeException('External endpoint not registered');
+        }
+    }
+
+    /**
+     * @param $route
+     */
+    protected function validateRoute(&$route): void
+    {
+        if (!Str::contains($route, '/')) {
+            $route .= '/handle';
         }
     }
 }

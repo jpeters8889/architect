@@ -44,8 +44,6 @@ class BlueprintManager
             }
         }
 
-        dd('end');
-
         return false;
     }
 

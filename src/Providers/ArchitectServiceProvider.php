@@ -6,14 +6,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use JPeters\Architect\Console\BuildCommand;
 use JPeters\Architect\Console\InstallCommand;
 use JPeters\Architect\Console\MakePageCommand;
 use JPeters\Architect\Console\MakePlanCommand;
 use JPeters\Architect\Console\MakeCardCommand;
 use JPeters\Architect\Console\PublishCommand;
-use JPeters\Architect\Contracts\ImageUploaderContract;
-use JPeters\Architect\Http\Middleware\ArchitectIsRunning;
-use JPeters\Architect\Resources\ImageUploader;
 
 class ArchitectServiceProvider extends ServiceProvider
 {
@@ -40,6 +38,7 @@ class ArchitectServiceProvider extends ServiceProvider
     public function register()
     {
         $this->commands([
+            BuildCommand::class,
             InstallCommand::class,
             MakeCardCommand::class,
             MakePageCommand::class,
