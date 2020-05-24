@@ -7,11 +7,11 @@ use Illuminate\Support\Str;
 use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Laravel\Blueprints\User as UserBlueprint;
 use JPeters\Architect\Tests\Laravel\Models\User;
-use JPeters\Architect\Tests\Traits\LogsInUses;
+use JPeters\Architect\Tests\Traits\LogsInUsers;
 
 class BlueprintSubmitTest extends ArchitectTestCase
 {
-    use LogsInUses;
+    use LogsInUsers;
     use WithFaker;
 
     protected function setUp(): void

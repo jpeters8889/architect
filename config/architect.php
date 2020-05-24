@@ -2,6 +2,7 @@
 
 use JPeters\Architect\Http\Middleware\ArchitectIsRunning;
 use JPeters\Architect\Http\Middleware\Authenticate;
+use JPeters\Architect\Http\Middleware\CanAccessArchitect;
 
 return [
     'name' => 'Architect',
@@ -14,6 +15,9 @@ return [
     'middleware' => [
         'web',
         Authenticate::class,
+        CanAccessArchitect::class,
         ArchitectIsRunning::class,
     ],
+
+    'gateway' => null,
 ];

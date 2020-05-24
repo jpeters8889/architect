@@ -3,12 +3,17 @@
 namespace JPeters\Architect\Tests\Feature;
 
 use JPeters\Architect\Tests\ArchitectTestCase;
+use JPeters\Architect\Tests\Traits\LogsInUsers;
 
 class AssetTest extends ArchitectTestCase
 {
+    use LogsInUsers;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->logIn();
 
         $this->architect->assetManager->registerStyle('testStylesheet', __DIR__ . '/../Assets/style.css');
         $this->architect->assetManager->registerScript('testScript', __DIR__ . '/../Assets/javascript.js');

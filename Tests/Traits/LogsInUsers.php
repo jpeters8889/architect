@@ -4,7 +4,7 @@ namespace JPeters\Architect\Tests\Traits;
 
 use JPeters\Architect\Tests\Laravel\Models\User;
 
-trait LogsInUses
+trait LogsInUsers
 {
     protected function logIn(User $user = null)
     {

@@ -4,11 +4,11 @@ namespace JPeters\Architect\Tests\Feature;
 
 use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Mocks\ApiManagerHandler;
-use JPeters\Architect\Tests\Traits\LogsInUses;
+use JPeters\Architect\Tests\Traits\LogsInUsers;
 
 class ApiTest extends ArchitectTestCase
 {
-    use LogsInUses;
+    use LogsInUsers;
 
     protected function setUp(): void
     {

@@ -2,11 +2,14 @@
 
 namespace JPeters\Architect\Http\Middleware;
 
+use Closure;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use JPeters\Architect\Architect;
+use JPeters\Architect\ArchitectGateway;
 
 class Authenticate extends Middleware
 {
@@ -24,13 +27,13 @@ class Authenticate extends Middleware
         parent::authenticate($request, $guards);
     }
 
-    /**
-     * @param Request $request
-     * @param array $guards
-     * @return void|null
-     */
-    protected function unauthenticated($request, array $guards)
+    public function handle($request, Closure $next, ...$guards)
     {
-        return null;
+        try {
+            return parent::handle($request, $next, $guards);
+        } catch (\Exception $exception) {
+            return new Response('', 401);
+        }
     }
+
 }

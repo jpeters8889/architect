@@ -6,11 +6,11 @@ use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Laravel\Blueprints\Blog;
 use JPeters\Architect\Tests\Laravel\Blueprints\User;
-use JPeters\Architect\Tests\Traits\LogsInUses;
+use JPeters\Architect\Tests\Traits\LogsInUsers;
 
 class BlueprintTest extends ArchitectTestCase
 {
-    use LogsInUses;
+    use LogsInUsers;
 
     /**
      * @var array

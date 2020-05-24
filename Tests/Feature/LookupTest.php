@@ -5,11 +5,11 @@ namespace JPeters\Architect\Tests\Feature;
 use JPeters\Architect\Tests\ArchitectTestCase;
 use JPeters\Architect\Tests\Laravel\Blueprints\Blog;
 use JPeters\Architect\Tests\Laravel\Models\BlogType;
-use JPeters\Architect\Tests\Traits\LogsInUses;
+use JPeters\Architect\Tests\Traits\LogsInUsers;
 
 class LookupTest extends ArchitectTestCase
 {
-    use LogsInUses;
+    use LogsInUsers;
 
     /** @var BlogType */
     private $newsType;

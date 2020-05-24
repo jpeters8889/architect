@@ -5,11 +5,11 @@ namespace JPeters\Architect\Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use JPeters\Architect\Architect;
 use JPeters\Architect\Tests\ArchitectTestCase as BaseArchitectTest;
-use JPeters\Architect\Tests\Traits\LogsInUses;
+use JPeters\Architect\Tests\Traits\LogsInUsers;
 
 class ArchitectTest extends BaseArchitectTest
 {
-    use LogsInUses;
+    use LogsInUsers;
 
     protected function setUp(): void
     {
