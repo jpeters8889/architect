@@ -10,8 +10,10 @@ import Loader from "./Components/Loader";
 
 import Input from "./Forms/Input";
 import Button from "./Forms/Button";
+import Search from "./Components/Search";
 
 Vue.component('blueprint-field', BlueprintField);
+Vue.component('blueprint-search', Search);
 Vue.component('header-component', Header);
 Vue.component('table-component', Table);
 Vue.component('pagination', Paginator);

@@ -1,46 +1,102 @@
 <template>
-    <div class="flex justify-between items-center">
-        <div v-if="last_page >= 2" class="flex border-2 border-primary rounded-lg overflow-hidden">
-            <div v-if="current_page > 1" class="paginator-page paginator-page-border" @click="changePage(1)">
-                First
-            </div>
+    <ul class="flex flex-wrap font-semibold leading-none justify-center" v-if="lastPage > 1">
+        <li class="border border-blue-900 bg-blue-900 text-white rounded m-px cursor-pointer transition-bg transition-color hover:bg-white hover:text-blue-900"
+            v-if="canGoBack">
+            <a class="p-2 block" @click.prevent="goTo(current - 1)">Previous</a>
+        </li>
 
-            <div v-if="current_page > 2" class="paginator-page paginator-page-border" @click="changePage(current_page - 1)">
-                {{ current_page - 1}}
-            </div>
+        <li class="border border-blue-900 rounded m-px cursor-pointer transition-bg transition-color"
+            :class="page.goTo !== current ? 'bg-blue-900 text-white hover:bg-white hover:text-blue-900' : 'bg-white text-blue-900'"
+            v-for="page in pageArray">
+            <a class="p-2 block" @click.prevent="goTo(page.goTo)">{{ page.label }}</a>
+        </li>
 
-            <div class="paginator-page-active">
-                {{ current_page }}
-            </div>
-
-            <div v-if="current_page < (last_page - 1)" class="paginator-page" v-bind:class="current_page < (last_page - 1) ? 'paginator-page-border' : ''" @click="changePage(current_page + 1)">
-                {{ current_page + 1}}
-            </div>
-
-            <div v-if="current_page < last_page" class="paginator-page" @click="changePage(last_page)">
-                Last
-            </div>
-        </div>
-        <div>
-            {{ from }} - {{ to }} of {{ total }}
-        </div>
-    </div>
+        <li class="border border-blue-900 bg-blue-900 text-white rounded m-px cursor-pointer transition-bg hover:bg-white hover:text-blue-900"
+            v-if="canGoForward">
+            <a class="p-2 block" @click.prevent="goTo(current + 1)">Next</a>
+        </li>
+    </ul>
 </template>
 
 <script>
     export default {
         props: {
-            current_page: Number,
-            last_page: Number,
-            per_page: Number,
-            from: Number,
-            to: Number,
-            total: Number,
+            current: {
+                required: true,
+                type: Number,
+            },
+            lastPage: {
+                required: true,
+                type: Number,
+            },
+            canGoBack: {
+                required: true,
+                type: Boolean,
+            },
+            canGoForward: {
+                required: true,
+                type: Boolean,
+            }
+        },
+
+        computed: {
+            pageArray() {
+                const data = [];
+                const multiples = Math.ceil(this.lastPage / 5);
+                const groups = [];
+
+                for (let x = 0; x < multiples; x++) {
+                    let group = [];
+                    for (let y = 1; y <= 5; y++) {
+                        group.push((x * 5) + y);
+                    }
+                    groups.push(group);
+                }
+
+                data.push({
+                    label: '1',
+                    goTo: 1,
+                });
+
+                if (this.current > 5) {
+                    data.push({
+                        label: '...',
+                        goTo: this.current - 1,
+                    })
+                }
+
+                let currentGroup = groups.findIndex((page) => {
+                    return page.indexOf(this.current) !== -1
+                });
+
+                groups[currentGroup].forEach((page) => {
+                    if (page > 1 && page < this.lastPage) {
+                        data.push({
+                            label: page.toString(),
+                            goTo: page,
+                        });
+                    }
+                });
+
+                if (currentGroup + 1 < groups.length) {
+                    data.push({
+                        label: '...',
+                        goTo: groups[currentGroup + 1][0],
+                    });
+                }
+
+                data.push({
+                    label: this.lastPage.toString(),
+                    goTo: this.lastPage,
+                });
+
+                return data;
+            }
         },
 
         methods: {
-            changePage(page) {
-                window.Architect.$emit('paginator-change', page);
+            goTo(page) {
+               window.Architect.$emit('paginator-change', page);
             }
         }
     }

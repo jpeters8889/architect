@@ -3,6 +3,7 @@
 namespace JPeters\Architect\Blueprints;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use JPeters\Architect\Cards\Card;
 use JPeters\Architect\Plans\Plan;
@@ -24,7 +25,7 @@ class BlueprintListExtractor extends Extractor
         $data = $this->blueprint->getData();
         $ordering = $this->blueprint->ordering();
 
-        if (! is_array($ordering[0])) {
+        if (!is_array($ordering[0])) {
             $ordering = [$ordering];
         }
         foreach ($ordering as $order) {
@@ -41,6 +42,17 @@ class BlueprintListExtractor extends Extractor
             $card = $concreteCard->make();
         }
 
+        /** @var Request $request */
+        if (($request = resolve(Request::class))->has('search')) {
+            $search = $request->get('search');
+
+            $data = $data->where(function (Builder $builder) use ($search) {
+                foreach ($this->columns as $column) {
+                    $builder->orWhere($column, 'LIKE', "%{$search}%");
+                }
+            });
+        }
+
         $data = $data->paginate($this->blueprint->perPage(), $this->columns);
 
         if ($this->blueprint->makeVisible() !== []) {
@@ -55,6 +67,7 @@ class BlueprintListExtractor extends Extractor
             'hiddenOnMobile' => $this->hideOnMobile,
             'data' => $data,
             'canEdit' => $this->blueprint->canEdit(),
+            'searchable' => $this->blueprint->searchable(),
             'meta' => [
                 'title' => $this->blueprint->blueprintName(),
             ],
@@ -65,7 +78,7 @@ class BlueprintListExtractor extends Extractor
     {
         (new Collection($this->blueprint->plans()))
             ->each(function (Plan $plan) {
-                if (! $plan->isAvailableOnIndex()) {
+                if (!$plan->isAvailableOnIndex()) {
                     return;
                 }
 

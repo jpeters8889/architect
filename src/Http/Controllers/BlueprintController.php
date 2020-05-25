@@ -2,6 +2,7 @@
 
 namespace JPeters\Architect\Http\Controllers;
 
+use Illuminate\Http\Request;
 use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Blueprints\BlueprintFormExtractor;
 use JPeters\Architect\Blueprints\BlueprintListExtractor;
@@ -10,7 +11,7 @@ use JPeters\Architect\Http\Requests\BlueprintSubmitRequest;
 
 class BlueprintController extends BaseController
 {
-    public function list($blueprint)
+    public function list(Request $request, $blueprint)
     {
         /** @var Blueprint $concreteBlueprint */
         $concreteBlueprint = $this->architect->blueprintManager->resolve($blueprint);

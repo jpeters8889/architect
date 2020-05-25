@@ -34,7 +34,7 @@ class BlueprintListTest extends ArchitectTestCase
     /** @test */
     public function it_creates_a_list_with_the_correct_keys()
     {
-        $keys = ['data', 'hiddenOnMobile', 'labels', 'meta', 'vue-suffix', 'vuePrefixes', 'card', 'canEdit'];
+        $keys = ['data', 'hiddenOnMobile', 'labels', 'meta', 'vue-suffix', 'vuePrefixes', 'card', 'canEdit', 'searchable'];
 
         foreach ($keys as $key) {
             $this->assertArrayHasKey($key, $this->list);

@@ -43,6 +43,11 @@ abstract class Blueprint
         ];
     }
 
+    public function searchable(): bool
+    {
+        return true;
+    }
+
     public function makeVisible()
     {
         return [];

@@ -1,7 +1,7 @@
 <template>
     <div class="flex overflow-hidden border border-gray-500 rounded">
         <div class="bg-white p-1 flex-1">
-            <input v-model="currentValue" :type="type" :name="name" :placeholder="placeholder" @blur="validate()" @keyup.enter="onEnter()"
+            <input v-model="currentValue" :type="type" :name="name" :placeholder="placeholder" @blur="validate()" @keyup="onKeyup()" @keyup.enter="onEnter()"
                    class="w-full text-sm border-0 p-0 m-0 text-gray-900" />
         </div>
 
@@ -85,6 +85,10 @@
 
             onEnter() {
                 this.$root.$emit(this.name + '-enter-press');
+            },
+
+            onKeyup() {
+                this.$root.$emit(this.name + '-keyup', this.currentValue);
             },
 
             checkEmail() {

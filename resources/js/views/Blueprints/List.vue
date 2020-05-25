@@ -4,6 +4,9 @@
             {{ this.title }}
         </header-component>
 
+        <!-- Search -->
+        <blueprint-search v-if="searchable && !card"></blueprint-search>
+
         <!-- List -->
         <div class="bg-white w-full p-2">
             <div v-if="Object.keys(headers).length > 0">
@@ -31,12 +34,10 @@
 
             <div v-if="data.last_page > 1" class="bg-primary-10 p-2">
                 <pagination
-                        :current_page="data.current_page"
-                        :from="data.from"
-                        :last_page="data.last_page"
-                        :per_page="data.per_page"
-                        :to="data.to"
-                        :total="data.total"
+                        :current="data.current_page"
+                        :lastPage="data.last_page"
+                        :can-go-back="!! data.prev_page_url"
+                        :can-go-forward="!! data.next_page_url"
                 ></pagination>
             </div>
         </div>
@@ -59,6 +60,8 @@
                 labels: [],
             },
             page: 1,
+            searchable: true,
+            searchText: '',
         }),
 
         mounted() {
@@ -73,6 +76,11 @@
             window.Architect.$on('reload-page', () => {
                 this.initComponent();
             })
+
+            this.$root.$on('search-keyup', (value) => {
+                this.searchText = value;
+                this.getBlueprint();
+            });
         },
 
         watch: {
@@ -83,12 +91,24 @@
 
         methods: {
             initComponent() {
+                this.searchText = '';
+                this.$root.$emit('search-set-value', '');
                 window.Architect.$emit('load-start');
                 this.getBlueprint();
             },
 
+            blueprintUrl() {
+                let url = `/blueprints/${this.blueprint}/list?page=${this.page}`
+
+                if (this.searchText) {
+                    url = `/blueprints/${this.blueprint}/list?page=1&search=${this.searchText}`;
+                }
+
+                return url;
+            },
+
             getBlueprint() {
-                Architect.request().get(`/blueprints/${this.blueprint}/list?page=${this.page}`)
+                Architect.request().get(this.blueprintUrl())
                     .then((response) => {
                         this.title = response.data.meta.title;
                         this.hideOnMobile = response.data.hiddenOnMobile;
@@ -97,6 +117,7 @@
                         this.data = response.data.data;
                         this.components = response.data.vuePrefixes;
                         this.canEdit = response.data.canEdit;
+                        this.searchable = response.data.searchable;
                     })
                     .catch(error => {
                         if (error.response.status >= 500) {
