@@ -7,32 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use JPeters\Architect\ArchitectGateway;
+use JPeters\Architect\Traits\CheckArchitectGateway;
 
 class CanAccessArchitect
 {
+    use CheckArchitectGateway;
+
     public function handle(Request $request, Closure $next)
     {
-        if(!$this->validateGateway()) {
+        if($request->wantsJson() && Auth::user() && !$this->validateGateway()) {
             return new Response('', 403);
         }
 
         return $next($request);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function validateGateway(): bool
-    {
-        $class = config('architect.gateway');
-
-        if (!$class) {
-            return true;
-        }
-
-        /** @var ArchitectGateway $gateway */
-        $gateway = new $class();
-
-        return $gateway->canUseArchitect(Auth::user());
     }
 }

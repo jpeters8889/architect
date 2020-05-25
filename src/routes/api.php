@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/health', 'HealthController@get');
+
 Route::get('/assets/{asset}/{name}', 'AssetController@get');
 
 Route::prefix('/blueprints')->group(static function () {

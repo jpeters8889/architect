@@ -65,13 +65,25 @@
 
         computed: {
             isLoggedIn() {
-                if (this.$route.name === 'logout') {
+                const routes = ['login', 'logout', 'error'];
+
+                if (routes.includes(this.$route.name)) {
                     return false;
                 }
 
                 return !!document.querySelector('meta[name="api-token"]');
             }
         },
+
+        // created() {
+        //   if(this.isLoggedIn) {
+        //       window.Architect.request().get('/health').then((response) => {
+        //           if(response.status !== 200) {
+        //
+        //           }
+        //       })
+        //   }
+        // },
 
         mounted() {
             window.Architect.$on('load-start', () => {

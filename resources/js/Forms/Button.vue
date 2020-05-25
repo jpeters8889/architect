@@ -11,14 +11,14 @@
 
             if (this.errorEventListener) {
                 this.$root.$on(this.errorEventListener, () => {
-                    this.classList.push('animation-shake', 'error-bg');
+                    this.classList.push('animate-shake', 'error-bg');
 
                     this.classList = this.classList.filter(item => item !== 'button');
 
                     setTimeout(() => {
                         this.buildClassMap();
                         this.buildStyleMap();
-                    }, 2000)
+                    }, 500)
                 });
             }
         },

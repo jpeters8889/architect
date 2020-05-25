@@ -13,16 +13,16 @@
 
                     <div class="mb-2">
                         <form-input name="email" type="email" placeholder="Email Address"
-                                          required :value="fields.email.value"></form-input>
+                                    required :value="fields.email.value"></form-input>
                     </div>
 
                     <div class="mb-6">
                         <form-input name="password" type="password" placeholder="Password"
-                                          required></form-input>
+                                    required></form-input>
                     </div>
 
                     <form-button class="w-full" theme="positive" error-event-listener="loginError"
-                                       :click="processLogin">Login
+                                 :click="processLogin">Login
                     </form-button>
                 </form>
 
@@ -60,6 +60,10 @@
                 this.$root.$on(field + '-error', () => {
                     this.fields[field].valid = false;
                 });
+
+                this.$root.$on(field + '-enter-press', () => {
+                    this.processLogin();
+                });
             });
         },
 
@@ -69,26 +73,35 @@
                     this.$root.$emit(field + '-get-value');
                 });
 
-                this.$root.$on('jp-form-error', () => {
-                    this.$root.$emit('loginError');
-                    window.Architect.error('Please enter your details...');
-                });
-
                 if (this.fields.email.valid && this.fields.password.valid) {
                     window.Architect.request().post('/auth', {
                         email: this.fields.email.value,
                         password: this.fields.password.value,
-                    }).then(() => {
-                        window.location = window.config.prefix;
-                    }).catch(error => {
-                        console.log(error);
-                        window.Architect.error('There was an error logging you in...');
-                        this.fields.password.value = '';
-                        this.fields.password.valid = false;
+                    }).then((request) => {
+                        if (request.status === 200) {
+                            window.location = window.config.prefix;
+                            return;
+                        }
 
-                        this.$root.$emit('password-set-value', '');
+                        this.loginError();
+                    }).catch(() => {
+                        this.loginError();
                     });
+
+                    return;
                 }
+
+                this.$root.$emit('loginError');
+                window.Architect.error('Please enter your details...');
+            },
+
+            loginError() {
+                this.$root.$emit('loginError');
+                window.Architect.error('There was an error logging you in...');
+                this.fields.password.value = '';
+                this.fields.password.valid = false;
+
+                this.$root.$emit('password-set-value', '');
             },
 
             forEachFields(closure) {

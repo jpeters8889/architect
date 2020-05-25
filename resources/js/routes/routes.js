@@ -3,6 +3,7 @@ import BlueprintList from './../views/Blueprints/List'
 import BlueprintForm from './../views/Blueprints/Form'
 import Login from "../views/Login";
 import Logout from "../views/Logout";
+import Error from "../views/Error";
 import CustomPage from "../views/CustomPage";
 
 export default [
@@ -22,6 +23,12 @@ export default [
         path: '/logout',
         name: 'logout',
         component: Logout,
+    },
+
+    {
+        path: '/error',
+        name: 'error',
+        component: Error,
     },
 
     {

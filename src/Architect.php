@@ -74,6 +74,8 @@ class Architect
     public static function coreJavascript(BlueprintManager $manager)
     {
         return [
+            'domain' => config('app.url'),
+            'siteName' => config('app.name'),
             'prefix' => '/' . config('architect.route'),
             'apiRoot' => '/' . config('architect.route') . '/api',
             'navigation' => $manager->renderForNavigation(),

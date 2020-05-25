@@ -55,6 +55,10 @@
     width: 100%;
 }
 
+.error-bg {
+    background-color: #f56565!important;
+}
+
 .transition-bg {
     transition: background-color 0.5s ease;
 }

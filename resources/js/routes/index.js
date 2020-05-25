@@ -26,6 +26,19 @@ function createArchitectRouter({prefix}) {
             return;
         }
 
+
+        const routes = ['login', 'logout', 'error'];
+
+        if (!routes.includes(to.name)) {
+            window.Architect.request().get('/health').then((response) => {
+                if (response.status !== 200) {
+                    next('/error');
+                }
+            }).catch(() => {
+                next('/error');
+            });
+        }
+
         next();
     });
 

@@ -5,6 +5,7 @@ namespace JPeters\Architect\Http\Middleware;
 use Closure;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -32,7 +33,7 @@ class Authenticate extends Middleware
         try {
             return parent::handle($request, $next, $guards);
         } catch (\Exception $exception) {
-            return new Response('', 401);
+            return new RedirectResponse(config('architect.route').'/login');
         }
     }
 

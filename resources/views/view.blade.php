@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @if(Illuminate\Support\Facades\Auth::user())
-    <meta name="api-token" content="{{ Illuminate\Support\Facades\Auth::user()->api_token }}">
-    @endif
+    @auth
+        <meta name="api-token" content="{{ Illuminate\Support\Facades\Auth::user()->api_token }}">
+    @endauth
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
 
     <title>{{ config('architect.name') }}</title>
 
@@ -17,9 +17,11 @@
 
     <link rel="stylesheet" href="{{ mix('architect.css', 'vendor/architect') }}">
 
-    @foreach($assetManager->styles() as $name => $path)
-        <link rel="stylesheet" href="/{{ config('architect.route') }}/api/assets/style/{!! $name !!}">
-@endforeach
+    @auth
+        @foreach($assetManager->styles() as $name => $path)
+            <link rel="stylesheet" href="/{{ config('architect.route') }}/api/assets/style/{!! $name !!}">
+    @endforeach
+@endauth
 
 <!-- other styles -->
 </head>
@@ -40,10 +42,11 @@
     window.Architect = new architectBootstrapper(config);
 </script>
 
-@foreach($assetManager->scripts() as $name => $path)
-    <script src="/{{ config('architect.route') }}/api/assets/script/{!!  $name !!}"></script>
-@endforeach
-
+@auth
+    @foreach($assetManager->scripts() as $name => $path)
+        <script src="/{{ config('architect.route') }}/api/assets/script/{!!  $name !!}"></script>
+    @endforeach
+@endauth
 <script>
     Architect.build();
 </script>

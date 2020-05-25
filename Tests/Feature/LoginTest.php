@@ -8,13 +8,6 @@ use JPeters\Architect\Tests\Laravel\Models\User;
 class LoginTest extends ArchitectTestCase
 {
     /** @test */
-    public function it_shows_the_login_page()
-    {
-        $this->get('/architect/login')
-            ->assertStatus(200);
-    }
-
-    /** @test */
     public function it_errors_when_trying_to_login_an_unknown_user()
     {
         $this->post('/architect/api/auth', [
