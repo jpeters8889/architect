@@ -397,6 +397,7 @@ module.exports = {
             screen: '100vw',
             imageManager: '150px',
             '255': '255px',
+            '300': '300px',
         },
 
         zIndex: {

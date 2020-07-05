@@ -1,5 +1,5 @@
 <template>
-    <div class="flex overflow-hidden border border-gray-500 rounded">
+    <div class="flex overflow-hidden border border-gray-500 rounded" :class="classes">
         <div class="bg-white p-1 flex-1">
             <input v-model="currentValue" :type="type" :name="name" :placeholder="placeholder" @blur="validate()" @keyup="onKeyup()" @keyup.enter="onEnter()"
                    class="w-full text-sm border-0 p-0 m-0 text-gray-900" />
@@ -21,6 +21,10 @@
         }),
 
         props: {
+            classes: {
+                type: String,
+                default: '',
+            },
             type: {
                 type: String,
                 default: 'text',

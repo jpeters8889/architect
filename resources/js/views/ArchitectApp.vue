@@ -9,7 +9,7 @@
         <template v-else>
             <div v-cloak class="flex flex-col min-h-screen">
                 <!-- Header bar -->
-                <div class="flex justify-between">
+                <div class="flex justify-between items-center">
                     <div class="w-full bg-blue-900 p-2 h-15 flex sm:w-255">
                         <div class="mr-1 p-1 flex justify-center items-center text-blue-100 font-bold text-3xl cursor-pointer sm:hidden"
                              @click="showMobileNav = true">
@@ -19,8 +19,8 @@
                             Logo
                         </router-link>
                     </div>
-                    <div class="hidden sm:block bg-gray-100 flex-1 p-2 h-15 flex shadow">
-                        Title?
+                    <div class="hidden sm:flex bg-gray-100 flex-1 p-2 h-15 shadow items-center">
+                        <h1 class="text-2xl font-semibold text-gray-900">{{ siteTitle }}</h1>
                     </div>
                 </div>
 
@@ -72,18 +72,12 @@
                 }
 
                 return !!document.querySelector('meta[name="api-token"]');
+            },
+
+            siteTitle() {
+                return window.config.siteName;
             }
         },
-
-        // created() {
-        //   if(this.isLoggedIn) {
-        //       window.Architect.request().get('/health').then((response) => {
-        //           if(response.status !== 200) {
-        //
-        //           }
-        //       })
-        //   }
-        // },
 
         mounted() {
             window.Architect.$on('load-start', () => {

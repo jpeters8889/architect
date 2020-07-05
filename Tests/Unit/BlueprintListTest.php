@@ -8,6 +8,7 @@ use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Blueprints\BlueprintListExtractor;
 use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Tests\ArchitectTestCase;
+use JPeters\Architect\Tests\Laravel\Blueprints\Blog as BlogBlueprint;
 use JPeters\Architect\Tests\Laravel\Blueprints\User;
 use JPeters\Architect\Tests\Laravel\Models\Blog;
 use JPeters\Architect\Tests\Laravel\Models\User as UserModel;
@@ -31,14 +32,21 @@ class BlueprintListTest extends ArchitectTestCase
         $this->list = (new BlueprintListExtractor(new User()))->make();
     }
 
-    /** @test */
-    public function it_creates_a_list_with_the_correct_keys()
+    public function blueprintKeyDataProvider()
     {
-        $keys = ['data', 'hiddenOnMobile', 'labels', 'meta', 'vue-suffix', 'vuePrefixes', 'card', 'canEdit', 'searchable'];
+        return [
+            ['data'], ['hiddenOnMobile'], ['labels'], ['meta'], ['vue-suffix'],
+            ['vuePrefixes'], ['card'], ['canEdit'], ['searchable'], ['filters']
+        ];
+    }
 
-        foreach ($keys as $key) {
-            $this->assertArrayHasKey($key, $this->list);
-        }
+    /**
+     * @test
+     * @dataProvider blueprintKeyDataProvider
+     */
+    public function it_creates_a_list_with_the_correct_keys($key)
+    {
+        $this->assertArrayHasKey($key, $this->list);
     }
 
     /** @test */
@@ -148,6 +156,46 @@ class BlueprintListTest extends ArchitectTestCase
                 $this->assertArrayHasKey($column, $user);
                 $this->assertContains($user[$column], $item);
             }
+        }
+    }
+
+    /** @test */
+    public function it_shows_whether_the_blueprint_is_searchable()
+    {
+        $this->assertTrue($this->list['searchable']);
+
+        // Blogs are set as not searchable
+        $blogBlueprint = (new BlueprintListExtractor(new BlogBlueprint()))->make();
+        $this->assertFalse($blogBlueprint['searchable']);
+    }
+
+    /** @test */
+    public function it_returns_a_collection_on_the_filter_property()
+    {
+        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $this->list['filters']);
+    }
+
+    /** @test */
+    public function it_returns_an_empty_collection_when_there_are_no_filters()
+    {
+        $this->assertCount(0, $this->list['filters']);
+    }
+
+    /** @test */
+    public function it_returns_a_formatted_list_of_filters_when_filters_are_available()
+    {
+        $blogBlueprint = (new BlueprintListExtractor($blog = new BlogBlueprint()))->make();
+        $filters = $blog->filters();
+
+        $this->assertNotCount(0, $blogBlueprint['filters']);
+
+        foreach($filters as $key => $filter) {
+            $this->assertArrayHasKey($key, $blogBlueprint['filters']);
+            $this->assertArrayHasKey('name', $blogBlueprint['filters'][$key]);
+            $this->assertArrayHasKey('options', $blogBlueprint['filters'][$key]);
+
+            $this->assertEquals($filter['name'], $blogBlueprint['filters'][$key]['name']);
+            $this->assertIsIterable($blogBlueprint['filters'][$key]['options']);
         }
     }
 }

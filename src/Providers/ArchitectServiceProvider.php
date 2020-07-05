@@ -2,6 +2,7 @@
 
 namespace JPeters\Architect\Providers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +32,14 @@ class ArchitectServiceProvider extends ServiceProvider
         if (! Str::hasMacro('explodeIntoCollection')) {
             Str::macro('explodeIntoCollection', static function ($value, $delimiter = ',') {
                 return new Collection(explode($delimiter, $value));
+            });
+        }
+
+        if(! Builder::hasGlobalMacro('columnExists')) {
+            Builder::macro('columnExists', function($column) {
+               $columns = $this->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->getModel()->getTable());
+
+               return array_key_exists($column, $columns);
             });
         }
     }

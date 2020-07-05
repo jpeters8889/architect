@@ -12,7 +12,7 @@
 
         methods: {
             getValue() {
-                return moment(this.value).format('Do MMM YY');
+                return moment(this.value).format('Do MMM YY HH:mm:ss');
             }
         }
     }

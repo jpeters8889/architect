@@ -2,6 +2,7 @@
 
 namespace JPeters\Architect\Tests\Laravel\Blueprints;
 
+use Illuminate\Database\Eloquent\Builder;
 use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Plans\Lookup;
 use JPeters\Architect\Plans\Textarea;
@@ -26,6 +27,23 @@ class Blog extends Blueprint
                 ->lookupAction(static function ($value) {
                     return BlogType::query()->where('type', $value)->get();
                 }),
+        ];
+    }
+
+    public function searchable(): bool
+    {
+        return false;
+    }
+
+    public function filters(): array
+    {
+        return [
+            'type_id' => [
+                'name' => 'Type',
+                'options' => BlogType::query()->get()
+                    ->mapWithKeys(fn (BlogType $type) => [$type->id => $type->type]),
+                'filter' => fn (Builder $builder, $value) => $builder->where('type_id', $value),
+            ],
         ];
     }
 }

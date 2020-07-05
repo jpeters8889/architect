@@ -4,8 +4,10 @@
             {{ this.title }}
         </header-component>
 
-        <!-- Search -->
-        <blueprint-search v-if="searchable && !card"></blueprint-search>
+        <div class="flex justify-between bg-white w-full p-2 mb-2 items-center" v-if="(searchable && !card) || Object.keys(filters).length > 0">
+            <blueprint-search v-if="searchable && !card"></blueprint-search>
+            <blueprint-filter :filters="filters" v-if="Object.keys(filters).length > 0"></blueprint-filter>
+        </div>
 
         <!-- List -->
         <div class="bg-white w-full p-2">
@@ -34,6 +36,7 @@
 
             <div v-if="data.last_page > 1" class="bg-primary-10 p-2">
                 <pagination
+                        v-if="paginate"
                         :current="data.current_page"
                         :lastPage="data.last_page"
                         :can-go-back="!! data.prev_page_url"
@@ -62,6 +65,9 @@
             page: 1,
             searchable: true,
             searchText: '',
+            filters: {},
+            appliedFilters: {},
+            paginate: true,
         }),
 
         mounted() {
@@ -79,6 +85,11 @@
 
             this.$root.$on('search-keyup', (value) => {
                 this.searchText = value;
+                this.getBlueprint();
+            });
+
+            this.$root.$on('filter-change', (filter) => {
+                this.appliedFilters = filter.filters;
                 this.getBlueprint();
             });
         },
@@ -104,6 +115,18 @@
                     url = `/blueprints/${this.blueprint}/list?page=1&search=${this.searchText}`;
                 }
 
+                if (this.appliedFilters !== {}) {
+                    let filters = [];
+
+                    Object.keys(this.appliedFilters).forEach((key) => {
+                        filters.push(`filter[${key}]=${this.appliedFilters[key]}`)
+                    });
+
+                    filters = filters.join('&')
+
+                    url = url + `&${filters}`;
+                }
+
                 return url;
             },
 
@@ -118,6 +141,8 @@
                         this.components = response.data.vuePrefixes;
                         this.canEdit = response.data.canEdit;
                         this.searchable = response.data.searchable;
+                        this.filters = response.data.filters;
+                        this.paginate = response.data.paginate;
                     })
                     .catch(error => {
                         if (error.response.status >= 500) {

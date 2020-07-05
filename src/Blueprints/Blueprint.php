@@ -48,6 +48,16 @@ abstract class Blueprint
         return true;
     }
 
+    public function filters(): array
+    {
+        return [];
+    }
+
+    public function paginate(): bool
+    {
+        return true;
+    }
+
     public function makeVisible()
     {
         return [];

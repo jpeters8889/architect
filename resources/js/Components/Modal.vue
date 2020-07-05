@@ -1,6 +1,6 @@
 <template>
     <div class="bg-black-90 fixed w-full h-full top-0 left-0 flex justify-center items-center z-50">
-        <div class="rounded-lg shadow-2xl p-3 bg-gray-200 w-11/12 max-w-2xl">
+        <div class="rounded-lg shadow-2xl p-3 bg-gray-200 w-11/12 max-w-2xl overflow-hidden overflow-y-scroll" style="max-height: 95%">
             <div class="relative">
                 <slot></slot>
             </div>

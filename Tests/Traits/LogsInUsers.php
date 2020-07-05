@@ -2,11 +2,12 @@
 
 namespace JPeters\Architect\Tests\Traits;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use JPeters\Architect\Tests\Laravel\Models\User;
 
 trait LogsInUsers
 {
-    protected function logIn(User $user = null)
+    protected function logIn(Authenticatable $user = null)
     {
         if (!$user) {
             $user = factory(User::class)->create();

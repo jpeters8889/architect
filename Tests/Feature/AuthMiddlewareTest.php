@@ -20,7 +20,7 @@ class AuthMiddlewareTest extends ArchitectTestCase
     {
         $this->architect->registerBlueprint(User::class);
 
-        $this->get('/architect/api/blueprints/user/list')->assertStatus(401);
+        $this->get('/architect/api/blueprints/user/list')->assertRedirect('/architect/login');
 
         $this->logIn();
 

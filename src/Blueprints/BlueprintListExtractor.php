@@ -28,6 +28,7 @@ class BlueprintListExtractor extends Extractor
         if (!is_array($ordering[0])) {
             $ordering = [$ordering];
         }
+
         foreach ($ordering as $order) {
             $data->orderBy(...$order);
         }
@@ -42,16 +43,8 @@ class BlueprintListExtractor extends Extractor
             $card = $concreteCard->make();
         }
 
-        /** @var Request $request */
-        if (($request = resolve(Request::class))->has('search')) {
-            $search = $request->get('search');
-
-            $data = $data->where(function (Builder $builder) use ($search) {
-                foreach ($this->columns as $column) {
-                    $builder->orWhere($column, 'LIKE', "%{$search}%");
-                }
-            });
-        }
+        $data = $this->processSearch($data);
+        $data = $this->processFilters($data);
 
         $data = $data->paginate($this->blueprint->perPage(), $this->columns);
 
@@ -68,10 +61,23 @@ class BlueprintListExtractor extends Extractor
             'data' => $data,
             'canEdit' => $this->blueprint->canEdit(),
             'searchable' => $this->blueprint->searchable(),
+            'paginate' => $this->blueprint->paginate(),
+            'filters' => $this->createFilters(),
             'meta' => [
                 'title' => $this->blueprint->blueprintName(),
             ],
         ];
+    }
+
+    private function createFilters(): Collection
+    {
+        return (new Collection($this->blueprint->filters()))
+            ->mapWithKeys(function ($filter, $identifier) {
+                return [$identifier => [
+                    'name' => $filter['name'],
+                    'options' => $filter['options']
+                ]];
+            });
     }
 
     private function processPlans()
@@ -95,5 +101,49 @@ class BlueprintListExtractor extends Extractor
                     $this->hideOnMobile[] = $column;
                 }
             });
+    }
+
+    /**
+     * @param Builder $data
+     * @return Builder
+     */
+    protected function processSearch(Builder $data): Builder
+    {
+        /** @var Request $request */
+        if (($request = resolve(Request::class))->has('search')) {
+            $search = $request->get('search');
+
+            $data = $data->where(function (Builder $builder) use ($search) {
+                $tableName = $builder->getModel()->getTable();
+
+                foreach ($this->columns as $column) {
+                    if ($builder->columnExists($column)) {
+                        $builder->orWhere($tableName . "." . $column, 'LIKE', "%{$search}%");
+                    }
+                }
+            });
+        }
+        return $data;
+    }
+
+    protected function processFilters(Builder $data): Builder
+    {
+        if (count($filters = $this->blueprint->filters()) === 0) {
+            return $data;
+        }
+
+        if (!($request = resolve(Request::class))->has('filter')) {
+            return $data;
+        }
+
+        foreach ($request->get('filter') as $key => $value) {
+            if (array_key_exists($key, $filters)) {
+                $closure = $filters[$key]['filter'];
+
+                $data->where(fn(Builder $builder) => $closure($builder, $value));
+            }
+        }
+
+        return $data;
     }
 }
