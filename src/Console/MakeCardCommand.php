@@ -92,7 +92,7 @@ class MakeCardCommand extends Command
     protected function makeDirectory($directory)
     {
         if (! $this->filesystem->exists($directory)) {
-            $this->filesystem->makeDirectory($directory);
+            $this->filesystem->makeDirectory($directory, 0775, true);
         }
     }
 

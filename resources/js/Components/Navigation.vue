@@ -1,7 +1,8 @@
 <template>
     <div class="h-full overflow-hidden">
         <div v-for="building in buildings">
-            <h3 class="flex items-center text-1 p-2 text-xl bg-blue-900 text-gray-100 rounded mb-2" @click="toggleBuilding(building)">
+            <h3 class="flex items-center text-1 p-2 text-xl bg-blue-900 text-gray-100 rounded mb-2"
+                v-if="buildings.length > 1" @click="toggleBuilding(building)">
                 <div class="mr-1 text-center w-8 text-gray-300">
                     <font-awesome-icon :icon="['far', 'building']"></font-awesome-icon>
                 </div>

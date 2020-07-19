@@ -2,14 +2,14 @@
   "name": "jpeters/architect",
   "description": "Architect",
   "type": "library",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "require": {
     "laravel/framework": "^7.0",
     "ext-json": "*",
     "laravel/ui": "^2.0",
     "orchestra/testbench": "5.1.0",
-    "phpunit/phpunit": "^9.0",
+    "phpunit/phpunit": "^8.5|^9.0",
     "doctrine/dbal": "^2.10"
   },
   "authors": [

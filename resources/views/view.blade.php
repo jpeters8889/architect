@@ -25,7 +25,7 @@
 
 <!-- other styles -->
 </head>
-<body class="bg-gray-200 min-h-full text-black">
+<body class="font-sans bg-gray-200 min-h-full text-black">
 <div id="architect">
     <architect-app></architect-app>
 </div>

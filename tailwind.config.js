@@ -179,7 +179,8 @@ module.exports = {
 
         fontFamily: {
             sans: [
-                'Open+Sans',
+                '"Open+Sans"',
+                'system-ui',
                 '-apple-system',
                 'BlinkMacSystemFont',
                 '"Segoe UI"',
@@ -193,21 +194,8 @@ module.exports = {
                 '"Segoe UI Symbol"',
                 '"Noto Color Emoji"',
             ],
-            serif: [
-                'Georgia',
-                'Cambria',
-                '"Times New Roman"',
-                'Times',
-                'serif',
-            ],
-            mono: [
-                'Menlo',
-                'Monaco',
-                'Consolas',
-                '"Liberation Mono"',
-                '"Courier New"',
-                'monospace',
-            ],
+            serif: ['Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
+            mono: ['Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
         },
 
         fontSize: {
