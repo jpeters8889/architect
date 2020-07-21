@@ -7,7 +7,8 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import PortalVue from 'portal-vue'
 import ArchitectApp from "./views/ArchitectApp";
 import Navigation from "./Components/Navigation";
-import Datetime from 'vue-datetime'
+import Datetime from 'vue-datetime';
+import ClickOutside from 'vue-click-outside';
 
 Vue.use(Toasted, {
     router: routes,
@@ -43,6 +44,9 @@ export default class Architect {
         this.app = new Vue({
             el: '#architect',
             router: routes,
+            directives: {
+                ClickOutside
+            },
             mounted: () => {
                 if (document.querySelector('.hamburger')) {
                     document.querySelector('.hamburger').addEventListener('click', () => {

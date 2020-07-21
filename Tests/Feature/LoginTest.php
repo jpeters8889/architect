@@ -13,8 +13,7 @@ class LoginTest extends ArchitectTestCase
         $this->post('/architect/api/auth', [
             'email' => 'foo',
             'password' => 'bar',
-        ])
-            ->assertSessionHasErrors();
+        ])->assertSessionHasErrors();
     }
 
     /** @test */

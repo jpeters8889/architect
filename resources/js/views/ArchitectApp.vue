@@ -15,12 +15,13 @@
                              @click="showMobileNav = true">
                             <font-awesome-icon :icon="['fas', 'bars']"></font-awesome-icon>
                         </div>
-                        <router-link :to="{name: 'home'}">
-                            Logo
+                        <router-link :to="{name: 'home'}" class="-m-2">
+                            <img src="/vendor/architect/images/architect-logo.png" alt="" class="h-15" />
                         </router-link>
                     </div>
-                    <div class="hidden sm:flex bg-gray-100 flex-1 p-2 h-15 shadow items-center">
+                    <div class="hidden sm:flex bg-gray-100 flex-1 p-2 h-15 shadow items-center justify-between">
                         <h1 class="text-2xl font-semibold text-gray-900">{{ siteTitle }}</h1>
+                        <user-info-circle></user-info-circle>
                     </div>
                 </div>
 
@@ -52,6 +53,7 @@
             </div>
 
             <portal-target name="modal"></portal-target>
+            <portal-target name="secondary-modal"></portal-target>
         </template>
     </div>
 </template>

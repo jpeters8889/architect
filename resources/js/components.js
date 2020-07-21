@@ -12,6 +12,7 @@ import Input from "./Forms/Input";
 import Button from "./Forms/Button";
 import Search from "./Components/Search";
 import Filters from "./Components/Filters";
+import UserCircle from "./Components/UserCircle";
 
 Vue.component('blueprint-field', BlueprintField);
 Vue.component('blueprint-filter', Filters);
@@ -22,6 +23,7 @@ Vue.component('pagination', Paginator);
 Vue.component('modal', Modal);
 Vue.component('card-component', Card);
 Vue.component('loader', Loader);
+Vue.component('user-info-circle', UserCircle);
 
 Vue.component('form-input', Input);
 Vue.component('form-button', Button);

@@ -38,12 +38,17 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
     {
         Route::post(config('architect.route') . '/api/auth', [
             'middleware' => ['web', ArchitectIsRunning::class],
-            'uses' => 'JPeters\Architect\Http\Controllers\LoginController@login',
+            'uses' => 'JPeters\Architect\Http\Controllers\AuthController@login',
         ]);
 
         Route::post(config('architect.route') . '/api/logout', [
             'middleware' => ['web', ArchitectIsRunning::class],
-            'uses' => 'JPeters\Architect\Http\Controllers\LoginController@logout',
+            'uses' => 'JPeters\Architect\Http\Controllers\AuthController@logout',
+        ]);
+
+        Route::post(config('architect.route') . '/api/change-password', [
+            'middleware' => ['web', ArchitectIsRunning::class],
+            'uses' => 'JPeters\Architect\Http\Controllers\AuthController@changePassword',
         ]);
 
         Route::namespace('JPeters\Architect\Http\Controllers')

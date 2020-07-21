@@ -1,8 +1,8 @@
 <template>
     <div class="bg-blue-900 h-full text-black h-full flex justify-center items-center w-full absolute">
         <div class="bg-blue-100 max-w-xs mx-auto rounded-lg shadow mx-auto w-full border-green-500 border-t-4">
-            <div class="mx-auto text-center text-highlight">
-                Logo
+            <div class="mx-auto text-center text-highlight p-4">
+                <img src="/vendor/architect/images/architect-logo-dark.png" alt="" />
             </div>
 
             <div class="p-8">
@@ -10,9 +10,9 @@
                     You're now logged out.
                 </h2>
 
-                <router-link class="text-center font-normal hover:underline text-sm block text-gray-500" :to="{name: 'login'}">
+                <a class="text-center font-normal hover:underline text-sm block text-gray-500" :href="link">
                     Login again
-                </router-link>
+                </a>
             </div>
         </div>
     </div>
@@ -23,5 +23,11 @@
         mounted() {
             window.Architect.request().post('/logout');
         },
+
+        computed: {
+            link() {
+                return window.config.prefix;
+            }
+        }
     }
 </script>

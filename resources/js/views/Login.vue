@@ -1,16 +1,14 @@
 <template>
     <div class="bg-blue-900 h-full text-black h-full flex justify-center items-center w-full absolute">
         <div class="bg-blue-100 max-w-xs mx-auto rounded-lg shadow mx-auto w-full border-green-500 border-t-4">
-            <div class="mx-auto text-center text-highlight">
-                Logo
+            <div class="mx-auto text-center text-highlight p-4">
+                <img src="/vendor/architect/images/architect-logo-dark.png" alt="" />
             </div>
 
-            <div class="p-8">
+            <div class="p-8 pt-0">
                 <h2 class="font-normal mb-6 text-2xl text-center text-2">Please login</h2>
 
-                <form>
-                    <!-- csrf -->
-
+                <div>
                     <div class="mb-2">
                         <form-input name="email" type="email" placeholder="Email Address"
                                     required :value="fields.email.value"></form-input>
@@ -24,7 +22,7 @@
                     <form-button class="w-full" theme="positive" error-event-listener="loginError"
                                  :click="processLogin">Login
                     </form-button>
-                </form>
+                </div>
 
             </div>
         </div>
@@ -109,6 +107,6 @@
                     closure(field);
                 });
             }
-        }
+        },
     }
 </script>

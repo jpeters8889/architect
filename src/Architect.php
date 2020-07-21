@@ -2,6 +2,7 @@
 
 namespace JPeters\Architect;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Event;
@@ -79,6 +80,8 @@ class Architect
             'prefix' => '/' . config('architect.route'),
             'apiRoot' => '/' . config('architect.route') . '/api',
             'navigation' => $manager->renderForNavigation(),
+            'user' => resolve(Authenticatable::class),
+            'canChangePassword' => config('architect.can_change_password', false),
         ];
     }
 }

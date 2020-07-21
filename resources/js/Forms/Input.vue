@@ -44,6 +44,10 @@
             required: {
                 type: Boolean,
                 default: false,
+            },
+            match: {
+                type: String,
+                default: null,
             }
         },
 
@@ -51,6 +55,10 @@
             this.currentValue = this.value;
 
             if(this.required) {
+                this.hasError = true;
+            }
+
+            if(this.match && this.value !== this.match) {
                 this.hasError = true;
             }
 
@@ -71,6 +79,12 @@
                 if (this.required && this.currentValue === '') {
                     this.hasError = true;
                     this.errorText = 'Field is required';
+                    return;
+                }
+
+                if(this.match && this.currentValue !== this.match) {
+                    this.hasError = true;
+                    this.errorText = 'Field does not match';
                     return;
                 }
 
