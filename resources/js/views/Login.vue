@@ -50,6 +50,10 @@
                     this.fields[field].value = value;
                 });
 
+                this.$root.$on(field + '-keyup', (value) => {
+                    this.fields[field].value = value;
+                });
+
                 this.$root.$on(field + '-valid', () => {
                     this.fields[field].valid = true;
 
