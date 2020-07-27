@@ -2,15 +2,21 @@
   "name": "jpeters/architect",
   "description": "Architect",
   "type": "library",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "require": {
     "laravel/framework": "^7.0",
     "ext-json": "*",
     "laravel/ui": "^2.0",
-    "orchestra/testbench": "5.1.0",
-    "phpunit/phpunit": "^8.5|^9.0",
     "doctrine/dbal": "^2.10"
+  },
+  "require-dev": {
+    "nunomaduro/phpinsights": "^1.14",
+    "friendsofphp/php-cs-fixer": "^2.16",
+    "orchestra/testbench": "5.1.0",
+    "phpmd/phpmd": "^2.8",
+    "phpunit/phpunit": "^8.5|^9.0",
+    "squizlabs/php_codesniffer": "^3.5"
   },
   "authors": [
     {
@@ -22,7 +28,11 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "JPeters\\Architect\\": "src",
+      "JPeters\\Architect\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "JPeters\\Architect\\Tests\\": "Tests"
     }
   },
@@ -32,11 +42,5 @@
         "JPeters\\Architect\\Providers\\ArchitectServiceProvider"
       ]
     }
-  },
-  "require-dev": {
-    "nunomaduro/phpinsights": "^1.14",
-    "friendsofphp/php-cs-fixer": "^2.16",
-    "phpmd/phpmd": "^2.8",
-    "squizlabs/php_codesniffer": "^3.5"
   }
 }

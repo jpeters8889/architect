@@ -2,7 +2,7 @@
     <div class="bg-blue-900 h-full text-black h-full flex justify-center items-center w-full absolute">
         <div class="bg-blue-100 max-w-xs mx-auto rounded-lg shadow mx-auto w-full border-green-500 border-t-4">
             <div class="mx-auto text-center text-highlight p-4">
-                <img src="/vendor/architect/images/architect-logo-dark.png" alt="" />
+                <img src="/vendor/architect/images/architect-logo-dark.png" alt=""/>
             </div>
 
             <div class="p-8 pt-0">
@@ -75,26 +75,28 @@
                     this.$root.$emit(field + '-get-value');
                 });
 
-                if (this.fields.email.valid && this.fields.password.valid) {
-                    window.Architect.request().post('/auth', {
-                        email: this.fields.email.value,
-                        password: this.fields.password.value,
-                    }).then((request) => {
-                        if (request.status === 200) {
-                            window.location = window.config.prefix;
-                            return;
-                        }
+                setTimeout(() => {
+                    if (this.fields.email.valid && this.fields.password.valid) {
+                        window.Architect.request().post('/auth', {
+                            email: this.fields.email.value,
+                            password: this.fields.password.value,
+                        }).then((request) => {
+                            if (request.status === 200) {
+                                window.location = window.config.prefix;
+                                return;
+                            }
 
-                        this.loginError();
-                    }).catch(() => {
-                        this.loginError();
-                    });
+                            this.loginError();
+                        }).catch(() => {
+                            this.loginError();
+                        });
 
-                    return;
-                }
+                        return;
+                    }
 
-                this.$root.$emit('loginError');
-                window.Architect.error('Please enter your details...');
+                    this.$root.$emit('loginError');
+                    window.Architect.error('Please enter your details...');
+                }, 100);
             },
 
             loginError() {

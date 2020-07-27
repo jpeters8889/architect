@@ -13,12 +13,16 @@
                 <li v-if="show[building]" v-for="blueprint in blueprints[building]"
                     class="leading-tight mb-2 overflow-hidden rounded"
                     :class="isActiveRoute(blueprint.route) ? 'bg-green-500' : 'bg-blue-200'">
-                    <router-link :to="{
-                        name: 'blueprintList',
-                        params: {
-                            blueprint: blueprint.route,
-                        }
-                    }" class="slider-bg no-underline text-justify text-xl flex items-center p-2">
+                    <router-link
+                            :to="{
+                                name: 'blueprintList',
+                                params: {
+                                    blueprint: blueprint.route,
+                                }
+                            }"
+                            @click="navigating()"
+                            class="slider-bg no-underline text-justify text-xl flex items-center p-2"
+                    >
                         <div class="mr-1 text-center w-8">
                             <font-awesome-icon :icon="['fas', 'cogs']"></font-awesome-icon>
                         </div>
@@ -66,6 +70,10 @@
             toggleBuilding(building) {
                 this.show[building] = !this.show[building];
             },
+
+            navigating() {
+                window.Architect.$emit('close-mobile-nav');
+            }
         }
     }
 </script>

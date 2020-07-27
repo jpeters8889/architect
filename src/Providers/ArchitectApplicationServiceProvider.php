@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use JPeters\Architect\Architect;
 use JPeters\Architect\CoreRoutes;
+use JPeters\Architect\Dashboard;
+use JPeters\Architect\Dashboards\DashboardContract;
 use JPeters\Architect\Http\Middleware\ArchitectIsRunning;
 
 class ArchitectApplicationServiceProvider extends ServiceProvider
@@ -22,6 +24,7 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
 
         Architect::isRunning(function () {
             $this->registerBlueprints();
+            $this->architect->registerDashboard($this->dashboard());
         });
 
         $this->registerCoreRoutes();
@@ -32,6 +35,11 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
     protected function blueprints()
     {
         return [];
+    }
+
+    protected function dashboard(): DashboardContract
+    {
+        return new Dashboard();
     }
 
     protected function registerCoreRoutes()

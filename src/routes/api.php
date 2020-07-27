@@ -6,6 +6,8 @@ Route::get('/health', 'HealthController@get');
 
 Route::get('/assets/{asset}/{name}', 'AssetController@get');
 
+Route::get('/dashboard', 'DashboardController@get');
+
 Route::prefix('/blueprints')->group(static function () {
     Route::post('/submit', 'BlueprintController@submit');
 

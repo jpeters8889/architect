@@ -91,6 +91,16 @@
             });
 
             window.Architect.$emit('load-end');
+
+            window.Architect.$on('close-mobile-nav', () => {
+                this.showMobileNav = false;
+            });
+        },
+
+        watch:{
+            $route: function() {
+                this.showMobileNav = false;
+            }
         }
     }
 </script>

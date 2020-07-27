@@ -8,6 +8,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Event;
 use JPeters\Architect\Blueprints\BlueprintManager;
 use JPeters\Architect\Buttons\Button;
+use JPeters\Architect\Dashboards\DashboardContract;
 use JPeters\Architect\Events\ArchitectRunning;
 use JPeters\Architect\Lookup\Lookup;
 use JPeters\Architect\Plans\Listeners\Listener;
@@ -31,6 +32,9 @@ class Architect
 
     /** @var Button */
     public $button;
+
+    /** @var DashboardContract */
+    public $dashboard;
 
     /** @var Lookup */
     public $lookup;
@@ -70,6 +74,11 @@ class Architect
     public function registerBlueprint($blueprint)
     {
         $this->blueprintManager->registerBlueprint($blueprint);
+    }
+
+    public function registerDashboard(DashboardContract $dashboard)
+    {
+        $this->dashboard = $dashboard;
     }
 
     public static function coreJavascript(BlueprintManager $manager)

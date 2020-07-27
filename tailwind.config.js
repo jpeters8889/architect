@@ -288,6 +288,7 @@ module.exports = {
             full: '100%',
             imageManager: '150px',
             255: '255px',
+            500: '500px',
         },
 
         minHeight: {

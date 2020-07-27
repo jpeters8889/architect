@@ -1,28 +1,30 @@
 <template>
     <div>
         <p class="mb-6">
-            To change your password please enter your current password below, then your new password, and finally confirm
-            your new password.
+            To change your password please enter your current password below, then your new password, and finally
+            confirm your new password.
         </p>
 
-        <div class="mb-6">
-            <form-input name="currentPassword" type="password" placeholder="Current Password"
-                        required></form-input>
-        </div>
+        <div class="max-w-500">
+            <div class="mb-6">
+                <form-input name="currentPassword" type="password" placeholder="Current Password"
+                            required></form-input>
+            </div>
 
-        <div class="mb-6">
-            <form-input name="newPassword" type="password" placeholder="New Password"
-                        required></form-input>
-        </div>
+            <div class="mb-6">
+                <form-input name="newPassword" type="password" placeholder="New Password"
+                            required></form-input>
+            </div>
 
-        <div class="mb-6">
-            <form-input name="passwordConfirmation" type="password" placeholder="Confirm New Password"
-                        :match="fields.newPassword.value" required></form-input>
-        </div>
+            <div class="mb-6">
+                <form-input name="passwordConfirmation" type="password" placeholder="Confirm New Password"
+                            :match="fields.newPassword.value" required></form-input>
+            </div>
 
-        <form-button class="w-full" theme="positive" error-event-listener="loginError"
-                     :click.prevent="processForm">Change Password
-        </form-button>
+            <form-button class="w-full" theme="positive" error-event-listener="loginError"
+                         :click.prevent="processForm">Change Password
+            </form-button>
+        </div>
     </div>
 </template>
 
