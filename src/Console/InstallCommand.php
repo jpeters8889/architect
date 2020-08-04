@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Console;
 
+use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Container\Container;
-use Illuminate\Support\Str;
 
 class InstallCommand extends Command
 {
@@ -12,7 +14,7 @@ class InstallCommand extends Command
 
     protected $description = 'Install Architect';
 
-    public function handle()
+    public function handle(): void
     {
         $this->comment('Publishing Architect Assets');
         $this->callSilent('architect:publish');
@@ -27,32 +29,33 @@ class InstallCommand extends Command
         $this->writeAppNamespace();
     }
 
-    protected function getAppNamespace()
+    protected function getAppNamespace(): string
     {
         return Container::getInstance()->getNamespace();
     }
 
-    protected function registerServiceProvider()
+    protected function registerServiceProvider(): voisd
     {
         $namespace = Str::replaceLast('\\', '', $this->getAppNamespace());
         $appConfigFile = config_path('app.php');
+
         file_put_contents($appConfigFile, str_replace(
-            "{$namespace}\\Providers\EventServiceProvider::class" . PHP_EOL,
-            "{$namespace}\\Providers\EventServiceProvider::class," .
-            PHP_EOL .
-            "        {$namespace}\Providers\ArchitectServiceProvider::class," . PHP_EOL,
+            "{$namespace}\\Providers\EventServiceProvider::class".PHP_EOL,
+            "{$namespace}\\Providers\EventServiceProvider::class,".
+            PHP_EOL.
+            "        {$namespace}\Providers\ArchitectServiceProvider::class,".PHP_EOL,
             file_get_contents($appConfigFile)
         ));
     }
 
-    protected function writeAppNamespace()
+    protected function writeAppNamespace(): void
     {
         $namespace = $this->getAppNamespace();
 
         $this->writeAppNamespaceOn(app_path('Providers/ArchitectServiceProvider.php'), $namespace);
     }
 
-    protected function writeAppNamespaceOn($file, $namespace)
+    protected function writeAppNamespaceOn(string $file, string $namespace): void
     {
         file_put_contents($file, str_replace(
             'App\\',

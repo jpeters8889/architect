@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\ArchitectTests\Unit;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
-use JPeters\Architect\Blueprints\Blueprint;
-use JPeters\Architect\Blueprints\BlueprintListExtractor;
 use JPeters\Architect\Plans\Plan;
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Laravel\Blueprints\Blog as BlogBlueprint;
-use JPeters\Architect\Tests\Laravel\Blueprints\User;
-use JPeters\Architect\Tests\Laravel\Models\Blog;
-use JPeters\Architect\Tests\Laravel\Models\User as UserModel;
+use JPeters\Architect\Blueprints\Blueprint;
+use Illuminate\Database\Eloquent\Collection;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\Laravel\Models\Blog;
+use JPeters\Architect\Blueprints\BlueprintListExtractor;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use JPeters\Architect\TestHelpers\Laravel\Blueprints\User;
+use JPeters\Architect\TestHelpers\Laravel\Models\User as UserModel;
+use JPeters\Architect\TestHelpers\Laravel\Blueprints\Blog as BlogBlueprint;
 
 class BlueprintListTest extends ArchitectTestCase
 {
@@ -36,7 +38,7 @@ class BlueprintListTest extends ArchitectTestCase
     {
         return [
             ['data'], ['hiddenOnMobile'], ['labels'], ['meta'], ['vue-suffix'],
-            ['vuePrefixes'], ['card'], ['canEdit'], ['searchable'], ['filters']
+            ['vuePrefixes'], ['card'], ['canEdit'], ['searchable'], ['filters'],
         ];
     }
 
@@ -123,7 +125,7 @@ class BlueprintListTest extends ArchitectTestCase
     {
         $this->assertTrue($this->list['canEdit']);
 
-        $this->list = (new BlueprintListExtractor(new class extends Blueprint {
+        $this->list = (new BlueprintListExtractor(new class() extends Blueprint {
             public function model(): string
             {
                 return Blog::class;
@@ -189,7 +191,7 @@ class BlueprintListTest extends ArchitectTestCase
 
         $this->assertNotCount(0, $blogBlueprint['filters']);
 
-        foreach($filters as $key => $filter) {
+        foreach ($filters as $key => $filter) {
             $this->assertArrayHasKey($key, $blogBlueprint['filters']);
             $this->assertArrayHasKey('name', $blogBlueprint['filters'][$key]);
             $this->assertArrayHasKey('options', $blogBlueprint['filters'][$key]);

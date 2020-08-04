@@ -1,9 +1,9 @@
 <template>
     <div class="flex">
-        <div class="flex items-center justify-center text-xs mr-2" :class="parseInt(value) === 1 ? 'text-green-500' : 'text-red-500'">
-            <font-awesome-icon :icon="['fas', 'circle']"></font-awesome-icon>
+        <div class="flex items-center justify-center py-1 leading-none px-3 rounded-full text-sm font-semibold"
+             :class="parseInt(value) === 1 ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700'">
+            {{ parseInt(value) === 1 ? 'Yes' : 'No' }}
         </div>
-        <div class="flex-1">{{ parseInt(value) === 1 ? 'Yes' : 'No' }}</div>
     </div>
 </template>
 

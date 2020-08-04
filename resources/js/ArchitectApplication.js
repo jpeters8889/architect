@@ -53,7 +53,7 @@ export default class Architect {
                         document.querySelector('.navigation').classList.toggle('hidden');
                     });
 
-                    architect.$on('error', message => {
+                    Architect.$on('error', message => {
                         console.log(message);
                         this.vue.$toasted.show(message, {type: 'error'});
                     });

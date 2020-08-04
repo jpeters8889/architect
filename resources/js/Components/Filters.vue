@@ -11,16 +11,16 @@
         <div class="fixed bg-black-90 fixed w-full h-full top-0 left-0 flex justify-center items-center z-50"
              v-if="showFilterBox">
             <div class="absolute top-0 right-0 bg-white w-300 h-full flex flex-col overflow-y-scroll overflow-x-hidden">
-                <div class="flex justify-between p-2 text-blue-900 text-xl font-semibold border-b-2 border-blue-900 items-center">
+                <div class="flex justify-between p-2 bg-gray-100 text-blue-900 text-xl font-semibold border-b-2 border-blue-900 items-center">
                     <h2>
                         Available Filters
                     </h2>
                     <font-awesome-icon :icon="['fas', 'times']" @click="showFilterBox = false"></font-awesome-icon>
                 </div>
 
-                <div v-for="(filter, key) in filters" class="flex flex-col">
-                    <div class="flex justify-between items-center border-b border-blue-900 p-2">
-                        <h2 class="text-blue-900 text-lg font-semibold" @click="show[key] = !show[key]">
+                <div v-for="(filter, key) in filters" class="flex flex-col bg-blue-300 overflow-hidden rounded-xl m-2">
+                    <div class="flex justify-between items-center p-2">
+                        <h2 class="text-lg font-semibold flex-1 cursor-pointer" @click="show[key] = !show[key]">
                             {{ filter.name }}
                         </h2>
                         <a v-if="Object.keys(appliedFilters).includes(key)" @click="removeFilter(key)">
@@ -30,8 +30,8 @@
 
                     <ul v-show="show[key]">
                         <li v-for="(name, value) in filter.options"
-                            class="border-b border-blue-300 transition-bg p-2"
-                            :class="isFilterApplied(key, value) ? 'bg-blue-200' : 'bg-white hover:bg-blue-100'"
+                            class="transition-bg p-2"
+                            :class="isFilterApplied(key, value) ? 'bg-green-400' : 'bg-blue-200 hover:bg-blue-100'"
                             @click="addFilter(key, value)">
                             {{ name }}
                         </li>
@@ -83,7 +83,7 @@
             appliedFilters: {
                 deep: true,
                 handler: function () {
-                    this.$root.$emit('filter-change', {
+                    Architect.$emit('filter-change', {
                         filters: this.appliedFilters,
                     });
                 },

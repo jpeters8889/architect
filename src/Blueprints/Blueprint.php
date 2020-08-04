@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Blueprints;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-use JPeters\Architect\Cards\Card;
+use Illuminate\Database\Eloquent\Builder;
 
 abstract class Blueprint
 {
@@ -15,27 +16,27 @@ abstract class Blueprint
         return $this->model()::query();
     }
 
-    public function url()
+    public function url(): string
     {
         return Str::lower(class_basename($this->model()));
     }
 
-    public function primaryField()
+    public function primaryField(): string
     {
         return 'id';
     }
 
-    public function isVisibleField()
+    public function isVisibleField(): string
     {
         return 'live';
     }
 
-    public function slugField()
+    public function slugField(): string
     {
         return 'slug';
     }
 
-    public function ordering()
+    public function ordering(): array
     {
         return [
             'created_at',
@@ -58,34 +59,34 @@ abstract class Blueprint
         return true;
     }
 
-    public function makeVisible()
+    public function makeVisible(): array
     {
         return [];
     }
 
-    public function blueprintName()
+    public function blueprintName(): string
     {
         return Str::plural(Str::title(class_basename($this->model())));
     }
 
-    public function blueprintRoute()
+    public function blueprintRoute(): string
     {
         return Str::slug(class_basename($this->model()));
     }
 
-    public function blueprintSite()
+    public function blueprintSite(): string
     {
         return 'Main';
     }
 
     abstract public function plans(): array;
 
-    public function card()
+    public function card(): ?string
     {
         return null;
     }
 
-    public function displayCount()
+    public function displayCount(): int
     {
         return 0;
     }

@@ -22,13 +22,13 @@
 
         methods: {
             changeOrder(direction) {
-                window.Architect.request().post('/order', {
+                Architect.request().post('/order', {
                     blueprint: this.$route.params.blueprint,
                     name: this.name,
                     value: this.value,
                     order: direction
                 }).then(() => {
-                   window.Architect.$emit('reload-page');
+                   Architect.$emit('reload-page');
                 });
             }
         }

@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Blueprints;
 
-use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Container\Container;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class BlueprintManager
 {
-    private $blueprints = [];
+    private array $blueprints = [];
 
-    public function renderForNavigation()
+    public function renderForNavigation(): array
     {
-        if (!Auth::check()) {
+        if (!Container::getInstance()->make(Guard::class)) {
             return [];
         }
 
@@ -28,12 +30,12 @@ class BlueprintManager
         return $navigationSettings;
     }
 
-    public function registerBlueprint($blueprint)
+    public function registerBlueprint($blueprint): void
     {
         $this->blueprints[] = $blueprint;
     }
 
-    public function resolve($blueprintRoute)
+    public function resolve(string $blueprintRoute)
     {
         foreach ($this->blueprints as $blueprint) {
             /** @var Blueprint $concrete */
@@ -47,10 +49,6 @@ class BlueprintManager
         return false;
     }
 
-    /**
-     * @param Collection $blueprints
-     * @param $navigationSettings
-     */
     private function processBlueprintsForNavigation(Collection $blueprints, &$navigationSettings): void
     {
         $blueprints->each(static function ($blueprint) use (&$navigationSettings) {
@@ -58,7 +56,7 @@ class BlueprintManager
             $concreteBlueprint = new $blueprint();
             $blueprintSite = $concreteBlueprint->blueprintSite();
 
-            if (! in_array($blueprintSite, $navigationSettings['buildings'], true)) {
+            if (!in_array($blueprintSite, $navigationSettings['buildings'], true)) {
                 $navigationSettings['buildings'][] = $blueprintSite;
             }
 
@@ -70,7 +68,7 @@ class BlueprintManager
         });
     }
 
-    public function blueprintList()
+    public function blueprintList(): array
     {
         return $this->blueprints;
     }

@@ -16,7 +16,7 @@
                             <font-awesome-icon :icon="['fas', 'bars']"></font-awesome-icon>
                         </div>
                         <router-link :to="{name: 'home'}" class="-m-2">
-                            <img src="/vendor/architect/images/architect-logo.png" alt="" class="h-15" />
+                            <img src="/vendor/architect/images/architect-logo.png" alt="" class="h-15"/>
                         </router-link>
                     </div>
                     <div class="hidden sm:flex bg-gray-100 flex-1 p-2 h-15 shadow items-center justify-between">
@@ -26,14 +26,13 @@
                 </div>
 
                 <div class="flex flex-1">
-                    <div class="hidden navigation w-255 max-w-255 sm:block sm:relative p-2 flex-1 bg-blue-700 shadow" style="flex: 0 0 255px">
+                    <div class="hidden navigation w-255 max-w-255 sm:block sm:relative p-2 flex-1 bg-blue-700 shadow"
+                         style="flex: 0 0 255px">
                         <architect-nav class="flex-1"></architect-nav>
                     </div>
 
-                    <div class="p-2 mx-auto flex-1">
-                        <div class="bg-gray-100 rounded p-4 shadow">
-                            <router-view></router-view>
-                        </div>
+                    <div class="p-4 mx-auto flex-1">
+                        <router-view></router-view>
                     </div>
                 </div>
 
@@ -82,24 +81,25 @@
         },
 
         mounted() {
-            window.Architect.$on('load-start', () => {
+            Architect.$on('load-start', () => {
                 this.showLoader = true;
             });
 
-            window.Architect.$on('load-end', () => {
+            Architect.$on('load-end', () => {
                 this.showLoader = false;
             });
 
-            window.Architect.$emit('load-end');
+            Architect.$emit('load-end');
 
-            window.Architect.$on('close-mobile-nav', () => {
+            Architect.$on('close-mobile-nav', () => {
                 this.showMobileNav = false;
             });
         },
 
-        watch:{
-            $route: function() {
+        watch: {
+            $route: function () {
                 this.showMobileNav = false;
+                window.scrollTo(0, 0);
             }
         }
     }

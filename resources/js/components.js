@@ -13,10 +13,12 @@ import Button from "./Forms/Button";
 import Search from "./Components/Search";
 import Filters from "./Components/Filters";
 import UserCircle from "./Components/UserCircle";
+import ChangePassword from "./Components/ChangePassword";
 
 Vue.component('blueprint-field', BlueprintField);
 Vue.component('blueprint-filter', Filters);
 Vue.component('blueprint-search', Search);
+Vue.component('change-password', ChangePassword)
 Vue.component('header-component', Header);
 Vue.component('table-component', Table);
 Vue.component('pagination', Paginator);

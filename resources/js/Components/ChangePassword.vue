@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <p class="mb-6">
+    <div class="flex flex-col items-center justify-center">
+        <p class="mb-6 text-center">
             To change your password please enter your current password below, then your new password, and finally
             confirm your new password.
         </p>
 
-        <div class="max-w-500">
+        <div class="w-3/4">
             <div class="mb-6">
                 <form-input name="currentPassword" type="password" placeholder="Current Password"
                             required></form-input>
@@ -21,9 +21,11 @@
                             :match="fields.newPassword.value" required></form-input>
             </div>
 
-            <form-button class="w-full" theme="positive" error-event-listener="loginError"
-                         :click.prevent="processForm">Change Password
-            </form-button>
+            <div class="text-center">
+                <form-button theme="positive" error-event-listener="loginError"
+                             :click.prevent="processForm">Change Password
+                </form-button>
+            </div>
         </div>
     </div>
 </template>
@@ -49,24 +51,24 @@
 
         mounted() {
             this.forEachFields((field) => {
-                this.$root.$on(field + '-value', (value) => {
+                Architect.$on(field + '-value', (value) => {
                     this.fields[field].value = value;
                 });
 
-                this.$root.$on(field + '-keyup', (value) => {
+                Architect.$on(field + '-keyup', (value) => {
                     this.fields[field].value = value;
                 });
 
-                this.$root.$on(field + '-valid', () => {
+                Architect.$on(field + '-valid', () => {
                     this.fields[field].valid = true;
 
                 });
 
-                this.$root.$on(field + '-error', () => {
+                Architect.$on(field + '-error', () => {
                     this.fields[field].valid = false;
                 });
 
-                this.$root.$on(field + '-enter-press', () => {
+                Architect.$on(field + '-enter-press', () => {
                     this.processForm();
                 });
             });
@@ -75,21 +77,21 @@
         methods: {
             processForm() {
                 this.forEachFields((field) => {
-                    this.$root.$emit(field + '-get-value');
+                    Architect.$emit(field + '-get-value');
                 });
 
                 if (!this.fields.currentPassword.valid || !this.fields.newPassword.valid || !this.fields.passwordConfirmation.valid) {
-                    window.Architect.error('Please enter your details...');
+                    Architect.error('Please enter your details...');
                     return;
                 }
 
-                window.Architect.request().post('/change-password', {
+                Architect.request().post('/change-password', {
                     current_password: this.fields.currentPassword.value,
                     new_password: this.fields.newPassword.value,
                     new_password_confirmation: this.fields.passwordConfirmation.value,
                 }).then((request) => {
                     if (request.status === 200) {
-                        window.Architect.success('Password updated...');
+                        Architect.success('Password updated...');
                         this.$router.push('home');
 
                         return;
@@ -102,10 +104,10 @@
             },
 
             error() {
-                window.Architect.error('There was an error changing your password...');
+                Architect.error('There was an error changing your password...');
                 this.forEachFields((field) => {
                     this.fields[field].value = '';
-                    this.$root.$emit(`${field}-set-value`, '');
+                    Architect.$emit(`${field}-set-value`, '');
                 });
             },
 

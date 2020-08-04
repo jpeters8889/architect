@@ -33,9 +33,7 @@
         }),
 
         mounted() {
-          if(this.actualValue) {
-              // this.select(this.actualValue);
-          }
+          this.actualValue = this.value[this.metas.lookupVariable];
         },
 
         methods: {

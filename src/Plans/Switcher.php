@@ -1,39 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Plans;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class Switcher extends Select
 {
-    protected $optionPlans = [];
+    protected array $optionPlans = [];
 
-    /** @var Model */
-    private $model;
+    private Model $model;
 
-    public $deferUpdate = true;
+    public bool $deferUpdate = true;
 
-    public function vuePrefix()
+    public function vuePrefix(): string
     {
         return 'switcher';
     }
 
-    public function addPlansForOption($option, array $plans)
+    public function addPlansForOption($option, array $plans): self
     {
         $this->optionPlans[$option] = $plans;
 
         return $this;
     }
 
-    public function getMetas()
+    public function getMetas(): array
     {
         return array_merge(parent::getMetas(), [
             'switches' => $this->getSwitches(),
         ]);
     }
 
-    protected function getSwitches()
+    protected function getSwitches(): array
     {
         $switches = [];
 
@@ -44,15 +45,15 @@ class Switcher extends Select
         return $switches;
     }
 
-    protected function getPlans($plans)
+    protected function getPlans($plans): Collection
     {
         return (new Collection($plans))
             ->transform(function (Plan $plan) {
                 return [
                     'label' => $plan->getLabel(),
                     'name' => $plan->getColumn(),
-                    'component' => $plan->vuePrefix() . '-form',
-                    'value' => $this->model ? $plan->getCurrentValue($this->model) : null,
+                    'component' => $plan->vuePrefix().'-form',
+                    'value' => isset($this->model) ? $plan->getCurrentValue($this->model) : null,
                     'metas' => $plan->getMetas(),
                 ];
             });
@@ -65,7 +66,7 @@ class Switcher extends Select
         $model->{$this->getColumn()} = $values[$this->getColumn()];
 
         foreach ($this->optionPlans[$values[$this->getColumn()]] as $plan) {
-            /** @var Plan $plan */
+            /* @var Plan $plan */
             $plan->handleUpdate($model, $plan->getColumn(), $values[$plan->getColumn()]);
         }
     }

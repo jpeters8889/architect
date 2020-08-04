@@ -1,17 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use JPeters\Architect\Blueprints\Blueprint;
+use JPeters\Architect\Blueprints\SaveBlueprint;
 use JPeters\Architect\Blueprints\BlueprintFormExtractor;
 use JPeters\Architect\Blueprints\BlueprintListExtractor;
-use JPeters\Architect\Blueprints\SaveBlueprint;
 use JPeters\Architect\Http\Requests\BlueprintSubmitRequest;
 
 class BlueprintController extends BaseController
 {
-    public function list(Request $request, $blueprint)
+    public function list(Request $request, string $blueprint): JsonResponse
     {
         /** @var Blueprint $concreteBlueprint */
         $concreteBlueprint = $this->architect->blueprintManager->resolve($blueprint);
@@ -23,10 +27,12 @@ class BlueprintController extends BaseController
         );
     }
 
-    public function form($blueprint, $id = null)
+    public function form($blueprint, $id = null): JsonResponse
     {
         /** @var Blueprint $concreteBlueprint */
-        $concreteBlueprint = $this->architect->blueprintManager->resolve($blueprint);
+        $concreteBlueprint = $this->architect
+            ->blueprintManager
+            ->resolve($blueprint);
 
         abort_if($concreteBlueprint === false, 404, 'Blueprint not found');
 
@@ -41,10 +47,11 @@ class BlueprintController extends BaseController
         );
     }
 
-    public function submit(BlueprintSubmitRequest $request)
+    public function submit(BlueprintSubmitRequest $request): Response
     {
         /** @var Blueprint $concreteBlueprint */
-        $concreteBlueprint = $this->architect->blueprintManager
+        $concreteBlueprint = $this->architect
+            ->blueprintManager
             ->resolve($request->input('_blueprint'));
 
         abort_if($concreteBlueprint === false, 404, 'Blueprint not found');

@@ -1,10 +1,12 @@
 <template>
     <div>
-        <header-component can-view-list="true" :blueprint="blueprint">
-            {{ this.pageTitle }}
-        </header-component>
+        <div class="flex flex-col bg-white rounded-xl shadow mb-2">
+            <header-component :can-view-list="true" :blueprint="blueprint">
+                {{ this.pageTitle }}
+            </header-component>
+        </div>
 
-        <div class="bg-white w-full p-2">
+        <div class="bg-white w-full p-4 rounded-xl shadow">
             <form autocomplete="off" @submit.prevent="submitForm">
                 <div class="w-full py-3" v-for="plan in plans">
                     <plan-form-field :plan="plan"></plan-form-field>
@@ -82,14 +84,14 @@
         mounted() {
             this.initComponent();
 
-            window.Architect.$on('form-field-change', (field) => {
+            Architect.$on('form-field-change', (field) => {
                 this.$set(this.values, field.name, field.value);
             });
         },
 
         computed: {
             currentState() {
-                if(this.$route.params.id !== undefined) {
+                if (this.$route.params.id !== undefined) {
                     return 'update';
                 }
 
@@ -113,7 +115,7 @@
             },
 
             blueprintUrl() {
-                if(this.currentState==='update') {
+                if (this.currentState === 'update') {
                     return `/blueprints/${this.blueprint}/${this.$route.params.id}`
                 }
 
@@ -123,7 +125,7 @@
 
         methods: {
             async initComponent() {
-                window.Architect.$emit('load-start');
+                Architect.$emit('load-start');
                 this.getBlueprint();
             },
 
@@ -150,24 +152,24 @@
                         Architect.error("Can't find Blueprint");
                     });
 
-                window.Architect.$emit('load-end');
+                Architect.$emit('load-end');
             },
 
             submitForm() {
                 let url = `/blueprints/submit`;
 
-                window.Architect.request().post(url, this.collectData())
+                Architect.request().post(url, this.collectData())
                     .then((response) => {
                         this.savedBlueprintUrl = response.data.url;
                         this.showModal = true;
                     })
                     .catch((error) => {
-                        window.Architect.$emit('error', 'An error has occurred, ' + error.message + ' - ' + error.response.data.message);
+                        Architect.$emit('error', 'An error has occurred, ' + error.message + ' - ' + error.response.data.message);
                     });
             },
 
             collectData() {
-                window.Architect.$emit('prepare-form-data');
+                Architect.$emit('prepare-form-data');
 
                 let formData = new FormData();
 

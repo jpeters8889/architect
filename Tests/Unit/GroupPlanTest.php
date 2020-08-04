@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\WithFaker;
+use JPeters\Architect\Plans\Plan;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use JPeters\Architect\Plans\Boolean;
 use JPeters\Architect\Plans\Group;
-use JPeters\Architect\Plans\Plan;
+use JPeters\Architect\Plans\Boolean;
 use JPeters\Architect\Plans\Textfield;
-use JPeters\Architect\Tests\Abstracts\PlanTestCase;
-use JPeters\Architect\Tests\Laravel\Models\Blog;
-use JPeters\Architect\Tests\Laravel\Models\User;
+use Illuminate\Foundation\Testing\WithFaker;
+use JPeters\Architect\TestHelpers\Laravel\Models\Blog;
+use JPeters\Architect\TestHelpers\Laravel\Models\User;
+use JPeters\Architect\TestHelpers\Abstracts\PlanTestCase;
 
 class GroupPlanTest extends PlanTestCase
 {
@@ -56,7 +58,7 @@ class GroupPlanTest extends PlanTestCase
         $this->plan->getPlans()->each(function ($plan, $index) {
             $this->assertEquals($this->setPlans[$index]->getLabel(), $plan['label']);
             $this->assertEquals($this->setPlans[$index]->getColumn(), $plan['name']);
-            $this->assertEquals($this->setPlans[$index]->vuePrefix() . '-form', $plan['component']);
+            $this->assertEquals($this->setPlans[$index]->vuePrefix().'-form', $plan['component']);
             $this->assertEquals($this->setPlans[$index]->getMetas(), $plan['metas']);
             $this->assertNull($plan['value']);
         });
@@ -157,7 +159,7 @@ class GroupPlanTest extends PlanTestCase
         $values = [];
 
         foreach ($this->setPlans as $plan) {
-            /** @var Plan $plan */
+            /* @var Plan $plan */
             $values[$plan->getColumn()] = $this->faker->word;
         }
 
@@ -173,7 +175,7 @@ class GroupPlanTest extends PlanTestCase
         $user = User::query()->first();
 
         foreach ($this->setPlans as $plan) {
-            /** @var Plan $plan */
+            /* @var Plan $plan */
             $this->assertEquals(
                 $values[$plan->getColumn()],
                 $user->{$plan->getColumn()}
@@ -197,7 +199,7 @@ class GroupPlanTest extends PlanTestCase
         $values = [];
 
         foreach ($plans as $plan) {
-            /** @var Plan $plan */
+            /* @var Plan $plan */
             $values[$plan->getColumn()] = $this->faker->word;
         }
 
@@ -206,7 +208,7 @@ class GroupPlanTest extends PlanTestCase
         $additional = $blog->fresh()->attributes()->first();
 
         foreach ($plans as $plan) {
-            /** @var Plan $plan */
+            /* @var Plan $plan */
             $this->assertEquals(
                 $values[$plan->getColumn()],
                 $additional->{$plan->getColumn()}

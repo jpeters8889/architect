@@ -37,14 +37,14 @@
             this.plans = this.metas.plans;
             this.wrap = this.metas.wrap;
 
-            window.Architect.$on(this.emitterName, (field) => {
+            Architect.$on(this.emitterName, (field) => {
                 this.$set(this.values, field.name, field.value);
             });
         },
 
         methods: {
             getFormData() {
-                window.Architect.$emit(this.listenerName);
+                Architect.$emit(this.listenerName);
 
                 return {
                     name: this.name,

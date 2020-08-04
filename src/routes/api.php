@@ -1,27 +1,33 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+declare(strict_types=1);
 
-Route::get('/health', 'HealthController@get');
+use Illuminate\Routing\Router;
 
-Route::get('/assets/{asset}/{name}', 'AssetController@get');
+/* @var Router $router */
 
-Route::get('/dashboard', 'DashboardController@get');
+$router->get('/health', 'HealthController@get');
 
-Route::prefix('/blueprints')->group(static function () {
-    Route::post('/submit', 'BlueprintController@submit');
+$router->get('/assets/{asset}/{name}', 'AssetController@get');
 
-    Route::prefix('/{blueprint}')->group(static function () {
-        Route::get('/list', 'BlueprintController@list');
-        Route::get('/add', 'BlueprintController@form');
-        Route::get('/{id}', 'BlueprintController@form');
+$router->get('/dashboard', 'DashboardController@get');
+
+$router->prefix('/blueprints')->group(static function ($router) {
+    $router->post('/submit', 'BlueprintController@submit');
+
+    $router->prefix('/{blueprint}')->group(static function ($router) {
+        $router->get('/list', 'BlueprintController@list');
+        $router->get('/add', 'BlueprintController@form');
+        $router->get('/{id}', 'BlueprintController@form');
     });
 });
 
-Route::post('/lookup', 'LookupController@handle');
-Route::post('/listener', 'ListenerController@handle');
-Route::post('/order', 'OrderController@handle');
+$router->post('/button', 'ButtonController@handle');
 
-Route::any('/external/{route}/{method}/{id}', 'ExternalPlanController@handle');
-Route::any('/external/{route}/{method}', 'ExternalPlanController@handle');
-Route::any('/external/{route}', 'ExternalPlanController@handle');
+$router->post('/lookup', 'LookupController@handle');
+$router->post('/listener', 'ListenerController@handle');
+$router->post('/order', 'OrderController@handle');
+
+$router->any('/external/{route}/{method}/{id}', 'ExternalPlanController@handle');
+$router->any('/external/{route}/{method}', 'ExternalPlanController@handle');
+$router->any('/external/{route}', 'ExternalPlanController@handle');

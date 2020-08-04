@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full bg-highlight-10 rounded-lg mb-4 shadow overflow-hidden">
+    <div class="w-full bg-white rounded-lg mb-2 p-4 shadow overflow-hidden">
         <component
                 :is="component"
                 :labels="labels"

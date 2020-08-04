@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect;
 
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +14,7 @@ class AnonymousModel extends Model
     {
         $parent = parent::getAttribute($key);
 
-        if (! $parent) {
+        if (!$parent) {
             return '0';
         }
 

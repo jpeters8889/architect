@@ -1,96 +1,100 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect;
 
-use Illuminate\Contracts\Auth\Authenticatable;
+use Closure;
+use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Support\Facades\Event;
-use JPeters\Architect\Blueprints\BlueprintManager;
-use JPeters\Architect\Buttons\Button;
-use JPeters\Architect\Dashboards\DashboardContract;
-use JPeters\Architect\Events\ArchitectRunning;
+use Illuminate\Contracts\Config\Repository;
 use JPeters\Architect\Lookup\Lookup;
+use JPeters\Architect\Buttons\Button;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Auth\Authenticatable;
+use JPeters\Architect\Events\ArchitectRunning;
 use JPeters\Architect\Plans\Listeners\Listener;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use JPeters\Architect\Blueprints\BlueprintManager;
+use JPeters\Architect\Dashboards\DashboardContract;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class Architect
 {
-    /** @var ApiManager */
-    public $apiManager;
+    public ApiManager $apiManager;
 
-    /** @var AssetManager */
-    public $assetManager;
+    public AssetManager $assetManager;
 
-    /** @var Guard */
-    public $authGuard;
+    public Guard $authGuard;
 
-    /** @var ResponseFactory */
-    public $responseFactory;
+    public ResponseFactory $responseFactory;
 
-    /** @var BlueprintManager */
-    public $blueprintManager;
+    public BlueprintManager $blueprintManager;
 
-    /** @var Button */
-    public $button;
+    public Button $button;
 
-    /** @var DashboardContract */
-    public $dashboard;
+    public DashboardContract $dashboard;
 
-    /** @var Lookup */
-    public $lookup;
+    public Lookup $lookup;
 
-    /** @var Listener */
-    public $listener;
+    public Listener $listener;
 
     public function __construct()
     {
         $this->bootstrapAppDependencies();
     }
 
-    private function bootstrapAppDependencies()
+    private function bootstrapAppDependencies(): void
     {
         $this->apiManager = new ApiManager();
         $this->assetManager = new AssetManager();
-        $this->authGuard = resolve(Guard::class);
+        $this->authGuard = Container::getInstance()->make(Guard::class);
         $this->blueprintManager = new BlueprintManager();
         $this->button = new Button($this);
         $this->listener = new Listener($this);
         $this->lookup = new Lookup($this);
-        $this->responseFactory = resolve(ResponseFactory::class);
+        $this->responseFactory = Container::getInstance()->make(ResponseFactory::class);
     }
 
-    public function buildPathTo($path)
+    public function buildPathTo(string $path): string
     {
-        $route = trim(config('architect.route'), '/');
+        $route = trim(Container::getInstance()->make(ConfigRepository::class)->get('architect.route'), '/');
 
         return "{$route}/{$path}";
     }
 
-    public static function isRunning($callback)
+    public static function isRunning(Closure $callback): void
     {
-        Event::listen(ArchitectRunning::class, $callback);
+        Container::getInstance()->make(Dispatcher::class)->listen(ArchitectRunning::class, $callback);
     }
 
-    public function registerBlueprint($blueprint)
+    public function registerBlueprint($blueprint): void
     {
         $this->blueprintManager->registerBlueprint($blueprint);
     }
 
-    public function registerDashboard(DashboardContract $dashboard)
+    public function registerDashboard(DashboardContract $dashboard): void
     {
         $this->dashboard = $dashboard;
     }
 
-    public static function coreJavascript(BlueprintManager $manager)
+    public static function coreJavascript(BlueprintManager $manager): array
     {
+        $config = Container::getInstance()->make(ConfigRepository::class);
+
         return [
-            'domain' => config('app.url'),
-            'siteName' => config('app.name'),
-            'prefix' => '/' . config('architect.route'),
-            'apiRoot' => '/' . config('architect.route') . '/api',
+            'domain' => $config->get('app.url'),
+            'siteName' => $config->get('app.name'),
+            'prefix' => '/'.$config->get('architect.route'),
+            'apiRoot' => '/'.$config->get('architect.route').'/api',
             'navigation' => $manager->renderForNavigation(),
-            'user' => resolve(Authenticatable::class),
-            'canChangePassword' => config('architect.can_change_password', false),
+            'user' => Container::getInstance()->make(Authenticatable::class),
+            'canChangePassword' => $config->get('architect.can_change_password', false),
         ];
+    }
+
+    public static function getInstance()
+    {
+        return Container::getInstance()->make(self::class);
     }
 }

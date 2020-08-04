@@ -46,24 +46,24 @@
 
         mounted() {
             this.forEachFields((field) => {
-                this.$root.$on(field + '-value', (value) => {
+                Architect.$on(field + '-value', (value) => {
                     this.fields[field].value = value;
                 });
 
-                this.$root.$on(field + '-keyup', (value) => {
+                Architect.$on(field + '-keyup', (value) => {
                     this.fields[field].value = value;
                 });
 
-                this.$root.$on(field + '-valid', () => {
+                Architect.$on(field + '-valid', () => {
                     this.fields[field].valid = true;
 
                 });
 
-                this.$root.$on(field + '-error', () => {
+                Architect.$on(field + '-error', () => {
                     this.fields[field].valid = false;
                 });
 
-                this.$root.$on(field + '-enter-press', () => {
+                Architect.$on(field + '-enter-press', () => {
                     this.processLogin();
                 });
             });
@@ -72,12 +72,12 @@
         methods: {
             processLogin() {
                 this.forEachFields((field) => {
-                    this.$root.$emit(field + '-get-value');
+                    Architect.$emit(field + '-get-value');
                 });
 
                 setTimeout(() => {
                     if (this.fields.email.valid && this.fields.password.valid) {
-                        window.Architect.request().post('/auth', {
+                        Architect.request().post('/auth', {
                             email: this.fields.email.value,
                             password: this.fields.password.value,
                         }).then((request) => {
@@ -94,18 +94,18 @@
                         return;
                     }
 
-                    this.$root.$emit('loginError');
-                    window.Architect.error('Please enter your details...');
+                    Architect.$emit('loginError');
+                    Architect.error('Please enter your details...');
                 }, 100);
             },
 
             loginError() {
-                this.$root.$emit('loginError');
-                window.Architect.error('There was an error logging you in...');
+                Architect.$emit('loginError');
+                Architect.error('There was an error logging you in...');
                 this.fields.password.value = '';
                 this.fields.password.valid = false;
 
-                this.$root.$emit('password-set-value', '');
+                Architect.$emit('password-set-value', '');
             },
 
             forEachFields(closure) {

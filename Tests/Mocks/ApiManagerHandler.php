@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Mocks;
 
 use Illuminate\Http\Request;
@@ -16,7 +18,7 @@ class ApiManagerHandler
     {
         return [
           $request,
-          $viewFactory
+          $viewFactory,
         ];
     }
 

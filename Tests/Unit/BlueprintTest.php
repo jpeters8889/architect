@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
 use JPeters\Architect\Blueprints\Blueprint;
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Laravel\Blueprints\Blog;
-use JPeters\Architect\Tests\Laravel\Blueprints\User;
-use JPeters\Architect\Tests\Traits\LogsInUsers;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\Traits\LogsInUsers;
+use JPeters\Architect\TestHelpers\Laravel\Blueprints\Blog;
+use JPeters\Architect\TestHelpers\Laravel\Blueprints\User;
 
 class BlueprintTest extends ArchitectTestCase
 {

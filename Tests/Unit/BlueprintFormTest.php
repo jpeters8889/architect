@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
-use JPeters\Architect\Blueprints\BlueprintFormExtractor;
 use JPeters\Architect\Plans\Plan;
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Laravel\Blueprints\User;
-use JPeters\Architect\Tests\Laravel\Models\User as UserModel;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\Blueprints\BlueprintFormExtractor;
+use JPeters\Architect\TestHelpers\Laravel\Blueprints\User;
+use JPeters\Architect\TestHelpers\Laravel\Models\User as UserModel;
 
 class BlueprintFormTest extends ArchitectTestCase
 {
@@ -76,7 +78,7 @@ class BlueprintFormTest extends ArchitectTestCase
 
         foreach ($blueprint->plans() as $index => $currentPlan) {
             /** @var Plan $currentPlan */
-            if (! $currentPlan->isAvailableOnForm()) {
+            if (!$currentPlan->isAvailableOnForm()) {
                 continue;
             }
 
@@ -101,7 +103,7 @@ class BlueprintFormTest extends ArchitectTestCase
 
         foreach ($blueprint->plans() as $index => $currentPlan) {
             /** @var Plan $currentPlan */
-            if (! $currentPlan->isAvailableOnForm()) {
+            if (!$currentPlan->isAvailableOnForm()) {
                 continue;
             }
 

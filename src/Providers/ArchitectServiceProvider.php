@@ -1,18 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Providers;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Support\Str;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Collection;
+use Illuminate\Container\Container;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Builder;
 use JPeters\Architect\Console\BuildCommand;
 use JPeters\Architect\Console\InstallCommand;
+use JPeters\Architect\Console\PublishCommand;
+use JPeters\Architect\Console\MakeCardCommand;
 use JPeters\Architect\Console\MakePageCommand;
 use JPeters\Architect\Console\MakePlanCommand;
-use JPeters\Architect\Console\MakeCardCommand;
-use JPeters\Architect\Console\PublishCommand;
 
 class ArchitectServiceProvider extends ServiceProvider
 {
@@ -22,24 +26,24 @@ class ArchitectServiceProvider extends ServiceProvider
             $this->registerPublishCommands();
         }
 
-        if (! $this->app->configurationIsCached()) {
-            $this->mergeConfigFrom(__DIR__ . '/../../config/architect.php', 'architect');
+        if (!$this->app->configurationIsCached()) {
+            $this->mergeConfigFrom(__DIR__.'/../../config/architect.php', 'architect');
         }
 
         $this->registerViews();
         $this->registerRoutes();
 
-        if (! Str::hasMacro('explodeIntoCollection')) {
+        if (!Str::hasMacro('explodeIntoCollection')) {
             Str::macro('explodeIntoCollection', static function ($value, $delimiter = ',') {
                 return new Collection(explode($delimiter, $value));
             });
         }
 
-        if(! Builder::hasGlobalMacro('columnExists')) {
-            Builder::macro('columnExists', function($column) {
-               $columns = $this->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->getModel()->getTable());
+        if (!Builder::hasGlobalMacro('columnExists')) {
+            Builder::macro('columnExists', function ($column) {
+                $columns = $this->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->getModel()->getTable());
 
-               return array_key_exists($column, $columns);
+                return array_key_exists($column, $columns);
             });
         }
     }
@@ -56,36 +60,39 @@ class ArchitectServiceProvider extends ServiceProvider
         ]);
     }
 
-    protected function registerPublishCommands()
+    protected function registerPublishCommands(): void
     {
         $this->publishes([
-            __DIR__ . '/../Console/Stubs/ArchitectServiceProvider.stub' => app_path('Providers/ArchitectServiceProvider.php'),
+            __DIR__.'/../Console/Stubs/ArchitectServiceProvider.stub' => app_path('Providers/ArchitectServiceProvider.php'),
         ], 'architect-provider');
 
         $this->publishes([
-            __DIR__ . '/../../config/architect.php' => config_path('architect.php'),
+            __DIR__.'/../../config/architect.php' => config_path('architect.php'),
         ], 'architect-config');
 
         $this->publishes([
-            __DIR__ . '/../../public' => public_path('vendor/architect'),
+            __DIR__.'/../../public' => public_path('vendor/architect'),
         ], 'architect-assets');
     }
 
-    protected function registerViews()
+    protected function registerViews(): void
     {
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'architect');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'architect');
     }
 
-    protected function registerRoutes()
+    protected function registerRoutes(): void
     {
-        Route::group(
+        $router = Container::getInstance()->make(Router::class);
+        $config = Container::getInstance()->make(ConfigRepository::class);
+
+        $router->group(
             [
                 'namespace' => 'JPeters\Architect\Http\Controllers',
-                'prefix' => config('architect.route') . '/api',
-                'middleware' => config('architect.middleware'),
+                'prefix' => $config->get('architect.route').'/api',
+                'middleware' => $config->get('architect.middleware'),
             ],
-            function () {
-                $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+            function ($router) {
+                require __DIR__.'/../routes/api.php';
             }
         );
     }

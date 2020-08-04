@@ -1,13 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Blueprints;
 
 abstract class Extractor
 {
-    /**
-     * @var Blueprint
-     */
-    protected $blueprint;
+    protected Blueprint $blueprint;
 
     public function __construct(Blueprint $blueprint)
     {

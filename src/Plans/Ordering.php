@@ -1,12 +1,12 @@
 <?php
 
-namespace JPeters\Architect\Plans;
+declare(strict_types=1);
 
-use Illuminate\Database\Eloquent\Model;
+namespace JPeters\Architect\Plans;
 
 class Ordering extends InternalPlan
 {
-    public function vuePrefix()
+    public function vuePrefix(): string
     {
         return 'ordering';
     }

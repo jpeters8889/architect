@@ -5,19 +5,13 @@ import Login from "../views/Login";
 import Logout from "../views/Logout";
 import Error from "../views/Error";
 import CustomPage from "../views/CustomPage";
-import ChangePassword from "../views/ChangePassword";
+import ChangePassword from "../Components/ChangePassword";
 
 export default [
     {
         path: '/',
         name: 'home',
         component: Home,
-    },
-
-    {
-        path: '/change-password',
-        name: 'change-password',
-        component: ChangePassword,
     },
 
     {

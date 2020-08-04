@@ -1,15 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use ReflectionParameter;
+use Exception;
+use Illuminate\Container\Container;
+use ReflectionMethod;
 use RuntimeException;
+use ReflectionParameter;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class ApiManager
 {
-    protected $endpoints = [
+    protected array $endpoints = [
         'get' => [],
         'post' => [],
         'patch' => [],
@@ -17,7 +22,7 @@ class ApiManager
         'delete' => [],
     ];
 
-    public function registerEndpoint($method, $route, $class, $function = 'handle')
+    public function registerEndpoint(string $method, string $route, string $class, string $function = 'handle'): void
     {
         $this->validateMethod($method);
 
@@ -27,7 +32,7 @@ class ApiManager
         ];
     }
 
-    public function checkEndpointExists($method, $route)
+    public function checkEndpointExists(string $method, string $route): bool
     {
         $this->validateMethod($method);
         $this->validateRoute($route);
@@ -35,7 +40,7 @@ class ApiManager
         return isset($this->endpoints[$method][$route]);
     }
 
-    public function getEndpointDetails($method, $route)
+    public function getEndpointDetails(string $method, string $route)
     {
         $this->validateMethod($method);
         $this->validateRoute($route);
@@ -45,7 +50,7 @@ class ApiManager
         return $this->endpoints[$method][$route];
     }
 
-    public function loadEndpoint($method, $route, Request $request, $id = null)
+    public function loadEndpoint(string $method, string $route, Request $request, $id = null)
     {
         $this->validateMethod($method);
         $this->validateRoute($route);
@@ -58,23 +63,23 @@ class ApiManager
         $function = $endpoint['function'];
 
         try {
-            $reflectedMethod = new \ReflectionMethod($class, $function);
+            $reflectedMethod = new ReflectionMethod($class, $function);
 
             $dependencies = $reflectedMethod->getParameters();
 
             return (new $class())->$function(...$this->getDependencies($dependencies, $request, $id));
-        } catch (\Exception $exception) {
-            throw new RuntimeException('Unable to execute endpoint, ' . $exception->getMessage());
+        } catch (Exception $exception) {
+            throw new RuntimeException('Unable to execute endpoint, '.$exception->getMessage());
         }
     }
 
-    private function getDependencies($dependencies, Request $request, $id = null)
+    private function getDependencies(array $dependencies, Request $request, $id = null): array
     {
         $bootableDependencies = [];
 
         foreach ($dependencies as $dependency) {
             /** @var ReflectionParameter $dependency */
-            if (! $typeHint = $dependency->getType()) {
+            if (!$typeHint = $dependency->getType()) {
                 continue;
             }
 
@@ -83,7 +88,7 @@ class ApiManager
                 continue;
             }
 
-            $bootableDependencies[] = resolve($typeHint->getName());
+            $bootableDependencies[] = Container::getInstance()->make($typeHint->getName());
         }
 
         $bootableDependencies[] = $id;
@@ -91,33 +96,23 @@ class ApiManager
         return $bootableDependencies;
     }
 
-    /**
-     * @param $method
-     */
-    private function validateMethod(&$method): void
+    private function validateMethod(string &$method): void
     {
         $method = strtolower($method);
 
-        if (! array_key_exists($method, $this->endpoints)) {
+        if (!array_key_exists($method, $this->endpoints)) {
             throw new RuntimeException('Unknown method');
         }
     }
 
-    /**
-     * @param $method
-     * @param $route
-     */
-    private function checkEndpointIsRegistered($method, $route): void
+    private function checkEndpointIsRegistered(string $method, string $route): void
     {
-        if (! isset($this->endpoints[$method][$route])) {
+        if (!isset($this->endpoints[$method][$route])) {
             throw new RuntimeException('External endpoint not registered');
         }
     }
 
-    /**
-     * @param $route
-     */
-    protected function validateRoute(&$route): void
+    protected function validateRoute(string &$route): void
     {
         if (!Str::contains($route, '/')) {
             $route .= '/handle';

@@ -1,33 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Plans\Listeners;
 
-use JPeters\Architect\Architect;
-use JPeters\Architect\Blueprints\Blueprint;
-use JPeters\Architect\Plans\Lookup as LookupPlan;
-use JPeters\Architect\Plans\Plan;
 use RuntimeException;
+use JPeters\Architect\Architect;
+use JPeters\Architect\Plans\Plan;
+use JPeters\Architect\Blueprints\Blueprint;
 
 class Listener
 {
+    private Architect $architect;
 
-    /** @var Architect */
-    private $architect;
+    private Blueprint $blueprint;
 
-    /** @var Blueprint */
-    private $blueprint;
-
-    /** @var Plan */
-    private $plan;
-
-    private $value;
+    private Plan $plan;
 
     public function __construct(Architect $architect)
     {
         $this->architect = $architect;
     }
 
-    public function executeListenerForPlan($blueprint, $event, $listener, $value)
+    public function executeListenerForPlan(string $blueprint, string $event, string $listener, string $value)
     {
         $value = json_decode($value, true);
 
@@ -37,17 +32,18 @@ class Listener
         return $this->plan->executeEvent($event, $value);
     }
 
-    private function resolveBlueprint($blueprint)
+    private function resolveBlueprint(string $blueprint): void
     {
         $this->blueprint = $this->architect->blueprintManager->resolve($blueprint);
     }
 
-    private function resolvePlan($column)
+    private function resolvePlan(string $column): void
     {
         foreach ($this->blueprint->plans() as $plan) {
             /** @var Plan $plan */
             if ($plan->getColumn() === $column) {
                 $this->plan = $plan;
+
                 return;
             }
         }

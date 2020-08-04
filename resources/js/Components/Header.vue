@@ -1,45 +1,83 @@
 <template>
-    <header class="bg-white w-full p-2 flex mb-2">
-        <div class="flex-1 text-2xl font-bold text-highlight">
-            <slot></slot>
+    <header class="w-full p-4 flex">
+        <div class="flex-1">
+            <h1 class="text-2xl font-semibold text-blue-700">
+                <slot></slot>
+            </h1>
         </div>
+
         <div class="flex justify-end">
-            <router-link
-                    v-if="canAdd"
-                    class="button button-primary px-4 py-2 rounded cursor-pointer hover:bg-highlight transition-bg"
-                    :to="{
+            <blueprint-search v-if="searchable && !hasCard" class="mr-2"></blueprint-search>
+
+            <blueprint-filter :filters="filters" v-if="!hasCard && Object.keys(filters).length > 0"
+                              class="mr-2"></blueprint-filter>
+
+            <div>
+                <router-link
+                        v-if="canAdd"
+                        class="button button-primary px-4 py-2 rounded cursor-pointer hover:bg-highlight transition-bg"
+                        :to="{
                         name: 'blueprintForm',
                         params: {
                             blueprint: blueprint,
                             state: 'add',
                         }
                     }"
-            >
-                Add
-            </router-link>
+                >
+                    Add
+                </router-link>
+            </div>
 
-            <router-link
-                    v-if="canViewList"
-                    class="button button-primary px-4 py-2 rounded cursor-pointer hover:bg-highlight transition-bg"
-                    :to="{
+            <div>
+                <router-link
+                        v-if="canViewList"
+                        class="button button-primary px-4 py-2 rounded cursor-pointer hover:bg-highlight transition-bg"
+                        :to="{
                         name: 'blueprintList',
                         params: {
                             blueprint: blueprint,
                         }
                     }"
-            >
-                Back to List
-            </router-link>
+                >
+                    Back to List
+                </router-link>
+            </div>
         </div>
+
     </header>
 </template>
 
 <script>
     export default {
-        props: [
-            'canAdd',
-            'canViewList',
-            'blueprint'
-        ],
+        props: {
+            canAdd: {
+                type: Boolean,
+                required: false,
+                default: false,
+            },
+            canViewList: {
+                type: Boolean,
+                required: false,
+                default: false,
+            },
+            blueprint: {
+                type: String,
+                required: true,
+            },
+            hasCard: {
+                type: Boolean,
+                default: false,
+            },
+            filters: {
+                type: Object,
+                default: () => {
+                    return {}
+                },
+            },
+            searchable: {
+                type: Boolean,
+                default: false,
+            }
+        },
     }
 </script>

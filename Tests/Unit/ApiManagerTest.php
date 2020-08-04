@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
+use RuntimeException;
 use Illuminate\Http\Request;
 use Illuminate\View\Factory;
-use JPeters\Architect\Tests\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
 use JPeters\Architect\Tests\Mocks\ApiManagerHandler;
-use RuntimeException;
 
 class ApiManagerTest extends ArchitectTestCase
 {

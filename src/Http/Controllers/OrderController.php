@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +10,7 @@ use JPeters\Architect\Http\Requests\OrderRequest;
 
 class OrderController extends BaseController
 {
-    public function handle(OrderRequest $request)
+    public function handle(OrderRequest $request): void
     {
         /** @var Blueprint $blueprint */
         $blueprint = $this->architect->blueprintManager->resolve($request->input('blueprint'));

@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Plans;
 
 class Body extends Textarea
 {
-    protected $rows = 20;
+    protected int $rows = 20;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Plans;
 
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +11,7 @@ class Lookup extends InternalPlan
 {
     use PlanHasLookupAction;
 
-    public function vuePrefix()
+    public function vuePrefix(): string
     {
         return 'lookup';
     }

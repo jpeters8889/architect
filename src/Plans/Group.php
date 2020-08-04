@@ -1,40 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Plans;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use JPeters\Architect\AnonymousModel;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Group extends InternalPlan
 {
-    protected $plans;
+    protected array $plans;
 
-    protected $wrapPlans = false;
-    protected $relationship;
-    protected $relationshipPivot = false;
+    protected bool $wrapPlans = false;
+    protected ?string $relationship;
+    protected bool $relationshipPivot = false;
 
-    public $deferUpdate = true;
+    public bool $deferUpdate = true;
 
-    /**
-     * @var Model
-     */
-    private $model;
+    private Model $model;
 
-    public function vuePrefix()
+    public function vuePrefix(): string
     {
         return 'group';
     }
 
-    public function plans(array $plans)
+    public function plans(array $plans): self
     {
         $this->plans = $plans;
 
         return $this;
     }
 
-    private function getCurrentValueFromPivot($model)
+    private function getCurrentValueFromPivot(Model $model): void
     {
         $parameters = [];
 
@@ -53,7 +52,7 @@ class Group extends InternalPlan
             return;
         }
 
-        if ($this->relationship) {
+        if (isset($this->relationship)) {
             $this->model = $model->{$this->relationship}()->getModels()[0];
 
             return;
@@ -64,21 +63,21 @@ class Group extends InternalPlan
         return null;
     }
 
-    public function wrapPlans()
+    public function wrapPlans(): self
     {
         $this->wrapPlans = true;
 
         return $this;
     }
 
-    public function setRelationship($relationship)
+    public function setRelationship($relationship): self
     {
         $this->relationship = $relationship;
 
         return $this;
     }
 
-    public function setPivotRelationship($relationship)
+    public function setPivotRelationship($relationship): self
     {
         $this->relationship = $relationship;
         $this->relationshipPivot = true;
@@ -86,21 +85,21 @@ class Group extends InternalPlan
         return $this;
     }
 
-    public function getPlans()
+    public function getPlans(): Collection
     {
         return (new Collection($this->plans))
             ->transform(function (Plan $plan) {
                 return [
                     'label' => $plan->getLabel(),
                     'name' => $plan->getColumn(),
-                    'component' => $plan->vuePrefix() . '-form',
+                    'component' => $plan->vuePrefix().'-form',
                     'metas' => $plan->getMetas(),
-                    'value' => $this->model ? $plan->getCurrentValue($this->model) : null,
+                    'value' => isset($this->model) ? $plan->getCurrentValue($this->model) : null,
                 ];
             });
     }
 
-    public function getMetas()
+    public function getMetas(): array
     {
         return array_merge(parent::getMetas() ?? [], [
             'plans' => $this->getPlans(),
@@ -108,15 +107,15 @@ class Group extends InternalPlan
         ]);
     }
 
-    public function handleDefaultUpdate(Model $model, array $values)
+    public function handleDefaultUpdate(Model $model, array $values): void
     {
         foreach ($this->plans as $plan) {
-            /** @var Plan $plan */
+            /* @var Plan $plan */
             parent::handleUpdate($model, $plan->getColumn(), $values[$plan->getColumn()]);
         }
     }
 
-    public function handleRelationshipUpdate(Model $model, array $values)
+    public function handleRelationshipUpdate(Model $model, array $values): void
     {
         /** @var Relation $class */
         $class = $model->{$this->relationship}();
@@ -132,7 +131,7 @@ class Group extends InternalPlan
         $model->{$this->relationship}()->save($relationship);
     }
 
-    public function handlePivotRelationshipUpdate(Model $model, array $values)
+    public function handlePivotRelationshipUpdate(Model $model, array $values): void
     {
         $pivots = [];
 
@@ -140,7 +139,7 @@ class Group extends InternalPlan
             /** @var Plan $plan */
             $column = $plan->getColumn();
 
-            if (! empty($values[$column])) {
+            if (!empty($values[$column])) {
                 $pivots[] = $column;
             }
         }
@@ -159,7 +158,7 @@ class Group extends InternalPlan
             return $this->handlePivotRelationshipUpdate($model, $values);
         }
 
-        if ($this->relationship) {
+        if (isset($this->relationship)) {
             return $this->handleRelationshipUpdate($model, $values);
         }
 

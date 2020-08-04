@@ -1,29 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Blueprints;
 
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use JPeters\Architect\Http\Requests\BlueprintSubmitRequest;
-use JPeters\Architect\Plans\Image;
-use JPeters\Architect\Plans\Password;
 use JPeters\Architect\Plans\Plan;
+use Illuminate\Support\Collection;
+use Illuminate\Container\Container;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Database\Connection as DatabaseConnection;
+use JPeters\Architect\Http\Requests\BlueprintSubmitRequest;
 
 class SaveBlueprint
 {
-    /** @var Blueprint */
-    private $blueprint;
+    private Blueprint $blueprint;
 
-    /** @var BlueprintSubmitRequest */
-    private $request;
+    private BlueprintSubmitRequest $request;
 
-    /** @var Model */
-    private $model;
+    private Model $model;
 
-    private $deferredPlans = [];
+    private array $deferredPlans = [];
 
     public function __construct(Blueprint $blueprint, BlueprintSubmitRequest $request)
     {
@@ -33,7 +32,7 @@ class SaveBlueprint
         $this->resolveModel();
     }
 
-    protected function resolveModel()
+    protected function resolveModel(): void
     {
         $modelClass = $this->blueprint->model();
 
@@ -44,10 +43,13 @@ class SaveBlueprint
         }
     }
 
-    public function saveBlueprint()
+    public function saveBlueprint(): Response
     {
+        /** @var DatabaseConnection $databaseConnection */
+        $databaseConnection = Container::getInstance()->make(DatabaseConnection::class);
+
         try {
-            DB::beginTransaction();
+            $databaseConnection->beginTransaction();
 
             (new Collection($this->blueprint->plans()))
                 ->each(function (Plan $plan) {
@@ -60,23 +62,24 @@ class SaveBlueprint
 
             $this->model->save();
 
-            DB::commit();
+            $databaseConnection->commit();
 
             return $this->returnResponse();
         } catch (Exception $exception) {
-            DB::rollBack();
+            $databaseConnection->rollBack();
             throw $exception;
         }
     }
 
-    protected function processPlan(Plan $plan)
+    protected function processPlan(Plan $plan): void
     {
-        if (! $plan->isAvailableOnForm()) {
+        if (!$plan->isAvailableOnForm()) {
             return;
         }
 
         if ($plan->deferUpdate) {
             $this->deferredPlans[] = $plan;
+
             return;
         }
 
@@ -87,7 +90,7 @@ class SaveBlueprint
         );
     }
 
-    protected function returnResponse()
+    protected function returnResponse(): Response
     {
         return new Response([
             'id' => $this->model->id,
@@ -96,10 +99,10 @@ class SaveBlueprint
         ], 201);
     }
 
-    protected function handleDeferredUpdates()
+    protected function handleDeferredUpdates(): void
     {
         foreach ($this->deferredPlans as $plan) {
-            /** @var Plan $plan */
+            /* @var Plan $plan */
             $plan->handleUpdate(
                 $this->model,
                 $plan->getColumn(),
@@ -108,20 +111,18 @@ class SaveBlueprint
         }
     }
 
-    /**
-     * @return string|null
-     */
-    protected function generateUrl()
+    protected function generateUrl(): ?string
     {
         $url = null;
 
         if ($this->model->{$this->blueprint->isVisibleField()}) {
             $url = implode('/', [
-                config('app.url'),
+                Container::getInstance()->make(Repository::class)->get('app.url'),
                 $this->blueprint->url(),
                 $this->model->{$this->blueprint->slugField()},
             ]);
         }
+
         return $url;
     }
 }

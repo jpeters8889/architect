@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use JPeters\Architect\Architect;
+use Illuminate\Routing\Controller;
 
 abstract class BaseController extends Controller
 {
-    /**
-     * @var Architect
-     */
-    protected $architect;
+    protected Architect $architect;
 
     public function __construct(Architect $architect)
     {

@@ -1,16 +1,13 @@
 <template>
     <div>
-        <header-component :blueprint="blueprint" :can-add="canEdit">
-            {{ this.title }}
-        </header-component>
-
-        <div class="flex justify-between bg-white w-full p-2 mb-2 items-center" v-if="(searchable && !card) || Object.keys(filters).length > 0">
-            <blueprint-search v-if="searchable && !card"></blueprint-search>
-            <blueprint-filter :filters="filters" v-if="Object.keys(filters).length > 0"></blueprint-filter>
+        <div class="flex flex-col bg-white rounded-xl shadow mb-2">
+            <header-component :blueprint="blueprint" :can-add="canEdit" :has-card="!!card" :filters="filters" :searchable="searchable">
+                {{ this.title }}
+            </header-component>
         </div>
 
         <!-- List -->
-        <div class="bg-white w-full p-2">
+        <div>
             <div v-if="Object.keys(headers).length > 0">
                 <table-component
                         :blueprint="blueprint"
@@ -73,22 +70,22 @@
         mounted() {
             this.initComponent();
 
-            window.Architect.$on('paginator-change', (page) => {
+            Architect.$on('paginator-change', (page) => {
                 this.page = page;
                 this.initComponent();
                 window.scrollTo(0, 0);
             });
 
-            window.Architect.$on('reload-page', () => {
+            Architect.$on('reload-page', () => {
                 this.initComponent();
             })
 
-            this.$root.$on('search-keyup', (value) => {
+            Architect.$on('search-keyup', (value) => {
                 this.searchText = value;
                 this.getBlueprint();
             });
 
-            this.$root.$on('filter-change', (filter) => {
+            Architect.$on('filter-change', (filter) => {
                 this.appliedFilters = filter.filters;
                 this.getBlueprint();
             });
@@ -103,8 +100,8 @@
         methods: {
             initComponent() {
                 this.searchText = '';
-                this.$root.$emit('search-set-value', '');
-                window.Architect.$emit('load-start');
+                Architect.$emit('search-set-value', '');
+                Architect.$emit('load-start');
                 this.getBlueprint();
             },
 
@@ -141,7 +138,7 @@
                         this.components = response.data.vuePrefixes;
                         this.canEdit = response.data.canEdit;
                         this.searchable = response.data.searchable;
-                        this.filters = response.data.filters;
+                        this.filters = Array.isArray(response.data.filters) ? {} : response.data.filters;
                         this.paginate = response.data.paginate;
                     })
                     .catch(error => {
@@ -157,7 +154,7 @@
                         Architect.error("Can't find Blueprint");
                     });
 
-                window.Architect.$emit('load-end');
+                Architect.$emit('load-end');
             }
         },
     }

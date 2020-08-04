@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Plans;
 
 use Illuminate\Database\Eloquent\Model;
@@ -11,49 +13,48 @@ class Select extends InternalPlan
         getMetas as protected getMetasFromTrait;
     }
 
-    /** @var array */
-    private $options;
+    private array $options;
 
-    private $showDefault = true;
+    private bool $showDefault = true;
 
-    private $fromPivot = false;
+    private bool $fromPivot = false;
 
-    private $pivotColumn = null;
+    private ?string $pivotColumn = null;
 
-    private $multiSelect = false;
+    private bool $multiSelect = false;
 
-    public function vuePrefix()
+    public function vuePrefix(): string
     {
         return 'select';
     }
 
-    public function options(array $options)
+    public function options(array $options): self
     {
         $this->options = $options;
 
         return $this;
     }
 
-    public function hideDefault()
+    public function hideDefault(): self
     {
         $this->showDefault = false;
 
         return $this;
     }
 
-    public function getMetas()
+    public function getMetas(): array
     {
         return array_merge($this->getMetasFromTrait(), [
-            'options' => $this->options,
+            'options' => $this->options ?? null,
             'showDefault' => $this->showDefault,
-            'hasLookup' => $this->action !== null,
+            'hasLookup' => isset($this->action) ? $this->action !== null : false,
             'multiSelect' => $this->multiSelect,
         ]);
     }
 
     public function getCurrentValue(Model $model)
     {
-        if(!$this->fromPivot) {
+        if (!$this->fromPivot) {
             return parent::getCurrentValue($model);
         }
 
@@ -71,14 +72,15 @@ class Select extends InternalPlan
         return $value->pluck('pivot.'.$this->pivotColumn);
     }
 
-    public function findFromPivot($column) {
+    public function findFromPivot($column): self
+    {
         $this->pivotColumn = $column;
         $this->fromPivot = true;
 
         return $this;
     }
 
-    public function enableMultiselect()
+    public function enableMultiselect(): self
     {
         $this->multiSelect = true;
 

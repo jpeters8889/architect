@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
 use JPeters\Architect\Plans\Textarea;
-use JPeters\Architect\Tests\Abstracts\PlanTestCase;
-use JPeters\Architect\Tests\Traits\TestsPlanRelationships;
+use JPeters\Architect\TestHelpers\Abstracts\PlanTestCase;
+use JPeters\Architect\TestHelpers\Traits\TestsPlanRelationships;
 
 class TextAreaPlanTest extends PlanTestCase
 {

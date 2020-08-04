@@ -45,7 +45,7 @@
         mounted() {
             this.switches = this.metas.switches;
 
-            window.Architect.$on(this.emitterName, (field) => {
+            Architect.$on(this.emitterName, (field) => {
                 this.$set(this.values, field.name, field.value);
             });
         },
@@ -54,7 +54,7 @@
             getFormData() {
                 this.$set(this.values, 'type_id', this.actualValue);
 
-                window.Architect.$emit(this.listenerName);
+                Architect.$emit(this.listenerName);
 
                 return {
                     name: this.name,

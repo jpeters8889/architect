@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Str;
+use Illuminate\Routing\Redirector;
+use Illuminate\Foundation\Testing\WithFaker;
 use JPeters\Architect\Blueprints\SaveBlueprint;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\Laravel\Blueprints\User;
 use JPeters\Architect\Http\Requests\BlueprintSubmitRequest;
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Laravel\Blueprints\User;
-use JPeters\Architect\Tests\Laravel\Models\User as UserModel;
+use JPeters\Architect\TestHelpers\Laravel\Models\User as UserModel;
 
 class SaveBlueprintTest extends ArchitectTestCase
 {

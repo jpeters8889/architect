@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Plans;
 
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +11,7 @@ abstract class InternalPlan extends Plan
 {
     public function handleUpdate(Model $model, $column, $value)
     {
-        if ($this->relationship) {
+        if (isset($this->relationship)) {
             $bits = explode('_', $this->column);
             array_pop($bits);
 

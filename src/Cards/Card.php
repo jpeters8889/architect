@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Cards;
 
 abstract class Card
@@ -11,7 +13,7 @@ abstract class Card
 
     abstract public function vueComponent(): string;
 
-    public function make()
+    public function make(): array
     {
         return [
             'labels' => $this->modelParameters(),

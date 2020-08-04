@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
-use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Plans\Button;
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Laravel\Models\User;
+use JPeters\Architect\Blueprints\Blueprint;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\Laravel\Models\User;
 
 class ButtonClickTest extends ArchitectTestCase
 {
@@ -16,8 +18,8 @@ class ButtonClickTest extends ArchitectTestCase
     {
         parent::setUp();
 
-        $this->architect->registerBlueprint(new class extends Blueprint {
-            public function blueprintRoute()
+        $this->architect->registerBlueprint(new class() extends Blueprint {
+            public function blueprintRoute(): string
             {
                 return 'blueprint';
             }

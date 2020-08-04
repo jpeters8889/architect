@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Http\Controllers;
 
-use Exception;
+use Throwable;
 use Illuminate\Http\Response;
 use JPeters\Architect\Http\Requests\LookupRequest;
-use Throwable;
 
 class LookupController extends BaseController
 {

@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
+use JPeters\Architect\Plans\Plan;
 use Illuminate\Support\Facades\Hash;
 use JPeters\Architect\Plans\Password;
-use JPeters\Architect\Plans\Plan;
-use JPeters\Architect\Plans\Textfield;
-use JPeters\Architect\Tests\Abstracts\PlanTestCase;
-use JPeters\Architect\Tests\Laravel\Models\User;
-use JPeters\Architect\Tests\Traits\TestsPlanRelationships;
+use JPeters\Architect\TestHelpers\Laravel\Models\User;
+use JPeters\Architect\TestHelpers\Abstracts\PlanTestCase;
 
 class PasswordPlanTest extends PlanTestCase
 {

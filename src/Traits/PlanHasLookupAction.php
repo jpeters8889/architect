@@ -1,42 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Traits;
 
 use Closure;
 
 trait PlanHasLookupAction
 {
-    /** @var Closure */
-    protected $action;
+    protected Closure $action;
 
-    protected $lookupVariable;
+    protected string $lookupVariable;
 
-    protected $customValueAttribute;
+    protected string $customValueAttribute;
 
     protected $getValueFrom;
 
-    public function lookupAction(Closure $action)
+    public function lookupAction(Closure $action): self
     {
         $this->action = $action;
 
         return $this;
     }
 
-    public function fetchValueFrom(Closure $closure)
+    public function fetchValueFrom(Closure $closure): self
     {
         $this->getValueFrom = $closure;
 
         return $this;
     }
 
-    public function setLookupVariable($variable)
+    public function setLookupVariable(string $variable): self
     {
         $this->lookupVariable = $variable;
 
         return $this;
     }
 
-    public function setLookupAttribute($attribute)
+    public function setLookupAttribute(string $attribute): self
     {
         $this->customValueAttribute = $attribute;
 
@@ -48,11 +49,11 @@ trait PlanHasLookupAction
         return call_user_func($this->action, $value);
     }
 
-    public function getMetas()
+    public function getMetas(): array
     {
         return array_merge(parent::getMetas() ?? [], [
-            'lookupVariable' => $this->lookupVariable,
-            'customValueAttribute' => $this->customValueAttribute,
+            'lookupVariable' => $this->lookupVariable ?? '',
+            'customValueAttribute' => $this->customValueAttribute ?? '',
         ]);
     }
 }

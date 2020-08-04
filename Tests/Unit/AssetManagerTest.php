@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
-use JPeters\Architect\Tests\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
 
 class AssetManagerTest extends ArchitectTestCase
 {
@@ -10,8 +12,8 @@ class AssetManagerTest extends ArchitectTestCase
     {
         parent::setUp();
 
-        $this->architect->assetManager->registerStyle('testStylesheet', __DIR__ . '/../Assets/style.css');
-        $this->architect->assetManager->registerScript('testScript', __DIR__ . '/../Assets/javascript.js');
+        $this->architect->assetManager->registerStyle('testStylesheet', __DIR__.'/../Assets/style.css');
+        $this->architect->assetManager->registerScript('testScript', __DIR__.'/../Assets/javascript.js');
     }
 
     /** @test */
@@ -25,7 +27,7 @@ class AssetManagerTest extends ArchitectTestCase
     public function it_returns_a_style_asset()
     {
         $this->assertEquals(
-            __DIR__ . '/../Assets/style.css',
+            __DIR__.'/../Assets/style.css',
             $this->architect->assetManager->findAsset('style', 'testStylesheet')
         );
     }
@@ -34,7 +36,7 @@ class AssetManagerTest extends ArchitectTestCase
     public function it_returns_a_script_asset()
     {
         $this->assertEquals(
-            __DIR__ . '/../Assets/javascript.js',
+            __DIR__.'/../Assets/javascript.js',
             $this->architect->assetManager->findAsset('script', 'testScript')
         );
     }

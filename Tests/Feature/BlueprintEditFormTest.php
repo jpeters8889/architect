@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Feature;
 
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Laravel\Blueprints\User;
-use JPeters\Architect\Tests\Laravel\Models\User as UserModel;
-use JPeters\Architect\Tests\Traits\LogsInUsers;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\Traits\LogsInUsers;
+use JPeters\Architect\TestHelpers\Laravel\Blueprints\User;
+use JPeters\Architect\TestHelpers\Laravel\Models\User as UserModel;
 
 class BlueprintEditFormTest extends ArchitectTestCase
 {
@@ -44,6 +46,6 @@ class BlueprintEditFormTest extends ArchitectTestCase
 
     private function makeRequest($extra = '')
     {
-        return $this->get('/architect/api/blueprints/user/' . $this->user->id . $extra);
+        return $this->get('/architect/api/blueprints/user/'.$this->user->id.$extra);
     }
 }

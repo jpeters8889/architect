@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
 use JPeters\Architect\Plans\Select;
-use JPeters\Architect\Tests\Abstracts\PlanTestCase;
+use JPeters\Architect\TestHelpers\Abstracts\PlanTestCase;
 
 class SelectPlanTest extends PlanTestCase
 {

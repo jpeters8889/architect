@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Feature;
 
 use Illuminate\Support\Facades\Hash;
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Laravel\Models\User;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\Laravel\Models\User;
 
 class ChangePasswordTest extends ArchitectTestCase
 {
@@ -26,7 +28,7 @@ class ChangePasswordTest extends ArchitectTestCase
         $this->post('/architect/api/change-password', [
             'current_password' => 'foo',
             'new_password' => 'foobarbaz',
-            'new_password_confirmation' => 'foobarbaz'
+            'new_password_confirmation' => 'foobarbaz',
         ])->assertStatus(422);
     }
 
@@ -36,7 +38,7 @@ class ChangePasswordTest extends ArchitectTestCase
         $this->post('/architect/api/change-password', [
             'current_password' => 'old-password',
             'new_password' => 'foobarbaz',
-            'new_password_confirmation' => 'bazbarfoo'
+            'new_password_confirmation' => 'bazbarfoo',
         ])->assertStatus(422);
     }
 
@@ -46,7 +48,7 @@ class ChangePasswordTest extends ArchitectTestCase
         $this->post('/architect/api/change-password', [
             'current_password' => 'old-password',
             'new_password' => 'foo',
-            'new_password_confirmation' => 'foo'
+            'new_password_confirmation' => 'foo',
         ])->assertStatus(422);
     }
 
@@ -56,7 +58,7 @@ class ChangePasswordTest extends ArchitectTestCase
         $this->post('/architect/api/change-password', [
             'current_password' => 'old-password',
             'new_password' => 'foobarbaz',
-            'new_password_confirmation' => 'foobarbaz'
+            'new_password_confirmation' => 'foobarbaz',
         ])->assertStatus(200);
     }
 
@@ -69,7 +71,7 @@ class ChangePasswordTest extends ArchitectTestCase
         $this->post('/architect/api/change-password', [
             'current_password' => 'old-password',
             'new_password' => 'new-password',
-            'new_password_confirmation' => 'new-password'
+            'new_password_confirmation' => 'new-password',
         ]);
 
         $this->assertNotEquals($user->password, $user->fresh()->password);
@@ -78,12 +80,12 @@ class ChangePasswordTest extends ArchitectTestCase
 
         $this->post('/architect/api/auth', [
             'email' => 'jamie@jamie-peters.co.uk',
-            'password' => 'old-password'
+            'password' => 'old-password',
         ])->assertSessionHasErrors();
 
         $this->post('/architect/api/auth', [
             'email' => 'jamie@jamie-peters.co.uk',
-            'password' => 'new-password'
+            'password' => 'new-password',
         ])->assertStatus(200);
     }
 }

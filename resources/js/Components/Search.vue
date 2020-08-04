@@ -6,12 +6,6 @@
     export default {
         data: () => ({
             searchText: '',
-        }),
-
-        mounted() {
-            this.$root.$on('search-set-value', (value) => {
-                //
-            });
-        }
+        })
     }
 </script>

@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Feature;
 
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Laravel\Blueprints\User as UserBlueprint;
-use JPeters\Architect\Tests\Laravel\Models\User;
-use JPeters\Architect\Tests\Traits\LogsInUsers;
+use Illuminate\Foundation\Testing\WithFaker;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\Traits\LogsInUsers;
+use JPeters\Architect\TestHelpers\Laravel\Models\User;
+use JPeters\Architect\TestHelpers\Laravel\Blueprints\User as UserBlueprint;
 
 class BlueprintSubmitTest extends ArchitectTestCase
 {
@@ -58,6 +60,7 @@ class BlueprintSubmitTest extends ArchitectTestCase
     /** @test */
     public function it_creates_a_record_when_submitting_a_valid_add_request()
     {
+        $this->withoutExceptionHandling();
         $this->makeRequest([
             'name' => $name = $this->faker->name,
             'email' => $email = $this->faker->safeEmail,

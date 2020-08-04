@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Feature;
 
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Traits\LogsInUsers;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\Traits\LogsInUsers;
 
 class AssetTest extends ArchitectTestCase
 {
@@ -15,8 +17,8 @@ class AssetTest extends ArchitectTestCase
 
         $this->logIn();
 
-        $this->architect->assetManager->registerStyle('testStylesheet', __DIR__ . '/../Assets/style.css');
-        $this->architect->assetManager->registerScript('testScript', __DIR__ . '/../Assets/javascript.js');
+        $this->architect->assetManager->registerStyle('testStylesheet', __DIR__.'/../Assets/style.css');
+        $this->architect->assetManager->registerScript('testScript', __DIR__.'/../Assets/javascript.js');
     }
 
     /** @test */
@@ -26,7 +28,7 @@ class AssetTest extends ArchitectTestCase
             ->assertStatus(200)
             ->assertHeader('Content-Type', 'text/css; charset=UTF-8');
 
-        $this->assertStringEqualsFile(__DIR__ . '/../Assets/style.css', $request->content());
+        $this->assertStringEqualsFile(__DIR__.'/../Assets/style.css', $request->content());
     }
 
     /** @test */
@@ -36,6 +38,6 @@ class AssetTest extends ArchitectTestCase
             ->assertStatus(200)
             ->assertHeader('Content-Type', 'application/javascript');
 
-        $this->assertStringEqualsFile(__DIR__ . '/../Assets/javascript.js', $request->content());
+        $this->assertStringEqualsFile(__DIR__.'/../Assets/javascript.js', $request->content());
     }
 }

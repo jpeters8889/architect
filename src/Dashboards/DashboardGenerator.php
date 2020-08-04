@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Dashboards;
 
 class DashboardGenerator
 {
-    protected $redirect = [];
+    protected array $redirect = [];
 
-    public function redirectTo($url, $asVue = true, $data = []): self
+    public function redirectTo(string $url, bool $asVue = true, array $data = []): self
     {
         $this->redirect = [
             'url' => $url,

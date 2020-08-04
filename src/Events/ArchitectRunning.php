@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Events;
 
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Events\Dispatchable;
 
 class ArchitectRunning
 {
     use Dispatchable;
 
-    /** @var Request */
-    public $request;
+    public Request $request;
 
     public function __construct(Request $request)
     {

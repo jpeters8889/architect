@@ -1,29 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Buttons;
 
-use JPeters\Architect\Architect;
-use JPeters\Architect\Blueprints\Blueprint;
-use JPeters\Architect\Plans\Plan;
 use RuntimeException;
+use JPeters\Architect\Architect;
+use JPeters\Architect\Plans\Plan;
+use JPeters\Architect\Blueprints\Blueprint;
+use JPeters\Architect\Plans\Button as ButtonPlan;
 
 class Button
 {
-    /** @var Architect */
-    private $architect;
+    private Architect $architect;
 
-    /** @var Blueprint */
-    private $blueprint;
+    private Blueprint $blueprint;
 
-    /** @var \JPeters\Architect\Plans\Button */
-    private $plan;
+    private ButtonPlan $plan;
 
     public function __construct(Architect $architect)
     {
         $this->architect = $architect;
     }
 
-    public function handleClickForButton($button, $blueprint, $id)
+    public function handleClickForButton(string $button, string $blueprint, int $id)
     {
         $this->resolveBlueprint($blueprint);
         $this->resolvePlan($button);
@@ -31,17 +31,18 @@ class Button
         return $this->plan->handleUpdate($this->blueprint->model()::query()->findOrFail($id));
     }
 
-    private function resolveBlueprint($blueprint)
+    private function resolveBlueprint($blueprint): void
     {
         $this->blueprint = $this->architect->blueprintManager->resolve($blueprint);
     }
 
-    private function resolvePlan($column)
+    private function resolvePlan($column): void
     {
         foreach ($this->blueprint->plans() as $plan) {
             /** @var Plan $plan */
             if ($plan->getColumn() === $column) {
                 $this->plan = $plan;
+
                 return;
             }
         }

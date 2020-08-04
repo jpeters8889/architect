@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Feature;
 
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Laravel\Models\User;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\Laravel\Models\User;
 
 class LoginTest extends ArchitectTestCase
 {
@@ -20,13 +22,13 @@ class LoginTest extends ArchitectTestCase
     public function it_logs_in_a_user()
     {
         factory(User::class)->create([
-            'email' => 'jamie@jamie-peters.co.uk'
+            'email' => 'jamie@jamie-peters.co.uk',
         ]);
 
         $this->withoutExceptionHandling()
             ->post('/architect/api/auth', [
             'email' => 'jamie@jamie-peters.co.uk',
-            'password' => 'secret'
+            'password' => 'secret',
         ])->assertStatus(200);
 
         $this->assertAuthenticated();

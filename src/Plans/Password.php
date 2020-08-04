@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Plans;
 
-use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Hashing\Hasher;
 
 class Password extends InternalPlan
 {
-    protected $showOnIndex = false;
+    protected bool $showOnIndex = false;
 
     public function handleUpdate(Model $model, $column, $value)
     {
@@ -15,7 +18,7 @@ class Password extends InternalPlan
             return;
         }
 
-        parent::handleUpdate($model, $column, resolve(Hasher::class)->make($value));
+        parent::handleUpdate($model, $column, Container::getInstance()->make(Hasher::class)->make($value));
     }
 
     public function getCurrentValue(Model $model)
@@ -23,7 +26,7 @@ class Password extends InternalPlan
         return '';
     }
 
-    public function vuePrefix()
+    public function vuePrefix(): string
     {
         return 'password';
     }

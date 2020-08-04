@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
 use Illuminate\Database\Eloquent\Collection;
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Laravel\Blueprints\Blog;
-use JPeters\Architect\Tests\Laravel\Models\BlogType;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\Laravel\Blueprints\Blog;
+use JPeters\Architect\TestHelpers\Laravel\Models\BlogType;
 
 class LookupResultTest extends ArchitectTestCase
 {

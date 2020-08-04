@@ -21,7 +21,7 @@
 <script>
     export default {
         mounted() {
-            window.Architect.request().post('/logout');
+            Architect.request().post('/logout');
         },
 
         computed: {

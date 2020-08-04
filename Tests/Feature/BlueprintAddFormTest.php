@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Feature;
 
-use JPeters\Architect\Tests\ArchitectTestCase;
-use JPeters\Architect\Tests\Laravel\Blueprints\User;
-use JPeters\Architect\Tests\Traits\LogsInUsers;
+use JPeters\Architect\TestHelpers\ArchitectTestCase;
+use JPeters\Architect\TestHelpers\Traits\LogsInUsers;
+use JPeters\Architect\TestHelpers\Laravel\Blueprints\User;
 
 class BlueprintAddFormTest extends ArchitectTestCase
 {
@@ -22,6 +24,7 @@ class BlueprintAddFormTest extends ArchitectTestCase
     /** @test */
     public function it_loads_the_add_page()
     {
+        $this->withoutExceptionHandling();
         $this->makeRequest()
             ->assertStatus(200);
     }
@@ -36,6 +39,6 @@ class BlueprintAddFormTest extends ArchitectTestCase
 
     private function makeRequest($extra = '')
     {
-        return $this->get('/architect/api/blueprints/user/add' . $extra);
+        return $this->get('/architect/api/blueprints/user/add'.$extra);
     }
 }

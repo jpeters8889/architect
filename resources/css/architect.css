@@ -8,7 +8,7 @@
 }
 
 .form-control-input {
-    @apply bg-white border border-gray-500 p-1 text-lg rounded-lg;
+    @apply bg-white border border-gray-500 p-2 text-lg rounded-lg;
 }
 
 .form-control-error {
@@ -64,11 +64,11 @@
 }
 
 .transition-colour {
-    transition: colour 0.5s ease;
+    transition: color 0.5s ease;
 }
 
 .transition-both {
-    transition: background-colour 0.5s ease, colour 0.5s ease;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .paginator-page {

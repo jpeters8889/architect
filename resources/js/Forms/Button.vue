@@ -10,7 +10,7 @@
             this.initComponent();
 
             if (this.errorEventListener) {
-                this.$root.$on(this.errorEventListener, () => {
+                Architect.$on(this.errorEventListener, () => {
                     this.classList.push('animate-shake', 'error-bg');
 
                     this.classList = this.classList.filter(item => item !== 'button');
@@ -137,7 +137,3 @@
         },
     }
 </script>
-
-<style>
-
-</style>

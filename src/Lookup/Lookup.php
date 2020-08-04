@@ -1,52 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Lookup;
 
+use RuntimeException;
 use JPeters\Architect\Architect;
+use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Blueprints\Blueprint;
 use JPeters\Architect\Plans\Lookup as LookupPlan;
-use JPeters\Architect\Plans\Plan;
-use RuntimeException;
 
 class Lookup
 {
-    /** @var Architect */
-    private $architect;
+    private Architect $architect;
 
-    /** @var Blueprint */
-    private $blueprint;
+    private Blueprint $blueprint;
 
-    /** @var LookupPlan */
-    private $plan;
-
-    private $value;
+    private LookupPlan $plan;
 
     public function __construct(Architect $architect)
     {
         $this->architect = $architect;
     }
 
-    public function performAction($blueprint, $column, $value)
+    public function performAction(string $blueprint, string $column, string $value)
     {
-        $this->value = $value;
-
         $this->resolveBlueprint($blueprint);
         $this->resolvePlan($column);
 
         return $this->plan->performLookup($value);
     }
 
-    private function resolveBlueprint($blueprint)
+    private function resolveBlueprint(string $blueprint): void
     {
         $this->blueprint = $this->architect->blueprintManager->resolve($blueprint);
     }
 
-    private function resolvePlan($column)
+    private function resolvePlan(string $column): void
     {
         foreach ($this->blueprint->plans() as $plan) {
             /** @var Plan $plan */
             if ($plan->getColumn() === $column) {
                 $this->plan = $plan;
+
                 return;
             }
         }

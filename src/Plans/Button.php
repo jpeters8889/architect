@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Plans;
 
 use Closure;
@@ -7,24 +9,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Button extends Plan
 {
-    /**
-     * @var Closure
-     */
-    private $onClickHandler;
+    private Closure $onClickHandler;
 
-    private $clickMethod = 'ajax';
+    private string $clickMethod = 'ajax';
 
-    public function hasDatabaseColumn()
+    public function hasDatabaseColumn(): bool
     {
         return false;
     }
 
-    public function vuePrefix()
+    public function vuePrefix(): string
     {
         return 'button';
     }
 
-    public function getMetas()
+    public function getMetas(): array
     {
         return array_merge(parent::getMetas() ?? [], [
             'click_method' => $this->clickMethod,
@@ -36,14 +35,14 @@ class Button extends Plan
         return call_user_func($this->onClickHandler, $model);
     }
 
-    public function onClick(Closure $closure)
+    public function onClick(Closure $closure): self
     {
         $this->onClickHandler = $closure;
 
         return $this;
     }
 
-    public function openAsLink()
+    public function openAsLink(): self
     {
         $this->clickMethod = 'link';
 

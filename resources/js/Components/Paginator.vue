@@ -96,7 +96,7 @@
 
         methods: {
             goTo(page) {
-               window.Architect.$emit('paginator-change', page);
+               Architect.$emit('paginator-change', page);
             }
         }
     }

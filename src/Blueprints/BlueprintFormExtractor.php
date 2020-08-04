@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Blueprints;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use JPeters\Architect\Plans\Plan;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class BlueprintFormExtractor extends Extractor
 {
-    /** @var Model */
-    private $currentModel;
+    private Model $currentModel;
 
-    public function getValuesFrom($id)
+    public function getValuesFrom($id): self
     {
         $this->currentModel = $this->blueprint->model()::query()->findOrFail($id);
 
@@ -24,7 +25,7 @@ class BlueprintFormExtractor extends Extractor
 
         (new Collection($this->blueprint->plans()))
             ->each(function (Plan $plan) use (&$plans) {
-                if (! $plan->isAvailableOnForm()) {
+                if (!$plan->isAvailableOnForm()) {
                     return;
                 }
 
@@ -40,13 +41,13 @@ class BlueprintFormExtractor extends Extractor
         ];
     }
 
-    private function preparePlanArray(Plan $plan)
+    private function preparePlanArray(Plan $plan): array
     {
         return [
             'label' => $plan->getLabel(),
             'name' => $plan->getColumn(),
-            'component' => $plan->vuePrefix() . '-form',
-            'value' => $this->currentModel ? $plan->getCurrentValue($this->currentModel) : $plan->getDefault(),
+            'component' => $plan->vuePrefix().'-form',
+            'value' => isset($this->currentModel) ? $plan->getCurrentValue($this->currentModel) : $plan->getDefault(),
             'metas' => $plan->getMetas(),
         ];
     }

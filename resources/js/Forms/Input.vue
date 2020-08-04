@@ -1,8 +1,8 @@
 <template>
     <div class="flex overflow-hidden border border-gray-500 rounded" :class="classes">
-        <div class="bg-white p-1 flex-1">
+        <div class="bg-white p-2 flex-1">
             <input v-model="currentValue" :type="type" :name="name" :placeholder="placeholder" @blur="validate()" @keyup="onKeyup()" @keyup.enter="onEnter()"
-                   class="w-full text-sm border-0 p-0 m-0 text-gray-900" />
+                   class="w-full border-0 p-0 m-0 text-gray-900 leading-none" />
         </div>
 
         <div class="bg-red-500 flex justify-center items-center p-2 text-white" v-if="hasError"
@@ -62,12 +62,12 @@
                 this.hasError = true;
             }
 
-            this.$root.$on(this.name + '-get-value', () => {
+            Architect.$on(this.name + '-get-value', () => {
                 this.validate();
-                this.$root.$emit(this.name + '-value', this.currentValue);
+                Architect.$emit(this.name + '-value', this.currentValue);
             });
 
-            this.$root.$on(this.name + '-set-value', (value) => {
+            Architect.$on(this.name + '-set-value', (value) => {
                 this.currentValue = value;
                 this.validate();
             });
@@ -102,11 +102,11 @@
             },
 
             onEnter() {
-                this.$root.$emit(this.name + '-enter-press');
+                Architect.$emit(this.name + '-enter-press');
             },
 
             onKeyup() {
-                this.$root.$emit(this.name + '-keyup', this.currentValue);
+                Architect.$emit(this.name + '-keyup', this.currentValue);
             },
 
             checkEmail() {
@@ -118,11 +118,11 @@
         watch: {
             hasError: function (error) {
                 if (error) {
-                    this.$root.$emit(this.name + '-error', this.errorText);
+                    Architect.$emit(this.name + '-error', this.errorText);
                     return;
                 }
 
-                this.$root.$emit(this.name + '-valid');
+                Architect.$emit(this.name + '-valid');
             }
         }
     }

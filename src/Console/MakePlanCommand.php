@@ -1,37 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Container\Container;
-use Illuminate\Contracts\Filesystem\Factory;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
-use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\Process\Process;
+use JPeters\Architect\Console\Concerns\UpdatesComposer;
+use JPeters\Architect\Console\Concerns\ExecutesCommands;
+use JPeters\Architect\Console\Concerns\ArchitectCreateWizard;
+use JPeters\Architect\Console\Concerns\CreatesProjectSkeleton;
 
 class MakePlanCommand extends Command
 {
+    use ArchitectCreateWizard;
+    use CreatesProjectSkeleton;
+    use ExecutesCommands;
+    use UpdatesComposer;
+
     protected $signature = 'architect:createPlan {plan}';
 
     protected $description = 'Make a custom Architect Plan';
 
-    /** @var string */
-    private $packageNamespace;
+    protected string $packageNamespace;
 
-    /** @var string */
-    private $packageName;
+    protected string $packageName;
 
-    /** @var string */
-    private $planPath;
+    protected string $planPath;
 
-    /** @var string */
-    private $relativePath;
+    protected string $relativePath;
 
-    /** @var Factory */
-    private $filesystem;
+    protected Filesystem $filesystem;
 
     public function __construct(Filesystem $filesystem)
     {
@@ -40,104 +39,15 @@ class MakePlanCommand extends Command
         $this->filesystem = $filesystem;
     }
 
-    public function handle()
+    public function handle(): void
     {
-        $this->packageNamespace = $this->argument('plan');
-        $this->packageName = Str::kebab(Arr::last(explode('/', $this->packageNamespace)));
-        $this->planPath = base_path($this->relativePath = 'architect/plans/' . $this->packageName);
-
-        // make architect/plans folder in root if it doesnt exist
-        $this->info('Creating architect/plans folder');
-        $this->makeDirectory(base_path('architect/plans'));
-
-        // make plan folder using tail part of plan name
-        $this->info('Creating ' . $this->packageName . ' folder');
-        $this->makeDirectory($this->planPath);
-
-        // copy plan stubs
-        $this->info('Copying plan skeleton');
-        $this->filesystem->copyDirectory(__DIR__ . '/Stubs/plan', $this->planPath);
-
-        // update place holders in the files
-        $this->info('Configuring plan skeleton');
-        $this->configurePlanSkeleton();
-
-        // read and update main composer.json to add the new plan
-        $this->info('Updating Composer File');
-        $this->updateComposer();
-
-        // composer install locally
-        if ($this->confirm('Do you want to install the and update your composer autoloader for the new plan?')) {
-            $this->executeCommand('composer require ' . $this->packageNamespace, base_path());
-        }
-
-        // install plan npm dependencies
-        if ($this->confirm('Do you want to install your plans NPM dependencies?')) {
-            $this->executeCommand('npm install', $this->planPath);
-        }
-
-        // build app
-        if ($this->confirm('Do you want to build the provided plan skeleton?')) {
-            $this->executeCommand('npm run dev', $this->planPath);
-        }
+        $this->runWizard('plan', $this->planPath);
     }
 
-    protected function executeCommand($command, $path)
+    protected function makeDirectory($directory): void
     {
-        (new Process(explode(' ', $command), $path))->setTimeout(null)->run(function ($type, $line) {
-            $this->output->write($line);
-        });
-    }
-
-    protected function makeDirectory($directory)
-    {
-        if (! $this->filesystem->exists($directory)) {
+        if (!$this->filesystem->exists($directory)) {
             $this->filesystem->makeDirectory($directory, 0755, true);
         }
-    }
-
-    protected function configurePlanSkeleton(): void
-    {
-        (new Collection($this->filesystem->allFiles($this->planPath)))
-            ->each(function (SplFileInfo $file) {
-                $contents = str_replace(
-                    [
-                        '{{package-namespace}}',
-                        '{{app-namespace}}',
-                        '{{package-name-namespace}}',
-                        '{{package-name}}',
-                        '{{package-namespace-dash}}',
-                    ],
-                    [
-                        $this->packageNamespace,
-                        Str::replaceLast('\\', '', Container::getInstance()->getNamespace()),
-                        Str::studly($this->packageName),
-                        Str::kebab($this->packageName),
-                        str_replace('/', '-', $this->packageNamespace),
-                    ],
-                    $file->getContents()
-                );
-
-                file_put_contents($file->getRealPath(), $contents);
-            });
-    }
-
-    protected function updateComposer(): void
-    {
-        $composer = json_decode(file_get_contents(base_path('composer.json')), true);
-
-        if (! isset($composer['repositories'])) {
-            $composer['repositories'] = [];
-        }
-
-        $composer['repositories'][] = [
-            'type' => 'path',
-            'url' => './' . $this->relativePath,
-        ];
-
-        $composer['require'][$this->packageNamespace] = 'dev-master';
-        ksort($composer['require']);
-
-        file_put_contents(base_path('composer.json'), json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 }

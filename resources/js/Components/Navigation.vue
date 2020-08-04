@@ -72,7 +72,7 @@
             },
 
             navigating() {
-                window.Architect.$emit('close-mobile-nav');
+                Architect.$emit('close-mobile-nav');
             }
         }
     }

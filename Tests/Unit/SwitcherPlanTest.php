@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
-use Illuminate\Support\Collection;
 use JPeters\Architect\Plans\Plan;
 use JPeters\Architect\Plans\Switcher;
 use JPeters\Architect\Plans\Textfield;
-use JPeters\Architect\Tests\Abstracts\PlanTestCase;
-use JPeters\Architect\Tests\Laravel\Models\User;
+use JPeters\Architect\TestHelpers\Laravel\Models\User;
+use JPeters\Architect\TestHelpers\Abstracts\PlanTestCase;
 
 class SwitcherPlanTest extends PlanTestCase
 {
@@ -41,7 +42,7 @@ class SwitcherPlanTest extends PlanTestCase
         $switch = $metas['switches'][1];
 
         foreach ($plans as $index => $plan) {
-            /** @var Plan $plan */
+            /* @var Plan $plan */
             $this->assertEquals($plan->getColumn(), $switch[$index]['name']);
             $this->assertEquals($plan->getLabel(), $switch[$index]['label']);
         }
@@ -58,7 +59,7 @@ class SwitcherPlanTest extends PlanTestCase
         $user = new User();
 
         foreach ($plans as $index => $plan) {
-            /** @var Plan $plan */
+            /* @var Plan $plan */
             $plan->handleUpdate($user, $plan->getColumn(), $plan->getColumn());
             $this->assertEquals($plan->getColumn(), $user->{$plan->getColumn()});
         }

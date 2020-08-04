@@ -1,15 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Console;
 
-use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Symfony\Component\Process\Process;
+use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
+use JPeters\Architect\Console\Concerns\ExecutesCommands;
 
 class BuildCommand extends Command
 {
+    use ExecutesCommands;
+
     protected $signature = 'architect:build {env=prod}';
 
     protected $description = 'Build your custom Architect assets';
@@ -23,37 +27,41 @@ class BuildCommand extends Command
         parent::__construct();
 
         $this->directories = [
-          'cards',
-          'pages',
-          'plans',
+            'cards',
+            'pages',
+            'plans',
         ];
 
         $this->filesystem = $filesystem;
     }
 
-    public function handle()
+    public function handle(): void
     {
         foreach ($this->directories as $directory) {
-            $this->info('Checking for custom Architect ' . $name = Str::of($directory)->pluralStudly());
+            $this->info('Checking for custom Architect '.$name = Str::of($directory)->pluralStudly());
 
-            if (!$this->filesystem->exists($basePath = base_path('architect/' . $directory))) {
+            if (!$this->filesystem->exists($basePath = base_path('architect/'.$directory))) {
                 $this->info("No {$name} found in your app");
                 continue;
             }
 
-            foreach ($this->filesystem->directories($basePath) as $path) {
-                $buildName = Str::pluralStudly(Arr::last(explode('/', $path)));
-                
-                $this->info("Building {$buildName} {$name}");
-                $this->executeCommand("npm run {$this->argument('env')}", $path);
-            }
+            $this->processDirectories($basePath, $name);
         }
     }
 
-    protected function executeCommand($command, $path)
+    public function processDirectories(string $basePath, string $name): void
     {
-        (new Process(explode(' ', $command), $path))->setTimeout(null)->run(function ($type, $line) {
-            $this->output->write($line);
-        });
+        foreach ($this->filesystem->directories($basePath) as $path) {
+            $buildName = Str::pluralStudly(Arr::last(explode('/', $path)));
+
+            $this->info("Building {$buildName} {$name}");
+
+            if (!$this->filesystem->exists("{$basePath}/node_modules")) {
+                $this->executeCommand('npm install', $path);
+            }
+
+            $this->executeCommand("npm run {$this->argument('env')}", $path);
+            $this->executeCommand('rm -rf node_modules', $path);
+        }
     }
 }

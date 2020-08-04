@@ -1,18 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Plans;
 
-use Closure;
 use Illuminate\Database\Eloquent\Model;
 
 class Label extends InternalPlan
 {
-    public function hasDatabaseColumn()
+    public function hasDatabaseColumn(): bool
     {
         return false;
     }
 
-    public function vuePrefix()
+    public function vuePrefix(): string
     {
         return 'label';
     }

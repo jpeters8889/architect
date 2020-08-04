@@ -11,7 +11,7 @@ class CardServiceProvider extends ServiceProvider
     {
         Architect::isRunning(function () {
             /** @var Architect $architect */
-            $architect = resolve(Architect::class);
+            $architect = Architect::getInstance();
 
             $architect->apiManager->registerEndpoint('post', '{{package-namespace-dash}}', ApiHandler::class);
             $architect->assetManager->registerScript('{{package-name-namespace}}', __DIR__.'/../dist/card.js');

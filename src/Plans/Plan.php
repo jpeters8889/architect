@@ -1,31 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Plans;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use JPeters\Architect\Blueprints\Blueprint;
-use JPeters\Architect\Traits\TogglesVisibility;
 use RuntimeException;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+use JPeters\Architect\Traits\TogglesVisibility;
 
 abstract class Plan
 {
     use TogglesVisibility;
 
-    public $deferUpdate = false;
+    public bool $deferUpdate = false;
 
-    protected $label;
+    protected ?string $label;
     protected $column;
-    protected $listeners = [];
+    protected array $listeners = [];
 
-    protected $metas = [];
+    protected array $metas = [];
 
-    protected $events = ['changed'];
+    protected array $events = ['changed'];
 
-    protected $relationship = false;
+    protected ?string $relationship;
 
-    protected $default = null;
+    protected ?string $default;
 
     public function __construct($column, $label = null)
     {
@@ -45,16 +46,16 @@ abstract class Plan
         return new static(...$args);
     }
 
-    public function isInRelationship($relationship)
+    public function isInRelationship($relationship): self
     {
         $this->relationship = $relationship;
 
         return $this;
     }
 
-    public function addListener($column, $on, Closure $closure)
+    public function addListener(string $column, string $on, Closure $closure): self
     {
-        if (!in_array($on, $this->events)) {
+        if (!in_array($on, $this->events, true)) {
             throw new RuntimeException('Unknown event handler');
         }
 
@@ -63,17 +64,17 @@ abstract class Plan
         return $this;
     }
 
-    protected function bootstrapEvents()
+    protected function bootstrapEvents(): void
     {
         foreach ($this->events as $event) {
             $this->listeners[$event] = [];
         }
     }
 
-    public function executeEvent($eventName, $value)
+    public function executeEvent(string $eventName, $value)
     {
         $event = last(explode('-', $eventName));
-        $column = str_replace('-' . $event, '', $eventName);
+        $column = str_replace('-'.$event, '', $eventName);
 
         if (!isset($this->listeners[$event][$column])) {
             throw new RuntimeException("Couldn't find listener");
@@ -86,7 +87,7 @@ abstract class Plan
     {
         $value = $model->{$this->getColumn()};
 
-        if ($this->relationship) {
+        if (isset($this->relationship)) {
             $bits = explode('_', $this->column);
             array_pop($bits);
 
@@ -102,17 +103,17 @@ abstract class Plan
         return $value;
     }
 
-    public function requestMethod()
+    public function requestMethod(): string
     {
         return 'input';
     }
 
-    public function hasDatabaseColumn()
+    public function hasDatabaseColumn(): bool
     {
         return true;
     }
 
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
     }
@@ -122,7 +123,7 @@ abstract class Plan
         return $this->column;
     }
 
-    public function parseListeners()
+    public function parseListeners(): array
     {
         $listeners = [];
 
@@ -136,31 +137,31 @@ abstract class Plan
         return $listeners;
     }
 
-    public function withMetas($metas)
+    public function withMetas(array $metas): void
     {
         $this->metas = $metas;
     }
 
-    public function getMetas()
+    public function getMetas(): array
     {
         return array_merge($this->metas, [
             'listeners' => $this->parseListeners(),
         ]);
     }
 
-    public function getDefault()
+    public function getDefault(): ?string
     {
-        return $this->default;
+        return $this->default ?? null;
     }
 
-    public function setDefault($default)
+    public function setDefault(string $default): self
     {
         $this->default = $default;
 
         return $this;
     }
 
-    abstract public function vuePrefix();
+    abstract public function vuePrefix(): string;
 
     abstract public function handleUpdate(Model $model, $column, $value);
 }

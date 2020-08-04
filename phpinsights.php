@@ -2,19 +2,23 @@
 
 declare(strict_types=1);
 
-use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
+use PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
+use PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
+use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use ObjectCalisthenics\Sniffs\Classes\ForbiddenPublicPropertySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
-use PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer;
-use PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer;
+use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
+use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
+use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\AssignmentInConditionSniff;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Preset
@@ -62,7 +66,7 @@ return [
     */
 
     'exclude' => [
-        //  'path/to/directory-or-file'
+        'src/Console/Stubs',
     ],
 
     'add' => [
@@ -80,6 +84,11 @@ return [
         ForbiddenPublicPropertySniff::class,
         ForbiddenTraits::class,
         ForbiddenSetterSniff::class,
+        AssignmentInConditionSniff::class,
+        DisallowEmptySniff::class,
+        ParameterTypeHintSniff::class,
+        ReturnTypeHintSniff::class,
+        PropertyTypeHintSniff::class,
     ],
 
     'config' => [
@@ -91,5 +100,4 @@ return [
             'maxComplexity' => 8,
         ],
     ],
-
 ];

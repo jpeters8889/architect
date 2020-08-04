@@ -1,15 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Traits;
 
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Container\Container;
 use JPeters\Architect\ArchitectGateway;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 trait CheckArchitectGateway
 {
     protected function validateGateway(): bool
     {
-        $class = config('architect.gateway');
+        $class = Container::getInstance()->make(ConfigRepository::class)->get('architect.gateway');
 
         if (!$class) {
             return true;
@@ -18,6 +22,6 @@ trait CheckArchitectGateway
         /** @var ArchitectGateway $gateway */
         $gateway = new $class();
 
-        return $gateway->canUseArchitect(Auth::user());
+        return $gateway->canUseArchitect(Container::getInstance()->make(Authenticatable::class));
     }
 }

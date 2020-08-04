@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Http\Controllers;
 
 use Illuminate\Http\Response;
 
 class AssetController extends BaseController
 {
-    public function get($asset, $name)
+    public function get(string $asset, string $name): Response
     {
         $contentType = 'application/javascript';
 

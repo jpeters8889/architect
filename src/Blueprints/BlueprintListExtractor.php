@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Blueprints;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Container\Container;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use JPeters\Architect\Cards\Card;
 use JPeters\Architect\Plans\Plan;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 class BlueprintListExtractor extends Extractor
 {
-    protected $labels = [];
-    protected $vuePrefix = [];
-    protected $columns = [];
-    protected $hideOnMobile = [];
+    protected array $labels = [];
+    protected array $vuePrefix = [];
+    protected array $columns = [];
+    protected array $hideOnMobile = [];
 
     public function make(): array
     {
@@ -21,7 +24,6 @@ class BlueprintListExtractor extends Extractor
 
         $this->columns[] = $this->blueprint->primaryField();
 
-        /** @var Builder $data */
         $data = $this->blueprint->getData();
         $ordering = $this->blueprint->ordering();
 
@@ -72,15 +74,17 @@ class BlueprintListExtractor extends Extractor
     private function createFilters(): Collection
     {
         return (new Collection($this->blueprint->filters()))
-            ->mapWithKeys(function ($filter, $identifier) {
-                return [$identifier => [
-                    'name' => $filter['name'],
-                    'options' => $filter['options']
-                ]];
+            ->mapWithKeys(static function ($filter, $identifier) {
+                return [
+                    $identifier => [
+                        'name' => $filter['name'],
+                        'options' => $filter['options'],
+                    ],
+                ];
             });
     }
 
-    private function processPlans()
+    private function processPlans(): void
     {
         (new Collection($this->blueprint->plans()))
             ->each(function (Plan $plan) {
@@ -103,14 +107,10 @@ class BlueprintListExtractor extends Extractor
             });
     }
 
-    /**
-     * @param Builder $data
-     * @return Builder
-     */
     protected function processSearch(Builder $data): Builder
     {
         /** @var Request $request */
-        if (($request = resolve(Request::class))->has('search')) {
+        if (($request = Container::getInstance()->make(Request::class))->has('search')) {
             $search = $request->get('search');
 
             $data = $data->where(function (Builder $builder) use ($search) {
@@ -118,11 +118,12 @@ class BlueprintListExtractor extends Extractor
 
                 foreach ($this->columns as $column) {
                     if ($builder->columnExists($column)) {
-                        $builder->orWhere($tableName . "." . $column, 'LIKE', "%{$search}%");
+                        $builder->orWhere($tableName.'.'.$column, 'LIKE', "%{$search}%");
                     }
                 }
             });
         }
+
         return $data;
     }
 
@@ -132,7 +133,7 @@ class BlueprintListExtractor extends Extractor
             return $data;
         }
 
-        if (!($request = resolve(Request::class))->has('filter')) {
+        if (!($request = Container::getInstance()->make(Request::class))->has('filter')) {
             return $data;
         }
 
@@ -140,7 +141,7 @@ class BlueprintListExtractor extends Extractor
             if (array_key_exists($key, $filters)) {
                 $closure = $filters[$key]['filter'];
 
-                $data->where(fn(Builder $builder) => $closure($builder, $value));
+                $data->where(static fn (Builder $builder) => $closure($builder, $value));
             }
         }
 

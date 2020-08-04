@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Http\Controllers;
 
+use Throwable;
 use Illuminate\Http\Response;
 use JPeters\Architect\Http\Requests\ListenerRequest;
-use Throwable;
 
 class ListenerController extends BaseController
 {
@@ -15,7 +17,6 @@ class ListenerController extends BaseController
                 ...array_values($request->only(['blueprint', 'event', 'column', 'value']))
             );
         } catch (Throwable $e) {
-            dd($e);
             return new Response("Couldn't execute listener", 400);
         }
     }

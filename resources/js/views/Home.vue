@@ -4,8 +4,8 @@
 <script>
     export default {
         mounted() {
-            window.Architect.request().get('/dashboard').then((response) => {
-                if (response.data.redirect instanceof Object) {
+            Architect.request().get('/dashboard').then((response) => {
+                if (Object.keys(response.data.redirect).length > 0) {
                     if (response.data.redirect.asVue) {
                         this.$router.push({
                             name: response.data.redirect.url,

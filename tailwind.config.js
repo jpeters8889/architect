@@ -4,7 +4,10 @@ const colours = {
 
     black: {
       default: '#000',
-        90: 'rgba(0,0,0,0.9)'
+        90: 'rgba(0,0,0,0.9)',
+        50: 'rgba(0,0,0,0.5)',
+        20: 'rgba(0,0,0,0.2)',
+        10: 'rgba(0,0,0,0.1)',
     },
     white: {
         default: '#fff',
@@ -122,6 +125,7 @@ module.exports = {
             sm: '0.125rem',
             default: '0.25rem',
             lg: '0.5rem',
+            xl: '0.75rem',
             full: '9999px',
         },
 
@@ -143,6 +147,7 @@ module.exports = {
             inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
             'inner-lg': 'inset 0 4px 8px 0 rgba(0, 0, 0, 0.06)',
             outline: '0 0 0 3px rgba(66, 153, 225, 0.5)',
+            'outline-dark': '0 0 0 3px rgba(47, 133, 90, 0.5)',
             none: 'none',
         },
 
@@ -271,7 +276,7 @@ module.exports = {
         maxHeight: {
             full: '100%',
             screen: '100vh',
-            imageManager: '150px',
+            modal: '95%',
         },
 
         maxWidth: {

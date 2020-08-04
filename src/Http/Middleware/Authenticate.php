@@ -1,25 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Http\Middleware;
 
 use Closure;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Exception;
+use Illuminate\Container\Container;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Support\Str;
-use JPeters\Architect\Architect;
-use JPeters\Architect\ArchitectGateway;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
 {
-    /**
-     * @param Request $request
-     * @param array $guards
-     * @throws AuthenticationException
-     */
-    protected function authenticate($request, array $guards)
+    protected function authenticate(Request $request, array $guards)
     {
         if (Str::contains($request->path(), 'login')) {
             return;
@@ -32,9 +28,10 @@ class Authenticate extends Middleware
     {
         try {
             return parent::handle($request, $next, $guards);
-        } catch (\Exception $exception) {
-            return new RedirectResponse(config('architect.route').'/login');
+        } catch (Exception $exception) {
+            return new RedirectResponse(
+                Container::getInstance()->make(ConfigRepository::class)->get('architect.route').'/login'
+            );
         }
     }
-
 }
