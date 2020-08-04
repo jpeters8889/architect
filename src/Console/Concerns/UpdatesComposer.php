@@ -19,7 +19,7 @@ trait UpdatesComposer
             'url' => './'.$this->relativePath,
         ];
 
-        $composer['require'][$this->packageNamespace] = 'dev-master';
+        $composer['require'][$this->packageNamespace] = '*';
         ksort($composer['require']);
 
         file_put_contents(base_path('composer.json'), json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));

@@ -1,6 +1,6 @@
 <template>
     <div class="bg-black-50 fixed w-full h-full top-0 left-0 flex justify-center items-center z-50"
-         @click="closeModal()">
+         @click.exact="closeModal()">
 
         <div class="flex flex-col bg-white rounded-lg shadow-xl w-11/12 max-w-2xl max-h-modal overflow-hidden overflow-y-scroll">
             <div class="flex justify-between items-center bg-gray-100 p-3 shadow-outline-dark">
