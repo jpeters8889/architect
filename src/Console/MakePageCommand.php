@@ -42,7 +42,7 @@ class MakePageCommand extends Command
 
     public function handle()
     {
-        $this->runWizard('page', $this->pagePath);
+        $this->runWizard('page');
     }
 
     protected function makeDirectory($directory)

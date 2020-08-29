@@ -41,7 +41,7 @@ class MakePlanCommand extends Command
 
     public function handle(): void
     {
-        $this->runWizard('plan', $this->planPath);
+        $this->runWizard('plan');
     }
 
     protected function makeDirectory($directory): void

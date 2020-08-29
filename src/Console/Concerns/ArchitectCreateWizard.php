@@ -9,11 +9,11 @@ use Illuminate\Support\Str;
 
 trait ArchitectCreateWizard
 {
-    protected function runWizard(string $name, string $path): void
+    protected function runWizard(string $name): void
     {
         $this->packageNamespace = (string) $this->argument($name);
         $this->packageName = Str::kebab(Arr::last(explode('/', $this->packageNamespace)));
-        $this->planPath = base_path($this->relativePath = "architect/{$name}s/{$this->packageName}");
+        $path = base_path($this->relativePath = "architect/{$name}s/{$this->packageName}");
 
         // make architect/plans folder in root if it doesnt exist
         $this->info("Creating architect/{$name} folder");

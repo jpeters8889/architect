@@ -39,7 +39,7 @@ class MakeCardCommand extends Command
 
     public function handle(): void
     {
-        $this->runWizard('card', $this->cardPath);
+        $this->runWizard('card');
     }
 
     protected function makeDirectory($directory): void
