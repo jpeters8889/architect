@@ -15,7 +15,7 @@
                 class="mr-1 p-1 flex justify-center items-center text-blue-100 font-bold text-3xl cursor-pointer sm:hidden relative"
                 @click="showMobileNav = true">
               <font-awesome-icon :icon="['fas', 'bars']"></font-awesome-icon>
-              <div v-if="hasNotifications" class="absolute bg-red-600 rounded-full w-3 h-3 top-0 right-0"></div>
+              <div v-if="hasNotifications()" class="absolute bg-red-600 rounded-full w-3 h-3 top-0 right-0"></div>
             </div>
             <router-link :to="{name: 'home'}" class="-m-2">
               <img src="/vendor/architect/images/architect-logo.png" alt="" class="h-15"/>
