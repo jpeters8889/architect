@@ -34,6 +34,10 @@
 
         mounted() {
           this.actualValue = this.value[this.metas.lookupVariable];
+
+          if (this.value) {
+            this.emitterValue = this.value;
+          }
         },
 
         methods: {
