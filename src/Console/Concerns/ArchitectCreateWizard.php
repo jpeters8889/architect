@@ -25,7 +25,7 @@ trait ArchitectCreateWizard
 
         // copy plan stubs
         $this->info('Copying plan skeleton');
-        $this->filesystem->copyDirectory(__DIR__.'/Stubs/'.$name, $path);
+        $this->filesystem->copyDirectory(__DIR__.'/../Stubs/'.$name, $path);
 
         // update place holders in the files
         $this->info("Configuring {$name} skeleton");
@@ -46,7 +46,7 @@ trait ArchitectCreateWizard
         }
 
         // build app
-        if ($this->confirm('Do you want to build the provided {$name} skeleton?')) {
+        if ($this->confirm("Do you want to build the provided {$name} skeleton?")) {
             $this->executeCommand('npm run dev', $path);
         }
     }

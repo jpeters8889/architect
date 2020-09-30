@@ -21,7 +21,7 @@
         </div>
 
         <portal to="modal" v-if="showModal">
-            <modal>
+            <modal title="Done!">
                 <div class="text-2xl">
                     {{ this.title }} saved.
                 </div>

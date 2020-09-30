@@ -74,7 +74,7 @@ abstract class Plan
     public function executeEvent(string $eventName, $value)
     {
         $event = last(explode('-', $eventName));
-        $column = str_replace('-'.$event, '', $eventName);
+        $column = str_replace('-' . $event, '', $eventName);
 
         if (!isset($this->listeners[$event][$column])) {
             throw new RuntimeException("Couldn't find listener");
@@ -157,6 +157,13 @@ abstract class Plan
     public function setDefault(string $default): self
     {
         $this->default = $default;
+
+        return $this;
+    }
+
+    public function defer()
+    {
+        $this->deferUpdate = true;
 
         return $this;
     }
