@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace JPeters\Architect\Plans;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use JPeters\Architect\Traits\PlanHasLookupAction;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Select extends InternalPlan
 {
@@ -90,28 +90,28 @@ class Select extends InternalPlan
 
     public function handleUpdate(Model $model, $column, $value)
     {
-        if(!$this->multiSelect) {
+        if (!$this->multiSelect) {
             $value = [$value];
         }
 
-        if($this->multiSelect && !is_array($value)) {
+        if ($this->multiSelect && !is_array($value)) {
             $value = explode(',', $value);
         }
 
-        if($this->fromPivot) {
+        if ($this->fromPivot) {
             /** @var BelongsToMany $relationship */
             $relationship = $model->{$this->relationship}();
 
             $relationship->detach();
 
-            foreach($value as $val) {
+            foreach ($value as $val) {
                 $relationship->attach($val);
             }
 
             return;
         }
 
-        foreach($value as $val) {
+        foreach ($value as $val) {
             parent::handleUpdate($model, $column, $val);
         }
     }

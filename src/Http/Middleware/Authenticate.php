@@ -6,12 +6,12 @@ namespace JPeters\Architect\Http\Middleware;
 
 use Closure;
 use Exception;
-use Illuminate\Container\Container;
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Container\Container;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class Authenticate extends Middleware
 {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace JPeters\Architect\Blueprints;
 
+use Illuminate\Support\Collection;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Support\Collection;
 
 class BlueprintManager
 {

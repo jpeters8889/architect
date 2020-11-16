@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace JPeters\Architect\Blueprints;
 
-use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use JPeters\Architect\Cards\Card;
 use JPeters\Architect\Plans\Plan;
 use Illuminate\Support\Collection;
+use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Builder;
 
 class BlueprintListExtractor extends Extractor

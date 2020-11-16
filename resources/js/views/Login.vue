@@ -82,7 +82,7 @@
                             password: this.fields.password.value,
                         }).then((request) => {
                             if (request.status === 200) {
-                                window.location = window.config.prefix;
+                                window.location = request.data.redirect;
                                 return;
                             }
 

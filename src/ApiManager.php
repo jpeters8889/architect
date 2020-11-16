@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace JPeters\Architect;
 
 use Exception;
-use Illuminate\Container\Container;
 use ReflectionMethod;
 use RuntimeException;
 use ReflectionParameter;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Container\Container;
 
 class ApiManager
 {

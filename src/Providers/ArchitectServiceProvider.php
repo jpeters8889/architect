@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace JPeters\Architect\Providers;
 
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Support\Str;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
@@ -17,6 +16,8 @@ use JPeters\Architect\Console\PublishCommand;
 use JPeters\Architect\Console\MakeCardCommand;
 use JPeters\Architect\Console\MakePageCommand;
 use JPeters\Architect\Console\MakePlanCommand;
+use JPeters\Architect\TestHelpers\Laravel\ArchitectGateway;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class ArchitectServiceProvider extends ServiceProvider
 {
@@ -30,22 +31,11 @@ class ArchitectServiceProvider extends ServiceProvider
             $this->mergeConfigFrom(__DIR__.'/../../config/architect.php', 'architect');
         }
 
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+
         $this->registerViews();
         $this->registerRoutes();
-
-        if (!Str::hasMacro('explodeIntoCollection')) {
-            Str::macro('explodeIntoCollection', static function ($value, $delimiter = ',') {
-                return new Collection(explode($delimiter, $value));
-            });
-        }
-
-        if (!Builder::hasGlobalMacro('columnExists')) {
-            Builder::macro('columnExists', function ($column) {
-                $columns = $this->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->getModel()->getTable());
-
-                return array_key_exists($column, $columns);
-            });
-        }
+        $this->registerMacros();
     }
 
     public function register()
@@ -58,6 +48,10 @@ class ArchitectServiceProvider extends ServiceProvider
             MakePlanCommand::class,
             PublishCommand::class,
         ]);
+
+        if ($gateway = config('architect.gateway')) {
+            $this->app->instance(ArchitectGateway::class, new $gateway());
+        }
     }
 
     protected function registerPublishCommands(): void
@@ -95,5 +89,22 @@ class ArchitectServiceProvider extends ServiceProvider
                 require __DIR__.'/../routes/api.php';
             }
         );
+    }
+
+    protected function registerMacros(): void
+    {
+        if (!Str::hasMacro('explodeIntoCollection')) {
+            Str::macro('explodeIntoCollection', static function ($value, $delimiter = ',') {
+                return new Collection(explode($delimiter, $value));
+            });
+        }
+
+        if (!Builder::hasGlobalMacro('columnExists')) {
+            Builder::macro('columnExists', function ($column) {
+                $columns = $this->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->getModel()->getTable());
+
+                return array_key_exists($column, $columns);
+            });
+        }
     }
 }

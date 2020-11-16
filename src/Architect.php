@@ -7,7 +7,6 @@ namespace JPeters\Architect;
 use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Contracts\Config\Repository;
 use JPeters\Architect\Lookup\Lookup;
 use JPeters\Architect\Buttons\Button;
 use Illuminate\Contracts\Events\Dispatcher;

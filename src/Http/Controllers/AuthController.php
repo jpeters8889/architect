@@ -9,7 +9,6 @@ use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use JPeters\Architect\Traits\CheckArchitectGateway;
 use JPeters\Architect\Http\Requests\ChangePasswordRequest;
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class AuthController extends BaseController
 {
@@ -20,6 +19,7 @@ class AuthController extends BaseController
     {
         return [
             'data' => 'Logged In',
+            'redirect' => $this->redirectPath($user),
         ];
     }
 
@@ -30,9 +30,15 @@ class AuthController extends BaseController
         ];
     }
 
-    public function redirectPath(ConfigRepository $config): string
+    public function redirectPath($user): string
     {
-        return $config->get('architect.route');
+        $path = config('architect.route');
+
+        if (method_exists($user, 'architectSetting')) {
+            $path = ltrim($path, '/').'/'.$user->architectSetting('landing-page');
+        }
+
+        return $path;
     }
 
     public function changePassword(ChangePasswordRequest $request, Hasher $hasher): void

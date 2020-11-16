@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace JPeters\Architect\Providers;
 
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Routing\Router;
 use JPeters\Architect\Architect;
 use JPeters\Architect\Dashboard;
@@ -13,6 +12,7 @@ use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use JPeters\Architect\Dashboards\DashboardContract;
 use JPeters\Architect\Http\Middleware\ArchitectIsRunning;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class ArchitectApplicationServiceProvider extends ServiceProvider
 {
