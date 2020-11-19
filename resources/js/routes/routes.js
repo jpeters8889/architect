@@ -6,6 +6,7 @@ import Logout from "../views/Logout";
 import Error from "../views/Error";
 import CustomPage from "../views/CustomPage";
 import ChangePassword from "../Components/ChangePassword";
+import Dashboard from "../views/Dashboard";
 
 export default [
     {
@@ -30,6 +31,13 @@ export default [
         path: '/error',
         name: 'error',
         component: Error,
+    },
+
+    {
+        path: '/dashboards/:dashboard',
+        name: 'dashboard',
+        component: Dashboard,
+        props: true,
     },
 
     {

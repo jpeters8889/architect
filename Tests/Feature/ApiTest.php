@@ -30,6 +30,8 @@ class ApiTest extends ArchitectTestCase
     /** @test */
     public function it_handles_the_request()
     {
+        $this->withoutExceptionHandling();
+
         $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'handle');
 
         $this->makeRequest()->assertSee((new ApiManagerHandler())->handle());

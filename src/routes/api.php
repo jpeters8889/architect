@@ -10,7 +10,7 @@ $router->get('/health', 'HealthController@get');
 
 $router->get('/assets/{asset}/{name}', 'AssetController@get');
 
-$router->get('/dashboard', 'DashboardController@get');
+$router->get('/dashboard/{dashboard}', 'DashboardController@get');
 
 $router->prefix('/blueprints')->group(static function ($router) {
     $router->post('/submit', 'BlueprintController@submit');

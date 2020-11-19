@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use JPeters\Architect\Dashboards\Dashboard
 use JPeters\Architect\Providers\ArchitectApplicationServiceProvider;
 
 class ArchitectServiceProvider extends ArchitectApplicationServiceProvider
@@ -16,13 +17,10 @@ class ArchitectServiceProvider extends ArchitectApplicationServiceProvider
         return [];
     }
 
-    public function dataSources(): array
+    public function dashboards(): array
     {
-        return [];
-    }
-
-    public function register()
-    {
-        //
+        return [
+            Dashboard::class,
+        ];
     }
 }

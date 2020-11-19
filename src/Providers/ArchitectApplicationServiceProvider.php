@@ -6,11 +6,10 @@ namespace JPeters\Architect\Providers;
 
 use Illuminate\Routing\Router;
 use JPeters\Architect\Architect;
-use JPeters\Architect\Dashboard;
 use Illuminate\Support\Collection;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
-use JPeters\Architect\Dashboards\DashboardContract;
+use JPeters\Architect\Dashboards\Dashboard;
 use JPeters\Architect\Http\Middleware\ArchitectIsRunning;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
@@ -24,7 +23,7 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
 
         Architect::isRunning(function () {
             $this->registerBlueprints();
-            $this->architect->registerDashboard($this->dashboard());
+            $this->registerDashboards();
         });
 
         $this->registerCoreRoutes();
@@ -37,9 +36,11 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
         return [];
     }
 
-    protected function dashboard(): DashboardContract
+    public function dashboards(): array
     {
-        return new Dashboard();
+        return [
+            Dashboard::class,
+        ];
     }
 
     protected function registerCoreRoutes(): void
@@ -47,17 +48,17 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
         $router = Container::getInstance()->make(Router::class);
         $config = Container::getInstance()->make(ConfigRepository::class);
 
-        $router->post($config->get('architect.route').'/api/auth', [
+        $router->post($config->get('architect.route') . '/api/auth', [
             'middleware' => ['web', ArchitectIsRunning::class],
             'uses' => 'JPeters\Architect\Http\Controllers\AuthController@login',
         ]);
 
-        $router->post($config->get('architect.route').'/api/logout', [
+        $router->post($config->get('architect.route') . '/api/logout', [
             'middleware' => ['web', ArchitectIsRunning::class],
             'uses' => 'JPeters\Architect\Http\Controllers\AuthController@logout',
         ]);
 
-        $router->post($config->get('architect.route').'/api/change-password', [
+        $router->post($config->get('architect.route') . '/api/change-password', [
             'middleware' => ['web', ArchitectIsRunning::class],
             'uses' => 'JPeters\Architect\Http\Controllers\AuthController@changePassword',
         ]);
@@ -74,8 +75,15 @@ class ArchitectApplicationServiceProvider extends ServiceProvider
 
     private function registerBlueprints(): void
     {
-        (new Collection($this->blueprints()))->each(function ($blueprint) {
+        (new Collection($this->blueprints()))->map(function ($blueprint) {
             $this->architect->registerBlueprint($blueprint);
+        });
+    }
+
+    private function registerDashboards(): void
+    {
+        (new Collection($this->dashboards()))->map(function ($dashboard) {
+            $this->architect->registerDashboard($dashboard);
         });
     }
 }

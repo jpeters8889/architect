@@ -14,6 +14,7 @@ import Search from "./Components/Search";
 import Filters from "./Components/Filters";
 import UserCircle from "./Components/UserCircle";
 import ChangePassword from "./Components/ChangePassword";
+import Chart from "./Components/Chart";
 
 Vue.component('blueprint-field', BlueprintField);
 Vue.component('blueprint-filter', Filters);
@@ -26,6 +27,7 @@ Vue.component('modal', Modal);
 Vue.component('card-component', Card);
 Vue.component('loader', Loader);
 Vue.component('user-info-circle', UserCircle);
+Vue.component('chart', Chart);
 
 Vue.component('form-input', Input);
 Vue.component('form-button', Button);

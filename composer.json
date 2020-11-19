@@ -2,13 +2,14 @@
   "name": "jpeters/architect",
   "description": "Architect",
   "type": "library",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "license": "MIT",
   "require": {
     "laravel/framework": "^8.0",
     "ext-json": "*",
     "laravel/ui": "^3.0",
-    "doctrine/dbal": "^2.10"
+    "doctrine/dbal": "^2.10",
+    "chartisan/php": "^1.2"
   },
   "require-dev": {
     "nunomaduro/phpinsights": "^1.14",

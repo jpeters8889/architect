@@ -7,6 +7,7 @@ namespace JPeters\Architect\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use JPeters\Architect\Dashboards\AbstractDashboard;
 use JPeters\Architect\Traits\CheckArchitectGateway;
 use JPeters\Architect\Http\Requests\ChangePasswordRequest;
 
@@ -34,11 +35,18 @@ class AuthController extends BaseController
     {
         $path = config('architect.route');
 
+        $dashboard = $this->architect->dashboardManager->dashboardList()[0];
+
+        /** @var AbstractDashboard $concreteDashboard */
+        $concreteDashboard = new $dashboard();
+
+        $page = 'dashboards/' . $concreteDashboard->dashboardRoute();
+
         if (method_exists($user, 'architectSetting')) {
-            $path = ltrim($path, '/').'/'.$user->architectSetting('landing-page');
+            $page = $user->architectSetting('landing-page', $page);
         }
 
-        return $path;
+        return '/' . trim($path, '/') . '/' . $page;
     }
 
     public function changePassword(ChangePasswordRequest $request, Hasher $hasher): void

@@ -15,6 +15,7 @@ import {faCaretUp} from "@fortawesome/free-solid-svg-icons/faCaretUp";
 import {faCaretDown} from "@fortawesome/free-solid-svg-icons/faCaretDown";
 import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons/faExclamationCircle";
 import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
+import {faDoorClosed} from "@fortawesome/free-solid-svg-icons/faDoorClosed";
 
 export default () => {
     // Generic
@@ -36,6 +37,7 @@ export default () => {
 
     // Navigation
     library.add(faBuilding);
+    library.add(faDoorClosed);
     library.add(faCogs);
 
     // Misc

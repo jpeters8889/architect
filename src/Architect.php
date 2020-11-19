@@ -7,6 +7,8 @@ namespace JPeters\Architect;
 use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
+use JPeters\Architect\Dashboards\AbstractDashboard;
+use JPeters\Architect\Dashboards\DashboardManager;
 use JPeters\Architect\Lookup\Lookup;
 use JPeters\Architect\Buttons\Button;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -15,7 +17,6 @@ use JPeters\Architect\Events\ArchitectRunning;
 use JPeters\Architect\Plans\Listeners\Listener;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use JPeters\Architect\Blueprints\BlueprintManager;
-use JPeters\Architect\Dashboards\DashboardContract;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class Architect
@@ -32,16 +33,25 @@ class Architect
 
     public Button $button;
 
-    public DashboardContract $dashboard;
+    public DashboardManager $dashboardManager;
 
     public Lookup $lookup;
 
     public Listener $listener;
 
+    protected static ?self $instance;
+
     public function __construct()
     {
         $this->bootstrapAppDependencies();
+
+        self::$instance = $this;
     }
+
+//    public static function getInstance()
+//    {
+//        return self::$instance;
+//    }
 
     private function bootstrapAppDependencies(): void
     {
@@ -49,6 +59,7 @@ class Architect
         $this->assetManager = new AssetManager();
         $this->authGuard = Container::getInstance()->make(Guard::class);
         $this->blueprintManager = new BlueprintManager();
+        $this->dashboardManager = new DashboardManager();
         $this->button = new Button($this);
         $this->listener = new Listener($this);
         $this->lookup = new Lookup($this);
@@ -72,21 +83,22 @@ class Architect
         $this->blueprintManager->registerBlueprint($blueprint);
     }
 
-    public function registerDashboard(DashboardContract $dashboard): void
+    public function registerDashboard($dashboard): void
     {
-        $this->dashboard = $dashboard;
+        $this->dashboardManager->registerDashboard($dashboard);
     }
 
-    public static function coreJavascript(BlueprintManager $manager): array
+    public static function coreJavascript(): array
     {
         $config = Container::getInstance()->make(ConfigRepository::class);
 
         return [
             'domain' => $config->get('app.url'),
             'siteName' => $config->get('app.name'),
-            'prefix' => '/'.$config->get('architect.route'),
-            'apiRoot' => '/'.$config->get('architect.route').'/api',
-            'navigation' => $manager->renderForNavigation(),
+            'prefix' => '/' . $config->get('architect.route'),
+            'apiRoot' => '/' . $config->get('architect.route') . '/api',
+            'dashboards' => self::$instance->dashboardManager->renderForNavigation(),
+            'navigation' => self::$instance->blueprintManager->renderForNavigation(),
             'user' => Container::getInstance()->make(Authenticatable::class),
             'canChangePassword' => $config->get('architect.can_change_password', false),
         ];
@@ -94,6 +106,6 @@ class Architect
 
     public static function getInstance()
     {
-        return Container::getInstance()->make(self::class);
+        return self::$instance;
     }
 }
