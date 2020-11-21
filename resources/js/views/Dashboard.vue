@@ -37,24 +37,28 @@ export default {
   }),
 
   mounted() {
-    Architect.$emit('load-start');
-
-    Architect.request().get(`/dashboard/${this.$route.params.dashboard}`).then((response) => {
-      if (response.status === 200) {
-        this.dashboard = response.data;
-
-        return;
-      }
-
-      Architect.error('Dashboard not found');
-    }).catch(() => {
-      Architect.error('Dashboard not found');
-    }).finally(() => {
-      Architect.$emit('load-end');
-    });
+    this.initComponent();
   },
 
   methods: {
+    initComponent() {
+      Architect.$emit('load-start');
+
+      Architect.request().get(`/dashboard/${this.$route.params.dashboard}`).then((response) => {
+        if (response.status === 200) {
+          this.dashboard = response.data;
+
+          return;
+        }
+
+        Architect.error('Dashboard not found');
+      }).catch(() => {
+        Architect.error('Dashboard not found');
+      }).finally(() => {
+        Architect.$emit('load-end');
+      });
+    },
+
     cardWidth(width) {
       switch (width) {
         case 'half':
@@ -70,9 +74,15 @@ export default {
 
     cardHeight(height) {
       return {
-        height: height+'px',
+        height: height + 'px',
       };
     }
-  }
+  },
+
+  watch: {
+    $route() {
+      this.initComponent();
+    }
+  },
 }
 </script>
