@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace JPeters\Architect\Plans;
 
 use Illuminate\Database\Eloquent\Model;
-use JPeters\Architect\Traits\PlanHasLookupAction;
 
-class Lookup extends InternalPlan
+class Lookup extends PlanWithLookupAction
 {
-    use PlanHasLookupAction;
-
     public function vuePrefix(): string
     {
         return 'lookup';

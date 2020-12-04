@@ -8,12 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use JPeters\Architect\Traits\PlanHasLookupAction;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Select extends InternalPlan
+class Select extends PlanWithLookupAction
 {
-    use PlanHasLookupAction {
-        getMetas as protected getMetasFromTrait;
-    }
-
     private array $options;
 
     private bool $showDefault = true;
@@ -45,7 +41,7 @@ class Select extends InternalPlan
 
     public function getMetas(): array
     {
-        return array_merge($this->getMetasFromTrait(), [
+        return array_merge(parent::getMetas(), [
             'options' => $this->options ?? null,
             'showDefault' => $this->showDefault,
             'hasLookup' => isset($this->action) ? $this->action !== null : false,

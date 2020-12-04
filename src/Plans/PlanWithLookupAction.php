@@ -1,12 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
-namespace JPeters\Architect\Traits;
+namespace JPeters\Architect\Plans;
 
 use Closure;
+use Illuminate\Database\Eloquent\Model;
 
-trait PlanHasLookupAction
+abstract class PlanWithLookupAction extends InternalPlan
 {
     protected Closure $action;
 
@@ -15,6 +14,8 @@ trait PlanHasLookupAction
     protected string $customValueAttribute;
 
     protected $getValueFrom;
+
+    protected ?Closure $createAction = null;
 
     public function lookupAction(Closure $action): self
     {
@@ -55,5 +56,21 @@ trait PlanHasLookupAction
             'lookupVariable' => $this->lookupVariable ?? '',
             'customValueAttribute' => $this->customValueAttribute ?? '',
         ]);
+    }
+
+    protected function getRelationshipInstance(Model $model, $value)
+    {
+        if (!$this->createAction) {
+            return parent::getRelationshipInstance($model, $value);
+        }
+
+        return call_user_func($this->createAction, $this->getRelationshipModelInstance($model), $value);
+    }
+
+    public function setCreateAction(Closure $action): self
+    {
+        $this->createAction = $action;
+
+        return $this;
     }
 }
