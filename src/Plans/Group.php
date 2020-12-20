@@ -94,7 +94,7 @@ class Group extends InternalPlan
                     'name' => $plan->getColumn(),
                     'component' => $plan->vuePrefix().'-form',
                     'metas' => $plan->getMetas(),
-                    'value' => isset($this->model) ? $plan->getCurrentValue($this->model) : null,
+                    'value' => isset($this->model) ? $plan->getCurrentValue($this->model) : $plan->getDefault(),
                 ];
             });
     }

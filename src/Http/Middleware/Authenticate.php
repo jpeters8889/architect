@@ -16,7 +16,7 @@ use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class Authenticate extends Middleware
 {
-    protected function authenticate(Request $request, array $guards)
+    protected function authenticate($request, array $guards)
     {
         if (Str::contains($request->path(), 'login')) {
             return;
