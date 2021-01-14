@@ -34,7 +34,7 @@ class InstallCommand extends Command
         return Container::getInstance()->getNamespace();
     }
 
-    protected function registerServiceProvider(): voisd
+    protected function registerServiceProvider(): void
     {
         $namespace = Str::replaceLast('\\', '', $this->getAppNamespace());
         $appConfigFile = config_path('app.php');

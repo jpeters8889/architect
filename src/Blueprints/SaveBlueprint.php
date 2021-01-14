@@ -64,6 +64,9 @@ class SaveBlueprint
 
             $databaseConnection->commit();
 
+            // One last save to trigger any saved events outside of the database transaction
+            $this->model->save();
+
             return $this->returnResponse();
         } catch (Exception $exception) {
             $databaseConnection->rollBack();
