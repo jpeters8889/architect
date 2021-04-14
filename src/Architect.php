@@ -7,8 +7,6 @@ namespace JPeters\Architect;
 use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
-use JPeters\Architect\Dashboards\AbstractDashboard;
-use JPeters\Architect\Dashboards\DashboardManager;
 use JPeters\Architect\Lookup\Lookup;
 use JPeters\Architect\Buttons\Button;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -17,6 +15,7 @@ use JPeters\Architect\Events\ArchitectRunning;
 use JPeters\Architect\Plans\Listeners\Listener;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use JPeters\Architect\Blueprints\BlueprintManager;
+use JPeters\Architect\Dashboards\DashboardManager;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class Architect
@@ -95,8 +94,8 @@ class Architect
         return [
             'domain' => $config->get('app.url'),
             'siteName' => $config->get('app.name'),
-            'prefix' => '/' . $config->get('architect.route'),
-            'apiRoot' => '/' . $config->get('architect.route') . '/api',
+            'prefix' => '/'.$config->get('architect.route'),
+            'apiRoot' => '/'.$config->get('architect.route').'/api',
             'dashboards' => self::$instance->dashboardManager->renderForNavigation(),
             'navigation' => self::$instance->blueprintManager->renderForNavigation(),
             'user' => Container::getInstance()->make(Authenticatable::class),

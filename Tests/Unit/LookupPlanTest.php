@@ -23,7 +23,7 @@ class LookupPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_can_have_an_action_set()
+    public function itCanHaveAnActionSet()
     {
         $this->plan->lookupAction(static function () {
             return 'foo';
@@ -33,7 +33,7 @@ class LookupPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_passes_a_value_to_the_action_callback()
+    public function itPassesAValueToTheActionCallback()
     {
         $this->plan->lookupAction(static function ($value) {
             return $value;

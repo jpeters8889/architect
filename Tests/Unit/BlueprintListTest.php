@@ -46,25 +46,25 @@ class BlueprintListTest extends ArchitectTestCase
      * @test
      * @dataProvider blueprintKeyDataProvider
      */
-    public function it_creates_a_list_with_the_correct_keys($key)
+    public function itCreatesAListWithTheCorrectKeys($key)
     {
         $this->assertArrayHasKey($key, $this->list);
     }
 
     /** @test */
-    public function it_shows_blueprint_plans_that_are_hidden_on_mobile()
+    public function itShowsBlueprintPlansThatAreHiddenOnMobile()
     {
         $this->assertContains('api_token', $this->list['hiddenOnMobile']);
     }
 
     /** @test */
-    public function it_doesnt_show_blueprint_labels_that_are_hidden_on_the_index()
+    public function itDoesntShowBlueprintLabelsThatAreHiddenOnTheIndex()
     {
         $this->assertArrayNotHasKey('updated_at', $this->list['labels']);
     }
 
     /** @test */
-    public function it_shows_the_blueprints_labels()
+    public function itShowsTheBlueprintsLabels()
     {
         $blueprint = new User();
 
@@ -80,7 +80,7 @@ class BlueprintListTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_shows_the_blueprints_card()
+    public function itShowsTheBlueprintsCard()
     {
         $card = (new User())->card();
 
@@ -93,19 +93,19 @@ class BlueprintListTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_contains_the_meta_information()
+    public function itContainsTheMetaInformation()
     {
         $this->assertEquals(['title' => 'Users'], $this->list['meta']);
     }
 
     /** @test */
-    public function it_shows_the_vue_suffix()
+    public function itShowsTheVueSuffix()
     {
         $this->assertEquals('list', $this->list['vue-suffix']);
     }
 
     /** @test */
-    public function it_shows_the_vue_prefixes()
+    public function itShowsTheVuePrefixes()
     {
         $blueprint = new User();
 
@@ -121,7 +121,7 @@ class BlueprintListTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_shows_the_can_edit_option()
+    public function itShowsTheCanEditOption()
     {
         $this->assertTrue($this->list['canEdit']);
 
@@ -146,7 +146,7 @@ class BlueprintListTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_shows_the_data()
+    public function itShowsTheData()
     {
         $this->assertInstanceOf(LengthAwarePaginator::class, $this->list['data']);
 
@@ -162,7 +162,7 @@ class BlueprintListTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_shows_whether_the_blueprint_is_searchable()
+    public function itShowsWhetherTheBlueprintIsSearchable()
     {
         $this->assertTrue($this->list['searchable']);
 
@@ -172,19 +172,19 @@ class BlueprintListTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_returns_a_collection_on_the_filter_property()
+    public function itReturnsACollectionOnTheFilterProperty()
     {
         $this->assertInstanceOf(\Illuminate\Support\Collection::class, $this->list['filters']);
     }
 
     /** @test */
-    public function it_returns_an_empty_collection_when_there_are_no_filters()
+    public function itReturnsAnEmptyCollectionWhenThereAreNoFilters()
     {
         $this->assertCount(0, $this->list['filters']);
     }
 
     /** @test */
-    public function it_returns_a_formatted_list_of_filters_when_filters_are_available()
+    public function itReturnsAFormattedListOfFiltersWhenFiltersAreAvailable()
     {
         $blogBlueprint = (new BlueprintListExtractor($blog = new BlogBlueprint()))->make();
         $filters = $blog->filters();

@@ -26,7 +26,7 @@ class TextAreaPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_can_set_the_number_of_rows()
+    public function itCanSetTheNumberOfRows()
     {
         $this->assertArrayHasKey('rows', $this->plan->getMetas());
 

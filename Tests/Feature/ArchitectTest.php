@@ -20,7 +20,7 @@ class ArchitectTest extends BaseArchitectTest
     }
 
     /** @test */
-    public function it_shows_the_core_javascript_in_the_view()
+    public function itShowsTheCoreJavascriptInTheView()
     {
         $this->withoutExceptionHandling();
         $this->get('/architect')

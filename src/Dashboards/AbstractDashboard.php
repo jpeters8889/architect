@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Dashboards;
 
-use Illuminate\Contracts\Support\Jsonable;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 use JPeters\Architect\Dashboards\Cards\Card;
 
 abstract class AbstractDashboard
@@ -27,11 +28,10 @@ abstract class AbstractDashboard
             return [
                 'title' => $this->dashboardName(),
                 'cards' => (new Collection($this->cards()))
-                    ->transform(fn(Card $card) => $card->render())
+                    ->transform(fn (Card $card) => $card->render())
                     ->toArray(),
             ];
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             dd($e);
         }
     }

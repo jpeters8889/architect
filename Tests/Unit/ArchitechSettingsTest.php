@@ -30,19 +30,19 @@ class ArchitechSettingsTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_can_resolve_a_setting()
+    public function itCanResolveASetting()
     {
         $this->assertEquals('foobar', $this->user->architectSetting('first-setting'));
     }
 
     /** @test */
-    public function it_respects_the_default_if_the_value_isnt_found()
+    public function itRespectsTheDefaultIfTheValueIsntFound()
     {
         $this->assertEquals('bar', $this->user->architectSetting('foo', 'bar'));
     }
 
     /** @test */
-    public function it_respects_the_architect_gateway()
+    public function itRespectsTheArchitectGateway()
     {
         config(['architect.gateway' => TestArchitectGateway::class]);
         $this->app->instance(ArchitectGateway::class, new TestArchitectGateway());
@@ -57,7 +57,7 @@ class ArchitechSettingsTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_can_set_settings()
+    public function itCanSetSettings()
     {
         $this->assertNull($this->user->architectSetting('new-setting'));
 
@@ -67,7 +67,7 @@ class ArchitechSettingsTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_cant_update_settings_if_the_user_isnt_allowed_through_the_gatway()
+    public function itCantUpdateSettingsIfTheUserIsntAllowedThroughTheGatway()
     {
         config(['architect.gateway' => TestArchitectGateway::class]);
         $this->app->instance(ArchitectGateway::class, new TestArchitectGateway());

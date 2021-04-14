@@ -15,7 +15,7 @@ class ApiManagerTest extends ArchitectTestCase
     protected $methods = ['get', 'post', 'put', 'patch', 'delete'];
 
     /** @test */
-    public function it_registers_endpoints()
+    public function itRegistersEndpoints()
     {
         foreach ($this->methods as $method) {
             $this->architect->apiManager->registerEndpoint($method, 'foo', ApiManagerHandler::class);
@@ -32,7 +32,7 @@ class ApiManagerTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_errors_when_trying_to_register_an_endpoint_with_an_unknown_method()
+    public function itErrorsWhenTryingToRegisterAnEndpointWithAnUnknownMethod()
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Unknown method');
@@ -41,7 +41,7 @@ class ApiManagerTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_registers_when_registering_an_endpoint_in_uppercase()
+    public function itRegistersWhenRegisteringAnEndpointInUppercase()
     {
         $this->architect->apiManager->registerEndpoint('GET', 'foo', ApiManagerHandler::class);
 
@@ -56,13 +56,13 @@ class ApiManagerTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_returns_false_when_trying_to_check_a_non_existent_route()
+    public function itReturnsFalseWhenTryingToCheckANonExistentRoute()
     {
         $this->assertFalse($this->architect->apiManager->checkEndpointExists('get', 'foo'));
     }
 
     /** @test */
-    public function it_errors_when_trying_to_get_the_details_of_a_non_existent_endpoint()
+    public function itErrorsWhenTryingToGetTheDetailsOfANonExistentEndpoint()
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('External endpoint not registered');
@@ -71,7 +71,7 @@ class ApiManagerTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_loads_and_handles_an_endpoint()
+    public function itLoadsAndHandlesAnEndpoint()
     {
         $request = resolve(Request::class);
         $apiManager = new ApiManagerHandler();
@@ -86,7 +86,7 @@ class ApiManagerTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_loads_an_endpoint_with_dependencies()
+    public function itLoadsAnEndpointWithDependencies()
     {
         $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'handleWithDependencies');
 
@@ -97,7 +97,7 @@ class ApiManagerTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_errors_when_trying_to_load_an_unknown_method()
+    public function itErrorsWhenTryingToLoadAnUnknownMethod()
     {
         $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'bar');
 
@@ -108,7 +108,7 @@ class ApiManagerTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_loads_two_seperate_endpoints_when_registered_as_the_same_http_method()
+    public function itLoadsTwoSeperateEndpointsWhenRegisteredAsTheSameHttpMethod()
     {
         $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'first');
         $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'second');

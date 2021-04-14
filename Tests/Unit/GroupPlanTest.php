@@ -51,7 +51,7 @@ class GroupPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_can_have_plans_set()
+    public function itCanHavePlansSet()
     {
         $this->assertInstanceOf(Collection::class, $this->plan->getPlans());
 
@@ -65,13 +65,13 @@ class GroupPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_returns_plans_in_the_metas()
+    public function itReturnsPlansInTheMetas()
     {
         $this->assertArrayHasKey('plans', $this->plan->getMetas());
     }
 
     /** @test */
-    public function it_returns_each_plans_value_when_the_current_model_is_set()
+    public function itReturnsEachPlansValueWhenTheCurrentModelIsSet()
     {
         $user = factory(User::class)->create();
 
@@ -83,7 +83,7 @@ class GroupPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_returns_each_plans_value_from_a_relationship()
+    public function itReturnsEachPlansValueFromARelationship()
     {
         /** @var Blog $blog */
         $blog = factory(Blog::class)->create();
@@ -107,7 +107,7 @@ class GroupPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_returns_each_value_from_a_pivot_relationship()
+    public function itReturnsEachValueFromAPivotRelationship()
     {
         DB::table('blog_tags')
             ->insert([
@@ -143,7 +143,7 @@ class GroupPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_can_be_set_to_wrap_the_columns()
+    public function itCanBeSetToWrapTheColumns()
     {
         $this->assertArrayHasKey('wrap', $this->plan->getMetas());
         $this->assertFalse($this->plan->getMetas()['wrap']);
@@ -154,7 +154,7 @@ class GroupPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_updates_the_model()
+    public function itUpdatesTheModel()
     {
         $values = [];
 
@@ -184,7 +184,7 @@ class GroupPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_updates_the_model_when_a_relationship_is_set()
+    public function itUpdatesTheModelWhenARelationshipIsSet()
     {
         /** @var Blog $blog */
         $blog = factory(Blog::class)->create();
@@ -217,7 +217,7 @@ class GroupPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_will_attach_values_when_using_a_pivot_relationship()
+    public function itWillAttachValuesWhenUsingAPivotRelationship()
     {
         DB::table('blog_tags')
             ->insert([

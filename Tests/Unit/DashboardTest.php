@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Tests\Unit;
 
 use JPeters\Architect\Dashboards\Dashboard;
@@ -15,23 +17,23 @@ class DashboardTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_registers_dashboards()
+    public function itRegistersDashboards()
     {
         $this->assertCount(1, $this->architect->dashboardManager->dashboardList());
     }
 
     /** @test */
-    public function it_renders_for_the_navigation()
+    public function itRendersForTheNavigation()
     {
         $this->assertCount(1, $navigation = $this->architect->dashboardManager->renderForNavigation());
 
-        foreach(['label', 'route'] as $key) {
+        foreach (['label', 'route'] as $key) {
             $this->assertArrayHasKey($key, $navigation[0]);
         }
     }
 
     /** @test */
-    public function it_resolves_a_dashboard()
+    public function itResolvesADashboard()
     {
         $dashboard = $this->architect->dashboardManager->resolve('dashboard');
 

@@ -32,37 +32,37 @@ class LookupTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_errors_when_we_dont_pass_a_blueprint_to_the_request()
+    public function itErrorsWhenWeDontPassABlueprintToTheRequest()
     {
         $this->makeRequest(['blueprint' => null])->assertSessionHasErrors('blueprint');
     }
 
     /** @test */
-    public function it_errors_when_we_dont_pass_a_column_to_the_request()
+    public function itErrorsWhenWeDontPassAColumnToTheRequest()
     {
         $this->makeRequest(['column' => null])->assertSessionHasErrors('column');
     }
 
     /** @test */
-    public function it_errors_when_we_dont_pass_a_value_to_the_request()
+    public function itErrorsWhenWeDontPassAValueToTheRequest()
     {
         $this->makeRequest(['value' => null])->assertSessionHasErrors('value');
     }
 
     /** @test */
-    public function it_errors_when_we_pass_an_invalid_blueprint()
+    public function itErrorsWhenWePassAnInvalidBlueprint()
     {
         $this->makeRequest(['blueprint' => 'foo'])->assertStatus(400);
     }
 
     /** @test */
-    public function it_errors_when_we_pass_an_invalid_column()
+    public function itErrorsWhenWePassAnInvalidColumn()
     {
         $this->makeRequest(['column' => 'foo'])->assertStatus(400);
     }
 
     /** @test */
-    public function it_resolves_a_value()
+    public function itResolvesAValue()
     {
         $request = $this->makeRequest();
 

@@ -10,7 +10,7 @@ use JPeters\Architect\TestHelpers\Laravel\Models\User;
 class LoginTest extends ArchitectTestCase
 {
     /** @test */
-    public function it_errors_when_trying_to_login_an_unknown_user()
+    public function itErrorsWhenTryingToLoginAnUnknownUser()
     {
         $this->post('/architect/api/auth', [
             'email' => 'foo',
@@ -19,7 +19,7 @@ class LoginTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_logs_in_a_user()
+    public function itLogsInAUser()
     {
         factory(User::class)->create([
             'email' => 'jamie@jamie-peters.co.uk',

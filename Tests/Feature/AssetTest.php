@@ -22,7 +22,7 @@ class AssetTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_loads_the_css_file()
+    public function itLoadsTheCssFile()
     {
         $request = $this->get('/architect/api/assets/style/testStylesheet')
             ->assertStatus(200)
@@ -32,7 +32,7 @@ class AssetTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_loads_the_javascript_file()
+    public function itLoadsTheJavascriptFile()
     {
         $request = $this->get('/architect/api/assets/script/testScript')
             ->assertStatus(200)

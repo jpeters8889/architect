@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Dashboards\Cards;
 
-use Chartisan\PHP\Chartisan;
 use Illuminate\Support\Str;
+use Chartisan\PHP\Chartisan;
 
 class Chart extends Card
 {

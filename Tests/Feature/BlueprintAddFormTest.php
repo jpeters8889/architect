@@ -22,7 +22,7 @@ class BlueprintAddFormTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_loads_the_add_page()
+    public function itLoadsTheAddPage()
     {
         $this->withoutExceptionHandling();
         $this->makeRequest()
@@ -30,7 +30,7 @@ class BlueprintAddFormTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_loads_an_array_of_plans()
+    public function itLoadsAnArrayOfPlans()
     {
         $request = $this->makeRequest();
 

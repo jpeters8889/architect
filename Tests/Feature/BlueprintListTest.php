@@ -27,21 +27,21 @@ class BlueprintListTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_loads_the_list_page()
+    public function itLoadsTheListPage()
     {
         $this->makeRequest()
             ->assertStatus(200);
     }
 
     /** @test */
-    public function it_loads_the_labels_object()
+    public function itLoadsTheLabelsObject()
     {
         $this->makeRequest()
             ->assertJsonStructure(['labels']);
     }
 
     /** @test */
-    public function it_shows_a_paginated_list_of_current_data()
+    public function itShowsAPaginatedListOfCurrentData()
     {
         $this->makeRequest()
             ->assertJsonFragment(['current_page' => 1]);
@@ -51,7 +51,7 @@ class BlueprintListTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_returns_a_limited_list_when_searching()
+    public function itReturnsALimitedListWhenSearching()
     {
         UserModel::query()->first()->update(['email' => 'jamie@jamie-peters.co.uk']);
 
@@ -61,7 +61,7 @@ class BlueprintListTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_can_be_filtered()
+    public function itCanBeFiltered()
     {
         $firstBlog = factory(BlogModel::class)->create(['type_id' => 1]);
         $secondBlog = factory(BlogModel::class)->create(['type_id' => 2]);

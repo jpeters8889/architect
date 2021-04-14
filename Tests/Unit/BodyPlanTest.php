@@ -23,7 +23,7 @@ class BodyPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_returns_the_number_of_rows_in_the_metas()
+    public function itReturnsTheNumberOfRowsInTheMetas()
     {
         $this->assertArrayHasKey('rows', $this->plan->getMetas());
         $this->assertEquals(20, $this->plan->getMetas()['rows']);

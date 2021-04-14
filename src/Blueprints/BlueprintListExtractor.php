@@ -79,6 +79,8 @@ class BlueprintListExtractor extends Extractor
                     $identifier => [
                         'name' => $filter['name'],
                         'options' => $filter['options'],
+                        'multi' => $filter['multi'] ?? false,
+                        'default' => $filter['default'] ?? null,
                     ],
                 ];
             });

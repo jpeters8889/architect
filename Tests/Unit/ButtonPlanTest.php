@@ -24,7 +24,7 @@ class ButtonPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_updates_the_model()
+    public function itUpdatesTheModel()
     {
         $user = new User();
 
@@ -39,7 +39,7 @@ class ButtonPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_can_have_a_on_click_callback_set()
+    public function itCanHaveAOnClickCallbackSet()
     {
         $this->plan->onClick(function () {
             return 'foo';
@@ -49,7 +49,7 @@ class ButtonPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_can_be_marked_as_being_a_click_button()
+    public function itCanBeMarkedAsBeingAClickButton()
     {
         $this->assertArrayHasKey('click_method', $this->plan->getMetas());
 

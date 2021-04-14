@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Dashboards;
 
-use Illuminate\Support\Collection;
 use RuntimeException;
+use Illuminate\Support\Collection;
 
 class DashboardManager
 {

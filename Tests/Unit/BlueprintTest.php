@@ -34,7 +34,7 @@ class BlueprintTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_registers_blueprints()
+    public function itRegistersBlueprints()
     {
         $this->assertCount(2, $this->architect->blueprintManager->blueprintList());
         $this->assertEquals(User::class, $this->architect->blueprintManager->blueprintList()[0]);
@@ -42,14 +42,14 @@ class BlueprintTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_resolves_a_blueprint()
+    public function itResolvesABlueprint()
     {
         $this->assertInstanceOf(User::class, $this->architect->blueprintManager->resolve('user'));
         $this->assertInstanceOf(Blog::class, $this->architect->blueprintManager->resolve('blog'));
     }
 
     /** @test */
-    public function it_renders_the_blueprint_navigation()
+    public function itRendersTheBlueprintNavigation()
     {
         $this->logIn();
 

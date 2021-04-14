@@ -23,7 +23,7 @@ class ChangePasswordTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_errors_when_trying_to_change_a_password_when_the_current_password_is_incorrect()
+    public function itErrorsWhenTryingToChangeAPasswordWhenTheCurrentPasswordIsIncorrect()
     {
         $this->post('/architect/api/change-password', [
             'current_password' => 'foo',
@@ -33,7 +33,7 @@ class ChangePasswordTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_errors_when_the_new_passwords_dont_match()
+    public function itErrorsWhenTheNewPasswordsDontMatch()
     {
         $this->post('/architect/api/change-password', [
             'current_password' => 'old-password',
@@ -43,7 +43,7 @@ class ChangePasswordTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_errors_when_the_new_password_is_too_short()
+    public function itErrorsWhenTheNewPasswordIsTooShort()
     {
         $this->post('/architect/api/change-password', [
             'current_password' => 'old-password',
@@ -53,7 +53,7 @@ class ChangePasswordTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_returns_success_when_valid_data_is_sent()
+    public function itReturnsSuccessWhenValidDataIsSent()
     {
         $this->post('/architect/api/change-password', [
             'current_password' => 'old-password',
@@ -63,7 +63,7 @@ class ChangePasswordTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_successfully_changes_the_users_password()
+    public function itSuccessfullyChangesTheUsersPassword()
     {
         /** @var User $user */
         $user = User::first();

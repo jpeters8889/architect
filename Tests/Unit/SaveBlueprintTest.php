@@ -37,7 +37,7 @@ class SaveBlueprintTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_saves_the_blueprint_when_adding_data()
+    public function itSavesTheBlueprintWhenAddingData()
     {
         $this->assertEmpty(UserModel::query()->get());
 
@@ -57,7 +57,7 @@ class SaveBlueprintTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_saves_the_blueprint_when_updating_data()
+    public function itSavesTheBlueprintWhenUpdatingData()
     {
         $originalUser = factory(UserModel::class)->create();
 

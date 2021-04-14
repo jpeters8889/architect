@@ -30,14 +30,14 @@ class BlueprintEditFormTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_loads_the_edit_page()
+    public function itLoadsTheEditPage()
     {
         $this->makeRequest()
             ->assertStatus(200);
     }
 
     /** @test */
-    public function it_loads_an_array_of_plans()
+    public function itLoadsAnArrayOfPlans()
     {
         $request = $this->makeRequest();
 

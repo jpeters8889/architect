@@ -44,7 +44,7 @@ class ButtonClickTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_handles_the_click_event()
+    public function itHandlesTheClickEvent()
     {
         $this->assertNotEquals('Updated', $this->user->name);
 

@@ -28,7 +28,7 @@ class LookupResultTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_resolves_the_blueprint()
+    public function itResolvesTheBlueprint()
     {
         $actionResult = $this->architect->lookup->performAction('blog', 'type_id', 'Personal');
 

@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Dashboards\Cards;
 
 use Closure;
-use Illuminate\Contracts\Support\Jsonable;
 
 class Card
 {
@@ -19,6 +20,7 @@ class Card
 
     /**
      * @param string|Closure $content
+     *
      * @return $this
      */
     public function setContent($content): self

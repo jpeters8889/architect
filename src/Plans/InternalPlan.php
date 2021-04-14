@@ -33,6 +33,7 @@ abstract class InternalPlan extends Plan
 
     /**
      * @param Model $model
+     *
      * @return Model|Relation
      */
     protected function getRelationshipModelInstance(Model $model)
@@ -50,6 +51,7 @@ abstract class InternalPlan extends Plan
     /**
      * @param Model $model
      * @param $value
+     *
      * @return mixed
      */
     protected function getRelationshipInstance(Model $model, $value)

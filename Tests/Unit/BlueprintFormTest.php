@@ -25,7 +25,7 @@ class BlueprintFormTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_creates_a_list_with_the_correct_keys()
+    public function itCreatesAListWithTheCorrectKeys()
     {
         $keys = ['plans', 'meta', 'vue-suffix'];
 
@@ -35,25 +35,25 @@ class BlueprintFormTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_contains_the_meta_information()
+    public function itContainsTheMetaInformation()
     {
         $this->assertEquals(['title' => 'Users'], $this->form->make()['meta']);
     }
 
     /** @test */
-    public function it_shows_the_vue_suffix()
+    public function itShowsTheVueSuffix()
     {
         $this->assertEquals('list', $this->form->make()['vue-suffix']);
     }
 
     /** @test */
-    public function it_returns_an_array_of_plans()
+    public function itReturnsAnArrayOfPlans()
     {
         $this->assertIsArray($this->form->make()['plans']);
     }
 
     /** @test */
-    public function it_displays_the_plans_in_the_correct_format()
+    public function itDisplaysThePlansInTheCorrectFormat()
     {
         $keys = ['component', 'label', 'metas', 'name', 'value'];
 
@@ -65,13 +65,13 @@ class BlueprintFormTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_doesnt_display_a_plan_that_is_hidden_from_forms()
+    public function itDoesntDisplayAPlanThatIsHiddenFromForms()
     {
         $this->assertNotContains('updates_at', $this->form->make()['plans']);
     }
 
     /** @test */
-    public function it_displays_all_of_the_plans_in_the_blueprint()
+    public function itDisplaysAllOfThePlansInTheBlueprint()
     {
         $blueprint = new User();
         $plans = $this->form->make()['plans'];
@@ -91,7 +91,7 @@ class BlueprintFormTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_loads_plans_with_a_value_when_loading_the_edit_form()
+    public function itLoadsPlansWithAValueWhenLoadingTheEditForm()
     {
         /** @var UserModel $userModel */
         $userModel = factory(UserModel::class)->create();

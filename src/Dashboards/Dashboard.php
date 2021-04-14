@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPeters\Architect\Dashboards;
 
 use JPeters\Architect\Dashboards\Cards\Card;
@@ -32,9 +34,9 @@ class Dashboard extends AbstractDashboard
 
             Chart::generate('Charts')
                 ->addLabels(['one', 'two', 'three'])
-                ->addDataSet('foo', [1,2,3])
-                ->addDataSet('bar', [3,6,9])
-                ->addDataSet('baz', [2,8,16], 'line'),
+                ->addDataSet('foo', [1, 2, 3])
+                ->addDataSet('bar', [3, 6, 9])
+                ->addDataSet('baz', [2, 8, 16], 'line'),
         ];
     }
 }

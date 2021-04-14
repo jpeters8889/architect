@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace JPeters\Architect\Plans;
 
 use Illuminate\Database\Eloquent\Model;
-use JPeters\Architect\Traits\PlanHasLookupAction;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Select extends PlanWithLookupAction

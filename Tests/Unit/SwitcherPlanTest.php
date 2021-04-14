@@ -26,7 +26,7 @@ class SwitcherPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_can_have_plans_set_for_options()
+    public function itCanHavePlansSetForOptions()
     {
         $this->plan->addPlansForOption(1, $plans = [
            new Textfield('foo'),
@@ -49,7 +49,7 @@ class SwitcherPlanTest extends PlanTestCase
     }
 
     /** @test */
-    public function it_updates_the_model()
+    public function itUpdatesTheModel()
     {
         $this->plan->addPlansForOption(1, $plans = [
             new Textfield('foo'),

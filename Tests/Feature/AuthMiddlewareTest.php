@@ -16,7 +16,7 @@ class AuthMiddlewareTest extends ArchitectTestCase
     use LogsInUsers;
 
     /** @test */
-    public function it_errors_when_trying_to_load_api_auth_routes_when_not_logged_in()
+    public function itErrorsWhenTryingToLoadApiAuthRoutesWhenNotLoggedIn()
     {
         $this->architect->registerBlueprint(User::class);
 
@@ -28,7 +28,7 @@ class AuthMiddlewareTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_rejects_users_when_the_gateway_is_active()
+    public function itRejectsUsersWhenTheGatewayIsActive()
     {
         Config::set('architect.gateway', ArchitectGateway::class);
 

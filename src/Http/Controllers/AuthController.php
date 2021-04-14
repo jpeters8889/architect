@@ -40,13 +40,13 @@ class AuthController extends BaseController
         /** @var AbstractDashboard $concreteDashboard */
         $concreteDashboard = new $dashboard();
 
-        $page = 'dashboards/' . $concreteDashboard->dashboardRoute();
+        $page = 'dashboards/'.$concreteDashboard->dashboardRoute();
 
         if (method_exists($user, 'architectSetting')) {
             $page = $user->architectSetting('landing-page', $page);
         }
 
-        return '/' . trim($path, '/') . '/' . $page;
+        return '/'.trim($path, '/').'/'.$page;
     }
 
     public function changePassword(ChangePasswordRequest $request, Hasher $hasher): void

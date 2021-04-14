@@ -20,7 +20,7 @@ class ApiTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_loads_an_api_endpoint()
+    public function itLoadsAnApiEndpoint()
     {
         $this->architect->apiManager->registerEndpoint('get', 'foo', ApiManagerHandler::class, 'handle');
 
@@ -28,7 +28,7 @@ class ApiTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_handles_the_request()
+    public function itHandlesTheRequest()
     {
         $this->withoutExceptionHandling();
 

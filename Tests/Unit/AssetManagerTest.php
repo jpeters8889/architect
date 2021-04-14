@@ -17,14 +17,14 @@ class AssetManagerTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_registers_the_assets()
+    public function itRegistersTheAssets()
     {
         $this->assertCount(1, $this->architect->assetManager->styles());
         $this->assertCount(1, $this->architect->assetManager->scripts());
     }
 
     /** @test */
-    public function it_returns_a_style_asset()
+    public function itReturnsAStyleAsset()
     {
         $this->assertEquals(
             __DIR__.'/../Assets/style.css',
@@ -33,7 +33,7 @@ class AssetManagerTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_returns_a_script_asset()
+    public function itReturnsAScriptAsset()
     {
         $this->assertEquals(
             __DIR__.'/../Assets/javascript.js',

@@ -27,38 +27,38 @@ class BlueprintSubmitTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_rejects_requests_without_a_blueprint()
+    public function itRejectsRequestsWithoutABlueprint()
     {
         $this->makeRequest(['_blueprint' => null])->assertSessionHasErrors(['_blueprint']);
     }
 
     /** @test */
-    public function it_rejects_requests_with_an_unknown_blueprint()
+    public function itRejectsRequestsWithAnUnknownBlueprint()
     {
         $this->makeRequest(['_blueprint' => 'foo'])
             ->assertStatus(404);
     }
 
     /** @test */
-    public function it_rejects_requests_without_a_state()
+    public function itRejectsRequestsWithoutAState()
     {
         $this->makeRequest(['_state' => null])->assertSessionHasErrors(['_state']);
     }
 
     /** @test */
-    public function it_rejects_requests_without_an_invalid_state()
+    public function itRejectsRequestsWithoutAnInvalidState()
     {
         $this->makeRequest(['_state' => 'foo'])->assertSessionHasErrors(['_state']);
     }
 
     /** @test */
-    public function it_rejects_requests_without_an_id_when_the_state_is_update()
+    public function itRejectsRequestsWithoutAnIdWhenTheStateIsUpdate()
     {
         $this->makeRequest(['_state' => 'update'])->assertSessionHasErrors(['_id']);
     }
 
     /** @test */
-    public function it_creates_a_record_when_submitting_a_valid_add_request()
+    public function itCreatesARecordWhenSubmittingAValidAddRequest()
     {
         $this->withoutExceptionHandling();
         $this->makeRequest([
@@ -83,7 +83,7 @@ class BlueprintSubmitTest extends ArchitectTestCase
     }
 
     /** @test */
-    public function it_updates_a_record_when_submitting_a_valid_update_request()
+    public function itUpdatesARecordWhenSubmittingAValidUpdateRequest()
     {
         $this->makeRequest([
             '_state' => 'update',
