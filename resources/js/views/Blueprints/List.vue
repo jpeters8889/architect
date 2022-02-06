@@ -65,6 +65,8 @@
             filters: {},
             appliedFilters: {},
             paginate: true,
+
+            searchTimeout: null,
         }),
 
         mounted() {
@@ -81,8 +83,12 @@
             })
 
             Architect.$on('search-keyup', (value) => {
+              clearTimeout(this.searchTimeout);
+
+              this.searchTimeout = setTimeout(() => {
                 this.searchText = value;
                 this.getBlueprint();
+              }, 250);
             });
 
             Architect.$on('filter-change', (filter) => {
