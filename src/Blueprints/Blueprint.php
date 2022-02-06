@@ -100,4 +100,17 @@ abstract class Blueprint
     {
         return 25;
     }
+
+    public function searchUsing(Builder $builder, string $searchTerm, array $columns = []): Builder
+    {
+        return $builder->where(function (Builder $query) use ($searchTerm, $columns) {
+            $tableName = $query->getModel()->getTable();
+
+            foreach ($columns as $column) {
+                if ($query->columnExists($column)) {
+                    $query->orWhere($tableName.'.'.$column, 'LIKE', "%{$searchTerm}%");
+                }
+            }
+        });
+    }
 }

@@ -113,17 +113,7 @@ class BlueprintListExtractor extends Extractor
     {
         /** @var Request $request */
         if (($request = Container::getInstance()->make(Request::class))->has('search')) {
-            $search = $request->get('search');
-
-            $data = $data->where(function (Builder $builder) use ($search) {
-                $tableName = $builder->getModel()->getTable();
-
-                foreach ($this->columns as $column) {
-                    if ($builder->columnExists($column)) {
-                        $builder->orWhere($tableName.'.'.$column, 'LIKE', "%{$search}%");
-                    }
-                }
-            });
+            return $this->blueprint->searchUsing($data, $request->get('search'), $this->columns);
         }
 
         return $data;
