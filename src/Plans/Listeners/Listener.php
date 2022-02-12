@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JPeters\Architect\Plans\Listeners;
 
+use JPeters\Architect\Plans\BulkBlueprintVariants;
 use RuntimeException;
 use JPeters\Architect\Architect;
 use JPeters\Architect\Plans\Plan;
@@ -15,7 +16,7 @@ class Listener
 
     private Blueprint $blueprint;
 
-    private Plan $plan;
+    private ?Plan $plan = null;
 
     public function __construct(Architect $architect)
     {
@@ -41,6 +42,18 @@ class Listener
     {
         foreach ($this->blueprint->plans() as $plan) {
             /** @var Plan $plan */
+            if ($plan instanceof BulkBlueprintVariants) {
+                $plan->rawPlans()->each(function ( $bulkPlan) use ($column) {
+                    if ($bulkPlan->getColumn() === $column) {
+                        $this->plan = $bulkPlan;
+                    }
+                });
+            }
+
+            if ($this->plan) {
+                return;
+            }
+
             if ($plan->getColumn() === $column) {
                 $this->plan = $plan;
 

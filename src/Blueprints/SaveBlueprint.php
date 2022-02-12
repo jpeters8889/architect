@@ -6,6 +6,7 @@ namespace JPeters\Architect\Blueprints;
 
 use Exception;
 use Illuminate\Http\Response;
+use JPeters\Architect\Plans\BulkBlueprintVariants;
 use JPeters\Architect\Plans\Plan;
 use Illuminate\Support\Collection;
 use Illuminate\Container\Container;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Database\Connection as DatabaseConnection;
 use JPeters\Architect\Http\Requests\BlueprintSubmitRequest;
+use JPeters\Architect\TestHelpers\Laravel\Models\User;
 
 class SaveBlueprint
 {
@@ -20,14 +22,17 @@ class SaveBlueprint
 
     private BlueprintSubmitRequest $request;
 
-    private Model $model;
+    /** @var Collection<Model> */
+    private Collection $models;
 
+    private ?BulkBlueprintVariants $bulkPlan = null;
     private array $deferredPlans = [];
 
     public function __construct(Blueprint $blueprint, BlueprintSubmitRequest $request)
     {
         $this->blueprint = $blueprint;
         $this->request = $request;
+        $this->models = new Collection();
 
         $this->resolveModel();
     }
@@ -36,10 +41,35 @@ class SaveBlueprint
     {
         $modelClass = $this->blueprint->model();
 
-        $this->model = new $modelClass();
-
         if ($this->request->input('_state') === 'update') {
-            $this->model = $modelClass::query()->find($this->request->input('_id'));
+            $this->models = new Collection();
+            $this->models->push($modelClass::query()->find($this->request->input('_id')));
+
+            return;
+        }
+
+        $hasBulkPlan = collect($this->blueprint->plans())->filter(fn(Plan $plan) => $plan instanceof BulkBlueprintVariants);
+
+        if ($hasBulkPlan->count() > 1) {
+            throw new Exception('Blueprints can only have one bulk variant plan');
+        }
+
+        if ($hasBulkPlan->count() === 0) {
+            $this->models->push(new $modelClass);
+
+            return;
+        }
+
+        $bulkPlan = $hasBulkPlan->first();
+
+        $values = call_user_func([$this->request, $bulkPlan->requestMethod()], $bulkPlan->getColumn());
+
+        if(is_string($values)) {
+            $values = json_decode($values, true);
+        }
+
+        foreach ($values as $value) {
+            $this->models->push(new $modelClass);
         }
     }
 
@@ -49,34 +79,45 @@ class SaveBlueprint
         $databaseConnection = Container::getInstance()->make(DatabaseConnection::class);
 
         try {
-            $databaseConnection->beginTransaction();
+            $this->models->each(function (Model $model, $index) use ($databaseConnection) {
+                $databaseConnection->beginTransaction();
 
-            (new Collection($this->blueprint->plans()))
-                ->each(function (Plan $plan) {
-                    $this->processPlan($plan);
-                });
+                $this->deferredPlans = [];
 
-            $this->model->save();
+                (new Collection($this->blueprint->plans()))
+                    ->each(fn(Plan $plan) => $this->processPlan($plan, $model));
 
-            $this->handleDeferredUpdates();
+                $model = $this->handleBulkValues($model, $index);
 
-            $this->model->save();
+                $model->save();
 
-            $databaseConnection->commit();
+                $this->handleDeferredUpdates($model);
 
-            // One last save to trigger any saved events outside of the database transaction
-            $this->model->save();
+                $model->save();
+
+                $databaseConnection->commit();
+
+                // One last save to trigger any saved events outside of the database transaction
+                $model->save();
+            });
 
             return $this->returnResponse();
         } catch (Exception $exception) {
             $databaseConnection->rollBack();
+
             throw $exception;
         }
     }
 
-    protected function processPlan(Plan $plan): void
+    protected function processPlan(Plan $plan, Model $model): void
     {
         if (!$plan->isAvailableOnForm()) {
+            return;
+        }
+
+        if ($plan instanceof BulkBlueprintVariants) {
+            $this->bulkPlan = $plan;
+
             return;
         }
 
@@ -87,7 +128,7 @@ class SaveBlueprint
         }
 
         $plan->handleUpdate(
-            $this->model,
+            $model,
             $plan->getColumn(),
             call_user_func([$this->request, $plan->requestMethod()], $plan->getColumn())
         );
@@ -96,18 +137,40 @@ class SaveBlueprint
     protected function returnResponse(): Response
     {
         return new Response([
-            'id' => $this->model->id,
+            'id' => $this->blueprint->canBeAddedInBulk() ? $this->models->pluck('id') : $this->models[0]->id,
             'blueprint' => $this->blueprint->blueprintName(),
             'url' => $this->generateUrl(),
         ], 201);
     }
 
-    protected function handleDeferredUpdates(): void
+    protected function handleBulkValues(Model $model, $index): Model
+    {
+        if (!$this->bulkPlan) {
+            return $model;
+        }
+
+        $values = call_user_func([$this->request, $this->bulkPlan->requestMethod()], $this->bulkPlan->getColumn());
+
+        if(is_string($values)) {
+            $values = json_decode($values, true);
+        }
+
+        $this->bulkPlan->handleUpdate(
+            $model,
+            $this->bulkPlan->getColumn(),
+            $values[$index],
+            $index,
+        );
+
+        return $model;
+    }
+
+    protected function handleDeferredUpdates(Model $model): void
     {
         foreach ($this->deferredPlans as $plan) {
             /* @var Plan $plan */
             $plan->handleUpdate(
-                $this->model,
+                $model,
                 $plan->getColumn(),
                 call_user_func([$this->request, $plan->requestMethod()], $plan->getColumn())
             );
@@ -116,13 +179,21 @@ class SaveBlueprint
 
     protected function generateUrl(): ?string
     {
+        if ($this->blueprint->canBeAddedInBulk() || !$this->blueprint->hasPublicLink()) {
+            dd('heeee');
+            dd($this->blueprint->canBeAddedInBulk());
+            return null;
+        }
+
         $url = null;
 
-        if ($this->model->{$this->blueprint->isVisibleField()}) {
+        $model = $this->models->first();
+
+        if ($model->{$this->blueprint->isVisibleField()}) {
             $url = implode('/', [
                 Container::getInstance()->make(Repository::class)->get('app.url'),
                 $this->blueprint->url(),
-                $this->model->{$this->blueprint->slugField()},
+                $model->{$this->blueprint->slugField()},
             ]);
         }
 

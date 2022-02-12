@@ -49,6 +49,11 @@ abstract class Blueprint
         return true;
     }
 
+    public function canBeAddedInBulk(): bool
+    {
+        return false;
+    }
+
     public function filters(): array
     {
         return [];
@@ -99,6 +104,11 @@ abstract class Blueprint
     public function perPage(): int
     {
         return 25;
+    }
+
+    public function hasPublicLink(): bool
+    {
+        return true;
     }
 
     public function searchUsing(Builder $builder, string $searchTerm, array $columns = []): Builder

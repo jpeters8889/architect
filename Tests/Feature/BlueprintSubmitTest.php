@@ -60,7 +60,6 @@ class BlueprintSubmitTest extends ArchitectTestCase
     /** @test */
     public function itCreatesARecordWhenSubmittingAValidAddRequest()
     {
-        $this->withoutExceptionHandling();
         $this->makeRequest([
             'name' => $name = $this->faker->name,
             'email' => $email = $this->faker->safeEmail,

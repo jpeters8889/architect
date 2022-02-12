@@ -30,7 +30,7 @@ class Button extends Plan
         ]);
     }
 
-    public function handleUpdate(Model $model, $column = null, $value = null)
+    public function handleUpdate(Model $model, $column = null, $value = null, $index = null)
     {
         return call_user_func($this->onClickHandler, $model);
     }

@@ -74,7 +74,7 @@ abstract class Plan
     public function executeEvent(string $eventName, $value)
     {
         $event = last(explode('-', $eventName));
-        $column = str_replace('-'.$event, '', $eventName);
+        $column = str_replace('-' . $event, '', $eventName);
 
         if (!isset($this->listeners[$event][$column])) {
             throw new RuntimeException("Couldn't find listener");
@@ -170,5 +170,5 @@ abstract class Plan
 
     abstract public function vuePrefix(): string;
 
-    abstract public function handleUpdate(Model $model, $column, $value);
+    abstract public function handleUpdate(Model $model, $column, $value, $index = null);
 }

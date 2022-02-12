@@ -2,7 +2,7 @@
   "name": "jpeters/architect",
   "description": "Architect",
   "type": "library",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "license": "MIT",
   "require": {
     "laravel/framework": "^8.0",
@@ -17,7 +17,7 @@
     "phpmd/phpmd": "^2.8",
     "phpunit/phpunit": "^8.5|^9.0",
     "squizlabs/php_codesniffer": "^3.5",
-    "jpeters/architect-test-helpers": "^0.3",
+    "jpeters/architect-test-helpers": "^0.4",
     "laravel/legacy-factories": "^1.0"
   },
   "authors": [

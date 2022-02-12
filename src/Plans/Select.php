@@ -83,7 +83,7 @@ class Select extends PlanWithLookupAction
         return $this;
     }
 
-    public function handleUpdate(Model $model, $column, $value)
+    public function handleUpdate(Model $model, $column, $value, $index = null)
     {
         if (!$this->multiSelect) {
             $value = [$value];

@@ -45,7 +45,7 @@ class BuildCommand extends Command
                 continue;
             }
 
-            $this->processDirectories($basePath, $name);
+            $this->processDirectories($basePath, (string) $name);
         }
     }
 

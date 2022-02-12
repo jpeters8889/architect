@@ -17,6 +17,7 @@ class ListenerController extends BaseController
                 ...array_values($request->only(['blueprint', 'event', 'column', 'value']))
             );
         } catch (Throwable $e) {
+            dd($e);
             return new Response("Couldn't execute listener", 400);
         }
     }

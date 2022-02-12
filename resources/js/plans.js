@@ -17,6 +17,7 @@ import Button from "./Plans/List/Button";
 import DateTimeForm from "./Plans/Form/DateTime";
 import SelectList from "./Plans/List/Select";
 import Password from "./Plans/Form/Password";
+import BulkVariantGroup from "./Plans/Form/BulkVariantGroup";
 
 Vue.component('bool-list', BoolList);
 Vue.component('button-list', Button);
@@ -30,6 +31,7 @@ Vue.component('text-field-list', TextFieldList);
 Vue.component('plan-form-field', PlanFormField);
 
 Vue.component('bool-form', Bool);
+Vue.component('bulk-variant-group-form', BulkVariantGroup);
 Vue.component('date-time-form', DateTimeForm);
 Vue.component('group-form', Group);
 Vue.component('lookup-form', Lookup);

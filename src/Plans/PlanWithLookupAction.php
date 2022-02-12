@@ -60,13 +60,13 @@ abstract class PlanWithLookupAction extends InternalPlan
         ]);
     }
 
-    protected function getRelationshipInstance(Model $model, $value)
+    protected function getRelationshipInstance(Model $model, $value, $index = null)
     {
         if (!$this->createAction) {
             return parent::getRelationshipInstance($model, $value);
         }
 
-        return call_user_func($this->createAction, $this->getRelationshipModelInstance($model), $value);
+        return call_user_func($this->createAction, $this->getRelationshipModelInstance($model), $value, $index);
     }
 
     public function setCreateAction(Closure $action): self

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JPeters\Architect\Lookup;
 
+use JPeters\Architect\Plans\BulkBlueprintVariants;
 use RuntimeException;
 use JPeters\Architect\Architect;
 use JPeters\Architect\Plans\Plan;
@@ -16,7 +17,7 @@ class Lookup
 
     private Blueprint $blueprint;
 
-    private LookupPlan $plan;
+    private ?LookupPlan $plan = null;
 
     public function __construct(Architect $architect)
     {
@@ -40,6 +41,18 @@ class Lookup
     {
         foreach ($this->blueprint->plans() as $plan) {
             /** @var Plan $plan */
+            if ($plan instanceof BulkBlueprintVariants) {
+                $plan->rawPlans()->each(function ( $bulkPlan) use ($column) {
+                    if ($bulkPlan->getColumn() === $column) {
+                        $this->plan = $bulkPlan;
+                    }
+                });
+            }
+
+            if ($this->plan) {
+                return;
+            }
+
             if ($plan->getColumn() === $column) {
                 $this->plan = $plan;
 

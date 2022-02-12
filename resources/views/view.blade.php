@@ -20,8 +20,8 @@
     @auth
         @foreach($assetManager->styles() as $name => $path)
             <link rel="stylesheet" href="/{{ config('architect.route') }}/api/assets/style/{!! $name !!}">
-    @endforeach
-@endauth
+        @endforeach
+    @endauth
 
 <!-- other styles -->
 </head>

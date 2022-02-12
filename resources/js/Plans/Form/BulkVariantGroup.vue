@@ -1,0 +1,64 @@
+<template>
+  <div class="flex flex-col space-y-3">
+    <div class="w-full p-3 border border-blue-900 rounded-lg" v-for="(row, index) in values">
+      <div class="w-full py-3" v-for="plan in plans">
+        <plan-form-field
+            v-bind:key="plan.column"
+            :index="index"
+            :plan="plan"
+            :listener="listenerName"
+            :emitter="emitterName"
+        ></plan-form-field>
+      </div>
+    </div>
+
+    <div class="w-full py-3 flex justify-end">
+      <button class="button button-primary button-default" @click.prevent="values.push({})">
+        {{ metas.addLabel }}
+      </button>
+    </div>
+  </div>
+</template>
+
+<script>
+import {IsAFormField} from 'architect-js-helpers';
+
+export default {
+  mixins: [IsAFormField],
+
+  data: () => ({
+    plans: [],
+    values: [{}],
+  }),
+
+  computed: {
+    listenerName() {
+      return `prepare-${this.name}-bulk-form-data`;
+    },
+
+    emitterName() {
+      return `${this.name}-bulk-form-field-change`;
+    }
+  },
+
+  mounted() {
+    this.plans = this.metas.plans;
+    this.wrap = this.metas.wrap;
+
+    Architect.$on(this.emitterName, (field) => {
+      this.$set(this.values[field.index], field.name, field.value);
+    });
+  },
+
+  methods: {
+    getFormData() {
+      Architect.$emit(this.listenerName);
+
+      return {
+        name: this.name,
+        value: JSON.stringify(this.values),
+      }
+    }
+  }
+}
+</script>

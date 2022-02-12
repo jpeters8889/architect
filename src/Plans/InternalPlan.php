@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 abstract class InternalPlan extends Plan
 {
-    public function handleUpdate(Model $model, $column, $value)
+    public function handleUpdate(Model $model, $column, $value, $index = null)
     {
         if (isset($this->relationship)) {
-            $relatedValue = $this->getRelationshipInstance($model, $value);
+            $relatedValue = $this->getRelationshipInstance($model, $value, $index);
 
             $value = $relatedValue->id;
         }
@@ -54,7 +54,7 @@ abstract class InternalPlan extends Plan
      *
      * @return mixed
      */
-    protected function getRelationshipInstance(Model $model, $value)
+    protected function getRelationshipInstance(Model $model, $value, $inde = null)
     {
         $relationshipModel = $this->getRelationshipModelInstance($model);
 

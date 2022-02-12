@@ -150,7 +150,7 @@ class Group extends InternalPlan
         }
     }
 
-    public function handleUpdate(Model $model, $column, $value)
+    public function handleUpdate(Model $model, $column, $value, $index = null)
     {
         $values = json_decode($value, true);
 

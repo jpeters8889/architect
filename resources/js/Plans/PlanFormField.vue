@@ -14,6 +14,7 @@
                     :metas="plan.metas"
                     :listener="listener"
                     :emitter="emitter"
+                    :index="index"
             ></component>
         </div>
     </div>
@@ -30,6 +31,10 @@
             emitter: {
                 type: String,
                 default: 'form-field-change',
+            },
+            index: {
+              type: Number,
+              default: 0,
             }
         },
 

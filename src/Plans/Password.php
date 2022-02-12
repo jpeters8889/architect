@@ -12,7 +12,7 @@ class Password extends InternalPlan
 {
     protected bool $showOnIndex = false;
 
-    public function handleUpdate(Model $model, $column, $value)
+    public function handleUpdate(Model $model, $column, $value, $index = null)
     {
         if ($value === '') {
             return;

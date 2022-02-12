@@ -57,6 +57,7 @@ export default {
       }
 
       return {
+        index: this.index,
         name: this.name,
         value: value,
       };

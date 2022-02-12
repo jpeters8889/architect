@@ -22,7 +22,7 @@ class PasswordPlanTest extends PlanTestCase
         return 'password';
     }
 
-    public function it_updates_the_model()
+    public function itUpdatesTheModel()
     {
         /** @var User $user */
         $user = factory(User::class)->create();

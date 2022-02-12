@@ -18,7 +18,7 @@ class Label extends InternalPlan
         return 'label';
     }
 
-    public function handleUpdate(Model $model, $column, $value)
+    public function handleUpdate(Model $model, $column, $value, $index = null)
     {
         return null;
     }
