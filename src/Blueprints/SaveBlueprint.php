@@ -180,8 +180,6 @@ class SaveBlueprint
     protected function generateUrl(): ?string
     {
         if ($this->blueprint->canBeAddedInBulk() || !$this->blueprint->hasPublicLink()) {
-            dd('heeee');
-            dd($this->blueprint->canBeAddedInBulk());
             return null;
         }
 
