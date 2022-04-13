@@ -10,7 +10,7 @@
 
     <div class="fixed bg-black-90 fixed w-full h-full top-0 left-0 flex justify-center items-center z-50"
          v-if="showFilterBox">
-      <div class="absolute top-0 right-0 bg-white w-300 h-full flex flex-col overflow-y-scroll overflow-x-hidden">
+      <div class="absolute top-0 right-0 bg-white w-300 h-full overflow-y-scroll overflow-x-hidden">
         <div
             class="flex justify-between p-2 bg-gray-100 text-blue-900 text-xl font-semibold border-b-2 border-blue-900 items-center">
           <h2>
