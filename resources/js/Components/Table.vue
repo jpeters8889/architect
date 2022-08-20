@@ -14,9 +14,10 @@
                 <th v-if="canEdit">&nbsp;</th>
             </tr>
 
-            <tr class="border-b bg-white border-gray-200" v-for="row in rows" :data-id="row.id">
+            <tr class="border-b bg-white border-gray-200" v-for="row in rows" :data-id="row.id" :key="row.id">
                 <td class="p-4 align-top"
                     v-for="(header, key) in headers"
+                    :key="key"
                     :class="hideOnMobile.includes(key) ? 'hidden sm:table-cell' : ''"
                 >
                     <blueprint-field
