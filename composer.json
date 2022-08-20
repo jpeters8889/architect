@@ -2,14 +2,14 @@
   "name": "jpeters/architect",
   "description": "Architect",
   "type": "library",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "license": "MIT",
   "require": {
     "laravel/framework": "^8.0|^9.0",
     "ext-json": "*",
     "laravel/ui": "^3.0",
     "doctrine/dbal": "^2.10|^3.0",
-    "chartisan/php": "^1.2"
+    "rohsyl/chartisan-php": "^1.2"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.4",
