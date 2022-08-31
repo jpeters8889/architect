@@ -8,10 +8,10 @@ use RuntimeException;
 
 class DashboardController extends BaseController
 {
-    public function get($dashboard): array
+    public function __invoke($dashboard): array
     {
         try {
-            return $this->architect->dashboardManager->resolve($dashboard);
+            return $this->architect->dashboardManager->resolve($dashboard)->render();
         } catch (RuntimeException $exception) {
             abort(404);
         }

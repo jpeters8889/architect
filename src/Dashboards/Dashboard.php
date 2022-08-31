@@ -34,9 +34,9 @@ class Dashboard extends AbstractDashboard
 
             Chart::generate('Charts')
                 ->addLabels(['one', 'two', 'three'])
-                ->addDataSet('foo', [1, 2, 3])
-                ->addDataSet('bar', [3, 6, 9])
-                ->addDataSet('baz', [2, 8, 16], 'line'),
+                ->addDataSet([1, 2, 3], 'foo')
+                ->addDataSet([3, 6, 9], 'bar')
+                ->addDataSet([2, 8, 16], 'baz'),
         ];
     }
 }

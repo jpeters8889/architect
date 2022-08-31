@@ -10,7 +10,7 @@ use JPeters\Architect\Http\Requests\OrderRequest;
 
 class OrderController extends BaseController
 {
-    public function handle(OrderRequest $request): void
+    public function __invoke(OrderRequest $request): void
     {
         /** @var Blueprint $blueprint */
         $blueprint = $this->architect->blueprintManager->resolve($request->input('blueprint'));

@@ -35,5 +35,8 @@
     "vue-template-compiler": "^2.6.10",
     "vue-toasted": "^1.1.27",
     "weekstart": "^1.0.1"
+  },
+  "dependencies": {
+    "chart.js": "^3.9.1"
   }
 }

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ExternalPlanController extends BaseController
 {
-    public function handle(Request $request, string $route, string $method = 'handle', $id = null)
+    public function __invoke(Request $request, string $route, string $method = 'handle', $id = null)
     {
         $route .= "/{$method}";
 

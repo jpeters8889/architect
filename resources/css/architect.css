@@ -11,6 +11,10 @@
     @apply bg-white border border-gray-500 p-2 text-lg rounded-lg;
 }
 
+.form-control-small {
+    @apply text-sm p-1 rounded;
+}
+
 .form-control-error {
     @apply border-red-500;
 }

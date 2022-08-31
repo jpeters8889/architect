@@ -10,7 +10,7 @@ use JPeters\Architect\Http\Requests\LookupRequest;
 
 class LookupController extends BaseController
 {
-    public function handle(LookupRequest $request)
+    public function __invoke(LookupRequest $request)
     {
         try {
             return $this->architect->lookup->performAction(

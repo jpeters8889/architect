@@ -10,7 +10,7 @@ use JPeters\Architect\Http\Requests\ListenerRequest;
 
 class ListenerController extends BaseController
 {
-    public function handle(ListenerRequest $request)
+    public function __invoke(ListenerRequest $request)
     {
         try {
             return $this->architect->listener->executeListenerForPlan(

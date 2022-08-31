@@ -35,7 +35,7 @@ class DashboardManager
             })->toArray();
     }
 
-    public function resolve($dashboard): array
+    public function resolve($dashboard): AbstractDashboard
     {
         /** @var AbstractDashboard $resolvedDashboard */
         $resolvedDashboard = (new Collection($this->dashboards))
@@ -49,6 +49,6 @@ class DashboardManager
             throw new RuntimeException('Dashboard not found');
         }
 
-        return $resolvedDashboard->render();
+        return $resolvedDashboard;
     }
 }

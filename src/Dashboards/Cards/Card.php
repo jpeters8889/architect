@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace JPeters\Architect\Dashboards\Cards;
 
 use Closure;
+use Illuminate\Support\Str;
 
 class Card
 {
@@ -30,7 +31,7 @@ class Card
         return $this;
     }
 
-    public static function generate($title): self
+    public static function generate(string $title): static
     {
         return new static($title);
     }
@@ -55,5 +56,15 @@ class Card
     protected function renderContent()
     {
         return $this->content instanceof Closure ? call_user_func($this->content) : $this->content;
+    }
+
+    public function type(): string
+    {
+        return $this->type;
+    }
+
+    public function slug(): string
+    {
+        return Str::slug($this->title);
     }
 }

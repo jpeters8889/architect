@@ -35,7 +35,7 @@ class DashboardTest extends ArchitectTestCase
     /** @test */
     public function itResolvesADashboard()
     {
-        $dashboard = $this->architect->dashboardManager->resolve('dashboard');
+        $dashboard = $this->architect->dashboardManager->resolve('dashboard')->render();
 
         $this->assertArrayHasKey('title', $dashboard);
         $this->assertArrayHasKey('cards', $dashboard);

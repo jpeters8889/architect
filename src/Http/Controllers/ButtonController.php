@@ -9,7 +9,7 @@ use JPeters\Architect\Http\Requests\ButtonRequest;
 
 class ButtonController extends BaseController
 {
-    public function handle(ButtonRequest $request, Button $button)
+    public function __invoke(ButtonRequest $request, Button $button)
     {
         return $button->handleClickForButton($request->input('button'), $request->input('blueprint'), $request->input('id'));
     }

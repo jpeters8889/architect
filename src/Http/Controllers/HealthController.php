@@ -6,7 +6,7 @@ namespace JPeters\Architect\Http\Controllers;
 
 class HealthController extends BaseController
 {
-    public function get(): string
+    public function __invoke(): string
     {
         return 'ok';
     }

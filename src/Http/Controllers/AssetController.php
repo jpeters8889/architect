@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 
 class AssetController extends BaseController
 {
-    public function get(string $asset, string $name): Response
+    public function __invoke(string $asset, string $name): Response
     {
         $contentType = 'application/javascript';
 

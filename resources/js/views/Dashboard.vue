@@ -10,18 +10,22 @@
 
     <!-- Cards -->
     <div class="flex flex-wrap -m-1">
-      <div v-for="card in dashboard.cards"
-           class="p-1" :class="cardWidth(card.width)">
-        <div class="bg-white rounded-lg p-4 shadow overflow-hidden">
-          <h1 class="text-xl font-semibold text-blue-700">
-            {{ card.title }}
-          </h1>
+      <div v-for="card in dashboard.cards" class="p-1" :class="cardWidth(card.width)">
+        <template v-if="card.type === 'card'">
+          <div class="bg-white rounded-lg p-4 shadow overflow-hidden">
+            <h1 class="text-xl font-semibold text-blue-700">
+              {{ card.title }}
+            </h1>
 
-          <div v-if="card.type === 'card'" class="mt-2" v-html="card.content"></div>
-          <div v-else-if="card.type === 'chart'" class="mt-2" :style="cardHeight(card.content.height)">
-            <chart :name="card.content.name" :data="card.content.data" :types="card.content.types"></chart>
+            <div class="mt-2" v-html="card.content" />
           </div>
-        </div>
+        </template>
+
+        <template v-else-if="card.type === 'chart'">
+          <div class="bg-white rounded-lg p-4 shadow overflow-hidden">
+            <chart :name="card.title" :slug="card.content.name" />
+          </div>
+        </template>
       </div>
     </div>
   </div>
