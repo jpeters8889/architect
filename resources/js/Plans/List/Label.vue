@@ -1,9 +1,22 @@
 <template>
-    <div v-html="value"></div>
+  <div v-html="value" />
 </template>
 
 <script>
-    export default {
-        props: ['name', 'label', 'value']
-    }
+export default {
+  props: {
+    name: {
+      type: String,
+      required: true,
+    },
+    label: {
+      type: String,
+      required: true,
+    },
+    value: {
+      type: [String, Number],
+      required: true,
+    },
+  },
+};
 </script>

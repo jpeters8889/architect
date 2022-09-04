@@ -1,15 +1,19 @@
 <template>
-    <div>
-        <component :is="getPageComponent()" :page="$route.params.page" :id="$route.params.id"></component>
-    </div>
+  <div>
+    <component
+      :is="getPageComponent()"
+      :id="$route.params.id"
+      :page="$route.params.page"
+    />
+  </div>
 </template>
 
 <script>
-    export default {
-        methods: {
-            getPageComponent() {
-                return this.$route.params.page + '-page'
-            },
-        }
-    }
+export default {
+  methods: {
+    getPageComponent() {
+      return `${this.$route.params.page}-page`;
+    },
+  },
+};
 </script>

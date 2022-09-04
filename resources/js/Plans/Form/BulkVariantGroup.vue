@@ -1,19 +1,30 @@
 <template>
   <div class="flex flex-col space-y-3">
-    <div class="w-full p-3 border border-blue-900 rounded-lg" v-for="(row, index) in values">
-      <div class="w-full py-3" v-for="plan in plans">
+    <div
+      v-for="(row, index) in values"
+      :key="index"
+      class="w-full p-3 border border-blue-900 rounded-lg"
+    >
+      <div
+        v-for="plan in plans"
+        :key="plan.column"
+        class="w-full py-3"
+      >
         <plan-form-field
-            v-bind:key="plan.column"
-            :index="index"
-            :plan="plan"
-            :listener="listenerName"
-            :emitter="emitterName"
-        ></plan-form-field>
+          :key="plan.column"
+          :index="index"
+          :plan="plan"
+          :listener="listenerName"
+          :emitter="emitterName"
+        />
       </div>
     </div>
 
     <div class="w-full py-3 flex justify-end">
-      <button class="button button-primary button-default" @click.prevent="values.push({})">
+      <button
+        class="button button-primary button-default"
+        @click.prevent="values.push({})"
+      >
         {{ metas.addLabel }}
       </button>
     </div>
@@ -21,7 +32,7 @@
 </template>
 
 <script>
-import {IsAFormField} from 'architect-js-helpers';
+import { IsAFormField } from 'architect-js-helpers';
 
 export default {
   mixins: [IsAFormField],
@@ -38,7 +49,7 @@ export default {
 
     emitterName() {
       return `${this.name}-bulk-form-field-change`;
-    }
+    },
   },
 
   mounted() {
@@ -57,8 +68,8 @@ export default {
       return {
         name: this.name,
         value: JSON.stringify(this.values),
-      }
-    }
-  }
-}
+      };
+    },
+  },
+};
 </script>

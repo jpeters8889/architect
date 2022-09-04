@@ -1,15 +1,17 @@
 <template>
-    <datetime v-model="actualValue"
-              type="datetime"
-              input-class="form-control form-control-input w-full"
-              :hidden-name="name"></datetime>
+  <datetime
+    v-model="actualValue"
+    type="datetime"
+    input-class="form-control form-control-input w-full"
+    :hidden-name="name"
+  />
 </template>
 
 <script>
-    import {IsAFormField} from 'architect-js-helpers';
-    import 'vue-datetime/dist/vue-datetime.css'
+import { IsAFormField } from 'architect-js-helpers';
+import 'vue-datetime/dist/vue-datetime.css';
 
-    export default {
-        mixins: [IsAFormField],
-    }
+export default {
+  mixins: [IsAFormField],
+};
 </script>

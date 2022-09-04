@@ -1,15 +1,11 @@
 import Vue from 'vue';
-import ArchitectApplication from "./ArchitectApplication";
+import ArchitectApplication from './ArchitectApplication';
 import './plugins';
+import './components';
+import './plans';
 
 Vue.config.productionTip = false;
 
-import './components';
-
-import './plans';
-
-(function() {
-   this.architectBootstrapper = function(config) {
-       return new ArchitectApplication(config);
-   }
-}).call(window);
+// (() => {
+window.architectBootstrapper = (config) => new ArchitectApplication(config);
+// }).call(window);

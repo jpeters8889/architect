@@ -16,14 +16,7 @@
         "vue"
     ],
     "globals": {
-        "coeliac": true,
-        "dataLayer": true,
-        "fbq": true,
-        "Stripe": true,
-        "paypal": true,
-        "google": true,
-        "adsbygoogle": true,
-        "ga": true
+        "Architect": true
     },
     "rules": {
         "indent": [

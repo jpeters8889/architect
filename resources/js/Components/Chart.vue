@@ -7,32 +7,72 @@
 
       <div class="flex justify-end flex-col">
         <div class="flex justify-end">
-          <select class="form-control-input form-control-small" v-model="selectedDateRange" @change="getData()">
-            <option value="today">Today</option>
-            <option value="yesterday">Yesterday</option>
-            <option value="thisWeek">So Far This Week</option>
-            <option value="thisMonth">So Far This Month</option>
-            <option value="thisYear">So Far This Year</option>
-            <option value="last7">Past 7 Days</option>
-            <option value="last14">Past 14 Days</option>
-            <option value="lastMonth">Past Month</option>
-            <option value="lastYear">Past Year</option>
-            <option value="custom">Custom</option>
+          <select
+            v-model="selectedDateRange"
+            class="form-control-input form-control-small"
+            @change="getData()"
+          >
+            <option value="today">
+              Today
+            </option>
+            <option value="yesterday">
+              Yesterday
+            </option>
+            <option value="thisWeek">
+              So Far This Week
+            </option>
+            <option value="thisMonth">
+              So Far This Month
+            </option>
+            <option value="thisYear">
+              So Far This Year
+            </option>
+            <option value="last7">
+              Past 7 Days
+            </option>
+            <option value="last14">
+              Past 14 Days
+            </option>
+            <option value="lastMonth">
+              Past Month
+            </option>
+            <option value="lastYear">
+              Past Year
+            </option>
+            <option value="custom">
+              Custom
+            </option>
           </select>
         </div>
-        <div v-if="selectedDateRange === 'custom'" class="mt-2 flex justify-end space-x-2">
-          <input class="form-control-input form-control-small" type="date" v-model="customDateFrom" @change="getData()" />
-          <input class="form-control-input form-control-small" type="date" v-model="customDateTo" @change="getData()" />
+        <div
+          v-if="selectedDateRange === 'custom'"
+          class="mt-2 flex justify-end space-x-2"
+        >
+          <input
+            v-model="customDateFrom"
+            class="form-control-input form-control-small"
+            type="date"
+            @change="getData()"
+          >
+          <input
+            v-model="customDateTo"
+            class="form-control-input form-control-small"
+            type="date"
+            @change="getData()"
+          >
         </div>
       </div>
     </div>
 
-    <canvas class="h-full w-full" ref="chartElem"></canvas>
+    <canvas
+      ref="chartElem"
+      class="h-full w-full"
+    />
   </div>
 </template>
 
 <script>
-import {Chart, registerables} from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 
 export default {
   props: {
@@ -54,6 +94,12 @@ export default {
     customDateTo: null,
   }),
 
+  mounted() {
+    Chart.register(...registerables);
+
+    this.getData();
+  },
+
   methods: {
     getData() {
       if (this.selectedDateRange === 'custom' && (!this.customDateFrom || !this.customDateTo)) {
@@ -65,8 +111,8 @@ export default {
       if (this.selectedDateRange) {
         url += `?range=${this.selectedDateRange}`;
 
-        if(this.selectedDateRange === 'custom') {
-          url += `&from=${this.customDateFrom}&to=${this.customDateTo}`
+        if (this.selectedDateRange === 'custom') {
+          url += `&from=${this.customDateFrom}&to=${this.customDateTo}`;
         }
       }
 
@@ -78,13 +124,7 @@ export default {
         this.chart = new Chart(this.$refs.chartElem, response.data.chart);
         this.selectedDateRange = response.data.selectedDateRange;
       });
-    }
+    },
   },
-
-  mounted() {
-    Chart.register(...registerables);
-
-    this.getData();
-  }
-}
+};
 </script>

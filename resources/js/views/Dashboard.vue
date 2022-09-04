@@ -10,20 +10,31 @@
 
     <!-- Cards -->
     <div class="flex flex-wrap -m-1">
-      <div v-for="card in dashboard.cards" class="p-1" :class="cardWidth(card.width)">
+      <div
+        v-for="(card, index) in dashboard.cards"
+        :key="index"
+        class="p-1"
+        :class="cardWidth(card.width)"
+      >
         <template v-if="card.type === 'card'">
           <div class="bg-white rounded-lg p-4 shadow overflow-hidden">
             <h1 class="text-xl font-semibold text-blue-700">
               {{ card.title }}
             </h1>
 
-            <div class="mt-2" v-html="card.content" />
+            <div
+              class="mt-2"
+              v-html="card.content"
+            />
           </div>
         </template>
 
         <template v-else-if="card.type === 'chart'">
           <div class="bg-white rounded-lg p-4 shadow overflow-hidden">
-            <chart :name="card.title" :slug="card.content.name" />
+            <chart
+              :name="card.title"
+              :slug="card.content.name"
+            />
           </div>
         </template>
       </div>
@@ -39,6 +50,12 @@ export default {
       cards: [],
     },
   }),
+
+  watch: {
+    $route() {
+      this.initComponent();
+    },
+  },
 
   mounted() {
     this.initComponent();
@@ -58,9 +75,10 @@ export default {
         Architect.error('Dashboard not found');
       }).catch(() => {
         Architect.error('Dashboard not found');
-      }).finally(() => {
-        Architect.$emit('load-end');
-      });
+      })
+        .finally(() => {
+          Architect.$emit('load-end');
+        });
     },
 
     cardWidth(width) {
@@ -78,15 +96,9 @@ export default {
 
     cardHeight(height) {
       return {
-        height: height + 'px',
+        height: `${height}px`,
       };
-    }
+    },
   },
-
-  watch: {
-    $route() {
-      this.initComponent();
-    }
-  },
-}
+};
 </script>
