@@ -12,7 +12,14 @@
             <blueprint-filter :filters="filters" v-if="!hasCard && Object.keys(filters).length > 0"
                               class="mr-2"></blueprint-filter>
 
-            <div>
+            <div class="flex space-x-2">
+              <router-link
+                  v-if="button"
+                  class="button button-primary px-4 py-2 rounded cursor-pointer hover:bg-highlight transition-bg"
+                  :to="button.link"
+                  v-text="button.label"
+              />
+
                 <router-link
                         v-if="canAdd"
                         class="button button-primary px-4 py-2 rounded cursor-pointer hover:bg-highlight transition-bg"
@@ -77,7 +84,11 @@
             searchable: {
                 type: Boolean,
                 default: false,
-            }
+            },
+            button: {
+              type: Array | null,
+              default: () => null,
+            },
         },
     }
 </script>

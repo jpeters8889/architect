@@ -67,6 +67,7 @@ class BlueprintListExtractor extends Extractor
             'filters' => $this->createFilters(),
             'meta' => [
                 'title' => $this->blueprint->blueprintName(),
+                'button' => $this->blueprint->button(),
             ],
         ];
     }

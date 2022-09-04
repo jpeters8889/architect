@@ -1,7 +1,14 @@
 <template>
     <div>
         <div class="flex flex-col bg-white rounded-xl shadow mb-2">
-            <header-component :blueprint="blueprint" :can-add="canEdit" :has-card="!!card" :filters="filters" :searchable="searchable">
+            <header-component
+                :blueprint="blueprint"
+                :can-add="canEdit"
+                :has-card="!!card"
+                :filters="filters"
+                :searchable="searchable"
+                :button="button"
+            >
                 {{ this.title }}
             </header-component>
         </div>
@@ -50,6 +57,7 @@
 
         data: () => ({
             title: '',
+          button: null,
             headers: {},
             data: {},
             components: {},
@@ -137,6 +145,7 @@
                 Architect.request().get(this.blueprintUrl())
                     .then((response) => {
                         this.title = response.data.meta.title;
+                        this.button = response.data.meta.button;
                         this.hideOnMobile = response.data.hiddenOnMobile;
                         this.headers = response.data.labels;
                         this.card = response.data.card;

@@ -123,4 +123,9 @@ abstract class Blueprint
             }
         });
     }
+
+    public function button(): array | null
+    {
+        return null;
+    }
 }

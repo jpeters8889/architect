@@ -19,7 +19,8 @@
           <font-awesome-icon :icon="['fas', 'times']" @click="showFilterBox = false"></font-awesome-icon>
         </div>
 
-        <div v-for="(filter, key) in filters" class="flex flex-col bg-blue-300 overflow-hidden rounded-xl m-2">
+        <div v-for="(filter, key) in filters" class="flex flex-col bg-blue-300 overflow-hidden rounded-xl m-2"
+             :key="key">
           <div class="flex justify-between items-center p-2">
             <h2 class="text-lg font-semibold flex-1 cursor-pointer" @click="show[key] = !show[key]">
               {{ filter.name }}
@@ -62,7 +63,7 @@ export default {
     Object.keys(this.filters).forEach((key) => {
       this.$set(this.show, key, false);
 
-      if(this.filters[key].default) {
+      if (this.filters[key].default) {
         this.$set(this.appliedFilters, key, this.filters[key].default)
       }
     });
