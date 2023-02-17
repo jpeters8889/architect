@@ -38,9 +38,6 @@
 <script src="{{ mix('vendor.js', 'vendor/architect') }}"></script>
 <script src="{{ mix('architect.js', 'vendor/architect') }}"></script>
 
-<script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
-<script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
-
 <script>
     window.Architect = new architectBootstrapper(config);
 </script>
