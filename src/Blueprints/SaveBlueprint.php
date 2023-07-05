@@ -88,6 +88,7 @@ class SaveBlueprint
                     ->each(fn(Plan $plan) => $this->processPlan($plan, $model));
 
                 $model = $this->handleBulkValues($model, $index);
+                $model = $this->blueprint->beforeSave($model);
 
                 $model->save();
 

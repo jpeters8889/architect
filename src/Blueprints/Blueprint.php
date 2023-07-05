@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JPeters\Architect\Blueprints;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -127,5 +128,10 @@ abstract class Blueprint
     public function button(): array | null
     {
         return null;
+    }
+
+    public function beforeSave(Model $model): Model
+    {
+        return $model;
     }
 }
