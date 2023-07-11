@@ -14,6 +14,8 @@ class BulkBlueprintVariants extends InternalPlan
     protected string $addButtonLabel = 'Add Option';
     private Model $model;
 
+    protected bool $hideIfEmpty = false;
+
     public function vuePrefix(): string
     {
         return 'bulk-variant-group';
@@ -31,6 +33,7 @@ class BulkBlueprintVariants extends InternalPlan
         return array_merge(parent::getMetas() ?? [], [
             'plans' => $this->getPlans(),
             'addLabel' => $this->addButtonLabel,
+            'hideIfEmpty' => $this->hideIfEmpty,
         ]);
     }
 
@@ -80,5 +83,17 @@ class BulkBlueprintVariants extends InternalPlan
         $this->model = $model;
 
         return null;
+    }
+
+    public function shouldAutomaticallyCreateModels(): bool
+    {
+        return true;
+    }
+
+    public function shouldHideWhenEmpty(): static
+    {
+        $this->hideIfEmpty = true;
+
+        return $this;
     }
 }

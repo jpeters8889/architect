@@ -60,7 +60,12 @@ class SaveBlueprint
             return;
         }
 
+        /** @var BulkBlueprintVariants $bulkPlan */
         $bulkPlan = $hasBulkPlan->first();
+
+        if(! $bulkPlan->shouldAutomaticallyCreateModels()) {
+            return;
+        }
 
         $values = call_user_func([$this->request, $bulkPlan->requestMethod()], $bulkPlan->getColumn());
 
@@ -116,7 +121,7 @@ class SaveBlueprint
             return;
         }
 
-        if ($plan instanceof BulkBlueprintVariants) {
+        if ($plan instanceof BulkBlueprintVariants && $plan->shouldAutomaticallyCreateModels()) {
             $this->bulkPlan = $plan;
 
             return;
@@ -146,7 +151,7 @@ class SaveBlueprint
 
     protected function handleBulkValues(Model $model, $index): Model
     {
-        if (!$this->bulkPlan) {
+        if (!$this->bulkPlan || !$this->bulkPlan->shouldAutomaticallyCreateModels()) {
             return $model;
         }
 

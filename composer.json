@@ -2,7 +2,7 @@
   "name": "jpeters/architect",
   "description": "Architect",
   "type": "library",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "license": "MIT",
   "require": {
     "laravel/framework": "^9.0",

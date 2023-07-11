@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="text-lg font-semibold text-highlight mb-1">
+    <div
+      v-if="shouldDisplayLabel"
+      class="text-lg font-semibold text-highlight mb-1"
+    >
       <label>
         {{ plan.label }}
       </label>
@@ -53,6 +56,14 @@ export default {
 
       return this.plan.value;
     },
+
+    shouldDisplayLabel() {
+      if ('metas' in this.plan && 'hide_label' in this.plan.metas) {
+        return this.plan.hide_label;
+      }
+
+      return true;
+    }
   },
 };
 </script>

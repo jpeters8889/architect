@@ -17,7 +17,8 @@
         <div
           v-for="plan in plans"
           :key="plan.label"
-          class="w-full py-3"
+          class="w-full"
+          :class="{'py-3': plan.component !== 'hidden-field-form'}"
         >
           <plan-form-field :plan="plan" />
         </div>

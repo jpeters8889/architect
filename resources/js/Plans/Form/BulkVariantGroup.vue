@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col space-y-3">
+  <div class="flex flex-col space-y-3 border-b">
     <div
       v-for="(row, index) in values"
       :key="index"
@@ -8,16 +8,24 @@
       <div
         v-for="plan in plans"
         :key="plan.column"
-        class="w-full py-3"
+        class="w-full"
+        :class="{'py-3': plan.component !== 'hidden-field-form'}"
       >
         <plan-form-field
           :key="plan.column"
           :index="index"
-          :plan="plan"
+          :plan="{
+            ...plan,
+            value: row[plan.name]
+          }"
           :listener="listenerName"
           :emitter="emitterName"
         />
       </div>
+    </div>
+
+    <div v-if="values.length === 0 && metas.hideIfEmpty">
+      <span>No branches...</span>
     </div>
 
     <div class="w-full py-3 flex justify-end">
@@ -59,6 +67,12 @@ export default {
     Architect.$on(this.emitterName, (field) => {
       this.$set(this.values[field.index], field.name, field.value);
     });
+
+    if (this.value && this.value !== '') {
+      this.values = this.value;
+    } else if (this.metas.hideIfEmpty) {
+      this.values = [];
+    }
   },
 
   methods: {
