@@ -74,15 +74,9 @@ class BulkBlueprintVariants extends InternalPlan
 
     public function getCurrentValue(Model $model)
     {
-        if (isset($this->relationship)) {
-            $this->model = $model->{$this->relationship}()->getModels()[0];
-
-            return;
-        }
-
-        $this->model = $model;
-
-        return null;
+        return [collect($this->plans)
+            ->mapWithKeys(fn(Plan $plan) => [$plan->column => $plan->getCurrentValue($model)])
+            ->toArray()];
     }
 
     public function shouldAutomaticallyCreateModels(): bool
